@@ -156,23 +156,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alghoritms\Algorithm.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DebtorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Creditor.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Creditor_Account.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Debtor.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Debtor_Account.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinappDB.cs" />
     <Compile Include="Models\FinappDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinappDB1.cs" />
+    <Compile Include="Models\FinappDB2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction_Out.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -187,6 +211,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FinappDB.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\FinappDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FinappDB2.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -199,6 +230,7 @@
     <None Include="Models\FinappDB.edmx.diagram">
       <DependentUpon>FinappDB.edmx</DependentUpon>
     </None>
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -224,6 +256,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Debtor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
