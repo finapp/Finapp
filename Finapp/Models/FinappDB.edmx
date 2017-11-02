@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Creditor">
           <Key>
             <PropertyRef Name="Creditor_Id" />
@@ -33,6 +33,7 @@
           <Property Name="username" Type="nvarchar" MaxLength="20" />
           <Property Name="APR" Type="real" />
           <Property Name="EAPR" Type="real" />
+          <Property Name="debet" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -125,8 +126,7 @@
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FinapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -162,6 +162,7 @@
           <Property Name="APR" Type="Single" />
           <Property Name="EAPR" Type="Single" />
           <NavigationProperty Name="Debtor_Account" Relationship="Self.ss" FromRole="Debtor" ToRole="Debtor_Account" />
+          <Property Name="debet" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -289,6 +290,7 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="debet" ColumnName="debet" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="APR" ColumnName="APR" />

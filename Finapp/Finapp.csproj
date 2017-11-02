@@ -164,15 +164,36 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Creditor.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Creditor_Account.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Debtor.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Debtor_Account.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FinappDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinappDB.cs" />
     <Compile Include="Models\FinappDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinappDB1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinappDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction_Out.cs">
+      <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,6 +207,10 @@
     <Content Include="Models\FinappDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FinappDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\FinappDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FinappDB1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
