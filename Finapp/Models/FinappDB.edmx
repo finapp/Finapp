@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Creditor">
+          <Key>
+            <PropertyRef Name="Creditor_Id" />
+          </Key>
+          <Property Name="Creditor_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="20" />
+          <Property Name="saldo" Type="int" />
+          <Property Name="ROI" Type="real" />
+          <Property Name="EROI" Type="real" />
+        </EntityType>
+        <EntityType Name="Creditor_Account">
+          <Key>
+            <PropertyRef Name="Creditor_Account_Id" />
+          </Key>
+          <Property Name="Creditor_Account_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Creditor_Id" Type="int" Nullable="false" />
+          <Property Name="Balance" Type="int" Nullable="false" />
+          <Property Name="Expiration_Date" Type="date" />
+          <Property Name="Min_Balance" Type="int" />
+        </EntityType>
+        <EntityType Name="Debtor">
+          <Key>
+            <PropertyRef Name="Debtor_Id" />
+          </Key>
+          <Property Name="Debtor_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="20" />
+          <Property Name="APR" Type="real" />
+          <Property Name="EAPR" Type="real" />
+        </EntityType>
+        <EntityType Name="Debtor_Account">
+          <Key>
+            <PropertyRef Name="Debtor_Account_Id" />
+          </Key>
+          <Property Name="Debtor_Account_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Debtor_Id" Type="int" Nullable="false" />
+          <Property Name="Debet" Type="int" Nullable="false" />
+          <Property Name="Expiration_Date" Type="date" />
+          <Property Name="Credit_Line_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Transaction_Out">
+          <Key>
+            <PropertyRef Name="Transaction_Out_Id" />
+          </Key>
+          <Property Name="Transaction_Out_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ammount" Type="int" Nullable="false" />
+          <Property Name="Date_Of_Transaction" Type="date" />
+          <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="ss">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss2">
+          <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor">
+              <PropertyRef Name="Creditor_Id" />
+            </Principal>
+            <Dependent Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss4">
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss5">
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinapModelStoreContainer">
+          <EntitySet Name="Creditor" EntityType="Self.Creditor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="ss" Association="Self.ss">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+          </AssociationSet>
+          <AssociationSet Name="ss2" Association="Self.ss2">
+            <End Role="Creditor" EntitySet="Creditor" />
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+          </AssociationSet>
+          <AssociationSet Name="ss4" Association="Self.ss4">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="ss5" Association="Self.ss5">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FinapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Creditor">
+          <Key>
+            <PropertyRef Name="Creditor_Id" />
+          </Key>
+          <Property Name="Creditor_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="saldo" Type="Int32" />
+          <Property Name="ROI" Type="Single" />
+          <Property Name="EROI" Type="Single" />
+          <NavigationProperty Name="Creditor_Account" Relationship="Self.ss2" FromRole="Creditor" ToRole="Creditor_Account" />
+        </EntityType>
+        <EntityType Name="Creditor_Account">
+          <Key>
+            <PropertyRef Name="Creditor_Account_Id" />
+          </Key>
+          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Creditor_Id" Type="Int32" Nullable="false" />
+          <Property Name="Balance" Type="Int32" Nullable="false" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+          <Property Name="Min_Balance" Type="Int32" />
+          <NavigationProperty Name="Creditor" Relationship="Self.ss2" FromRole="Creditor_Account" ToRole="Creditor" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.ss5" FromRole="Creditor_Account" ToRole="Transaction_Out" />
+        </EntityType>
+        <EntityType Name="Debtor">
+          <Key>
+            <PropertyRef Name="Debtor_Id" />
+          </Key>
+          <Property Name="Debtor_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="APR" Type="Single" />
+          <Property Name="EAPR" Type="Single" />
+          <NavigationProperty Name="Debtor_Account" Relationship="Self.ss" FromRole="Debtor" ToRole="Debtor_Account" />
+        </EntityType>
+        <EntityType Name="Debtor_Account">
+          <Key>
+            <PropertyRef Name="Debtor_Account_Id" />
+          </Key>
+          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Debtor_Id" Type="Int32" Nullable="false" />
+          <Property Name="Debet" Type="Int32" Nullable="false" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+          <Property Name="Credit_Line_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Debtor" Relationship="Self.ss" FromRole="Debtor_Account" ToRole="Debtor" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.ss4" FromRole="Debtor_Account" ToRole="Transaction_Out" />
+        </EntityType>
+        <EntityType Name="Transaction_Out">
+          <Key>
+            <PropertyRef Name="Transaction_Out_Id" />
+          </Key>
+          <Property Name="Transaction_Out_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ammount" Type="Int32" Nullable="false" />
+          <Property Name="Date_Of_Transaction" Type="DateTime" Precision="0" />
+          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Creditor_Account" Relationship="Self.ss5" FromRole="Transaction_Out" ToRole="Creditor_Account" />
+          <NavigationProperty Name="Debtor_Account" Relationship="Self.ss4" FromRole="Transaction_Out" ToRole="Debtor_Account" />
+        </EntityType>
+        <Association Name="ss2">
+          <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor">
+              <PropertyRef Name="Creditor_Id" />
+            </Principal>
+            <Dependent Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss5">
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ss4">
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinapEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Creditor" EntityType="Self.Creditor" />
+          <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" />
+          <EntitySet Name="Debtor" EntityType="Self.Debtor" />
+          <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" />
+          <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" />
+          <AssociationSet Name="ss2" Association="Self.ss2">
+            <End Role="Creditor" EntitySet="Creditor" />
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+          </AssociationSet>
+          <AssociationSet Name="ss5" Association="Self.ss5">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="ss" Association="Self.ss">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+          </AssociationSet>
+          <AssociationSet Name="ss4" Association="Self.ss4">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FinapModelStoreContainer" CdmEntityContainer="FinapEntities">
+          <EntitySetMapping Name="Creditor">
+            <EntityTypeMapping TypeName="FinapModel.Creditor">
+              <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="EROI" ColumnName="EROI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Creditor_Account">
+            <EntityTypeMapping TypeName="FinapModel.Creditor_Account">
+              <MappingFragment StoreEntitySet="Creditor_Account">
+                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
+                <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+                <ScalarProperty Name="Min_Balance" ColumnName="Min_Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debtor">
+            <EntityTypeMapping TypeName="FinapModel.Debtor">
+              <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="APR" ColumnName="APR" />
+                <ScalarProperty Name="EAPR" ColumnName="EAPR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debtor_Account">
+            <EntityTypeMapping TypeName="FinapModel.Debtor_Account">
+              <MappingFragment StoreEntitySet="Debtor_Account">
+                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+                <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
+                <ScalarProperty Name="Debet" ColumnName="Debet" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+                <ScalarProperty Name="Credit_Line_Date" ColumnName="Credit_Line_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction_Out">
+            <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
+              <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />
+                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
+                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
