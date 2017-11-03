@@ -58,5 +58,19 @@ namespace Finapp.Services
                 throw;
             }
         }
+
+        public Debtor GetDeptorById(int id)
+        {
+            try
+            {
+                return _context.Debtor
+                    .Where(d=>d.Debtor_Id==id)
+                    .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace Finapp.Interfaces
         bool ModifyDebtor(Debtor debtor);
 
         IEnumerable<Debtor> GetAllDeptors();
+
+        Debtor GetDeptorById(int id);
     }
 }

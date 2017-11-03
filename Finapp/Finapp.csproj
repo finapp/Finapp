@@ -213,6 +213,7 @@
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
+    <Compile Include="ViewModels\DebtorTransactionViewModel.cs" />
     <Compile Include="ViewModels\DebtorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +266,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Debtor\Index.cshtml" />
+    <Content Include="Views\Debtor\TransactionForDeptor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

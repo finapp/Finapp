@@ -22,7 +22,7 @@
                     <td>@Debtor.EAPR</td>
                     <td>@Debtor.Debet</td>
                     <td>@Debtor.Finapp_Debet</td>
-                    <td><div class="btn btn-success">Sprawdz historie transakcji</div></td>
+                    <td>@Html.ActionLink("Sprawdz historie transakcji", "TransactionForDeptor", "Debtor", new { id = Debtor.Debtor_Id }, null)</td>
                 </tr>
             }
         </tbody>

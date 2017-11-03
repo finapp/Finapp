@@ -1,0 +1,27 @@
+﻿@model Finapp.ViewModels.DebtorTransactionViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Deptor Username</th>
+                <th>Creditor Account</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Transaction in Model.Transactions)
+            {
+                <tr>
+                    <td>@Model.Debtor.username</td>
+                    <td>@Transaction.Creditor_Account_Id</td>
+                    <td>@Transaction.Date_Of_Transaction</td>
+                    <td>@Transaction.Ammount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
