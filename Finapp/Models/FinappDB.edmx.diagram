@@ -14,6 +14,7 @@
         <AssociationConnector Association="FinapModel.ss5" ManuallyRouted="false" />
         <AssociationConnector Association="FinapModel.ss" ManuallyRouted="false" />
         <AssociationConnector Association="FinapModel.ss4" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FinapModel.database_firewall_rules" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

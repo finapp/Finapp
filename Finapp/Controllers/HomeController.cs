@@ -9,6 +9,7 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
+    
         public ActionResult Index()
         {
             FinapEntities context = new FinapEntities();
