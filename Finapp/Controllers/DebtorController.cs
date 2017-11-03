@@ -1,4 +1,4 @@
-﻿using Finapp.Alghoritms;
+﻿using Finapp.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,15 @@ namespace Finapp.Controllers
     public class DebtorController : Controller
     {
         // GET: Debtor
+        private readonly IAlgorithm _algorithmService;
+        public DebtorController(IAlgorithm algorithmService)
+        {
+            _algorithmService = algorithmService;
+        }
+
         public ActionResult Index()
         {
-            Algorithm.Debtor();
+            while (_algorithmService.MergeDebtorWithCreditors() == true) ;
             return View();
         }
     }

@@ -13,7 +13,10 @@ namespace Finapp.App_Start
     using System.Web.Http;
     using Ninject.Web.WebApi;
     using Ninject.Web.Common.WebHost;
-
+    using Finapp.Models;
+    using Finapp.Interfaces;
+    using Finapp.Services;
+    using Finapp.Algorithm;
 
     public static class NinjectWebCommon
     {
@@ -58,7 +61,14 @@ namespace Finapp.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-         
+            kernel.Bind<FinapEntities>().ToSelf().InRequestScope();
+            kernel.Bind<ICreditor>().To<CreditorService>().InRequestScope();
+            kernel.Bind<IDebtor>().To<DebtorService>().InRequestScope();
+            kernel.Bind<IAlgorithm>().To<Algorithm>().InRequestScope();
+            kernel.Bind<ITransactionOut>().To<TransactionOutService>().InRequestScope();
+            kernel.Bind<IDebtorAccount>().To<DebtorAccountService>().InRequestScope();
+            kernel.Bind<ICreditorAccount>().To<CreditorAccountService>().InRequestScope();
+
         }
     }
 }
