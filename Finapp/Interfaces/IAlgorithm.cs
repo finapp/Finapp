@@ -13,7 +13,9 @@ namespace Finapp.Interfaces
 
         bool MergeDebtorWithCreditors();
 
-        IEnumerable<Creditor> selectCreditorsToMerge(Debtor debtor, IEnumerable<Creditor> availablesCreditors);
+        IEnumerable<Creditor> SelectCreditorsToMerge(Debtor debtor, IEnumerable<Creditor> availablesCreditors);
+
+        bool CreateTransactionOut(Debtor debtor, Creditor creditor, int amount);
 
     }
 }

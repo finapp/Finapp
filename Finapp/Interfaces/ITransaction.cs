@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Finapp.Interfaces
 {
-    public interface IDebtor
+    public interface ITransactionOut
     {
 
-        Debtor GetAvaialbleDebtor();
-
-        bool ModifyDebtor(Debtor debtor);
+        bool CreateTransaction(Transaction_Out newTransaction);
     }
 }

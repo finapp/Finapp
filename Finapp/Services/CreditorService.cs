@@ -21,7 +21,7 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Available == true && c.EROI<debtor.EAPR)
+                return _context.Creditor.Where(c => c.Available == true && c.EROI < debtor.EAPR)
                     .OrderBy(c => c.Queue_Date)
                     .ToList();
             }

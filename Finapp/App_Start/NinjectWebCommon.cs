@@ -65,6 +65,10 @@ namespace Finapp.App_Start
             kernel.Bind<ICreditor>().To<CreditorService>().InRequestScope();
             kernel.Bind<IDebtor>().To<DebtorService>().InRequestScope();
             kernel.Bind<IAlgorithm>().To<Algorithm>().InRequestScope();
+            kernel.Bind<ITransactionOut>().To<TransactionOutService>().InRequestScope();
+            kernel.Bind<IDebtorAccount>().To<DebtorAccountService>().InRequestScope();
+            kernel.Bind<ICreditorAccount>().To<CreditorAccountService>().InRequestScope();
+
         }
     }
 }
