@@ -10,15 +10,15 @@ namespace Finapp.Controllers
     public class DebtorController : Controller
     {
         // GET: Debtor
-        IDebtor debtorService;
-        public DebtorController(IDebtor _debtorService)
+        private readonly IAlgorithm _algorithmService;
+        public DebtorController(IAlgorithm algorithmService)
         {
-            debtorService = _debtorService;
+            _algorithmService = algorithmService;
         }
 
         public ActionResult Index()
         {
-            var debtor = debtorService.GetAvaialbleDebtor();
+            _algorithmService.MergeDebtorWithCreditors();
             return View();
         }
     }

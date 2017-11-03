@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finapp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,8 @@ namespace Finapp.Interfaces
 
 
         bool MergeDebtorWithCreditors();
+
+        IEnumerable<Creditor> selectCreditorsToMerge(Debtor debtor, IEnumerable<Creditor> availablesCreditors);
+
     }
 }

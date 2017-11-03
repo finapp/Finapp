@@ -10,7 +10,9 @@ namespace Finapp.Interfaces
     public interface ICreditor
     {
 
-        IEnumerable<Creditor> GetAvailableCreditors();
+        IEnumerable<Creditor> GetAvailableCreditors(Debtor debtor);
+
+        bool ModifyCreditor(Creditor creditor);
 
 
     }
