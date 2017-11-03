@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Finapp.Models.Debtor>
+﻿@model Finapp.ViewModels.DebtorViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -10,12 +10,11 @@
                 <th>APR</th>
                 <th>EAPR</th>
                 <th>Debet</th>
-
                 <th>Finapp_Debet</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var Debtor in Model)
+            @foreach (var Debtor in Model.Debtors)
             {
                 <tr>
                     <td>@Debtor.username</td>
@@ -23,6 +22,7 @@
                     <td>@Debtor.EAPR</td>
                     <td>@Debtor.Debet</td>
                     <td>@Debtor.Finapp_Debet</td>
+                    <td><div class="btn btn-success">Sprawdz historie transakcji</div></td>
                 </tr>
             }
         </tbody>

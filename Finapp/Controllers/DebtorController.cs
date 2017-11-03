@@ -1,4 +1,5 @@
 ﻿using Finapp.Interfaces;
+using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace Finapp.Controllers
         public ActionResult Index()
         {
             //while (_algorithmService.MergeDebtorWithCreditors() == true) ;
-            var debtors = _debtorService.GetAllDeptors();
+            DebtorViewModel dwm = new DebtorViewModel
+            {
+                Debtors = _debtorService.GetAllDeptors()
+            };
 
-            return View(debtors);
+            return View(dwm);
         }
     }
 }
