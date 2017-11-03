@@ -7,6 +7,11 @@ namespace Finapp.ViewModels
 {
     public class TransactionOutListViewModel
     {
-        public IEnumerable<TransactionOutViewModel> List { get; set; }
+        public TransactionOutListViewModel()
+        {
+            List = new List<TransactionOutViewModel>();
+        }
+
+        public List<TransactionOutViewModel> List { get; set; }
     }
 }

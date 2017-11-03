@@ -8,6 +8,6 @@ namespace Finapp.ViewModels
     public class TransactionOutViewModel
     {
         public int Amount { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

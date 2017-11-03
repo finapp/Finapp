@@ -195,6 +195,7 @@
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
+    <Compile Include="IServices\ITransactionViewModelService.cs" />
     <Compile Include="Models\Creditor.cs">
       <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
@@ -238,6 +239,7 @@
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
+    <Compile Include="Services\TransactionViewModelService.cs" />
     <Compile Include="ViewModels\CreditorListViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
     <Compile Include="ViewModels\DebtorListViewModel.cs" />

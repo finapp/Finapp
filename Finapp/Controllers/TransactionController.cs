@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finapp.IServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,12 @@ namespace Finapp.Controllers
 {
     public class TransactionController : Controller
     {
+        private readonly ITransactionViewModelService _transactionViewModelService;
+
+        public TransactionController(ITransactionViewModelService transactionViewModelService)
+        {
+            _transactionViewModelService = transactionViewModelService;
+        }
 
         // GET: Transaction
         public ActionResult Index()
