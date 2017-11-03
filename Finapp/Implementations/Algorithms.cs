@@ -9,7 +9,7 @@ namespace Finapp.Implementations
 {
     public class Algorithms : IAlgorithms
     {
-        public Queue<Debtor> addDebtorsToQueue()
+        public Queue<Debtor> AddDebtorsToQueue()
         {
             FinapEntities context = new FinapEntities();
             var debtorsList = context.Debtor.ToList();
@@ -23,7 +23,7 @@ namespace Finapp.Implementations
             return debtors;
         }
 
-        public Queue<Creditor> addCreditorsToQueue()
+        public Queue<Creditor> AddCreditorsToQueue()
         {
             FinapEntities context = new FinapEntities();
             var creditorList = context.Creditor.ToList();
@@ -37,11 +37,11 @@ namespace Finapp.Implementations
             return creditors;
         }
 
-        public bool associating()
+        public bool Associating()
         {
             FinapEntities context = new FinapEntities();
-            Queue<Debtor> debtors = addDebtorsToQueue();
-            Queue<Creditor> creditors = addCreditorsToQueue();
+            Queue<Debtor> debtors = AddDebtorsToQueue();
+            Queue<Creditor> creditors = AddCreditorsToQueue();
 
             if (debtors.Count == 0)
                 return false;

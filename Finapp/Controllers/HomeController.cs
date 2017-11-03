@@ -9,11 +9,16 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
-    
+        private readonly FinapEntities _context;
+        public HomeController(FinapEntities context)
+        {
+            _context = context;
+        }
+
         public ActionResult Index()
         {
+
            
-            return View();
         }
 
         public ActionResult About()
