@@ -12,15 +12,19 @@ namespace Finapp.Controllers
     public class HomeController : Controller
     {
         private readonly IAlgorithms _algorithm;
+        private readonly FinapEntities _context;
 
-        public HomeController(IAlgorithms algorithm)
+        public HomeController(IAlgorithms algorithm, FinapEntities context)
         {
             _algorithm = algorithm;
+            _context = context;
         }
 
         public ActionResult Index()
         {
-            _algorithm.Associating();
+           // _algorithm.Associating();
+           
+
            
             return View();
         }

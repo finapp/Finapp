@@ -179,12 +179,15 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DebtorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Implementations\Algorithms.cs" />
     <Compile Include="Interfaces\IAlgorithms.cs" />
+    <Compile Include="IServices\IDebtorViewModelService.cs" />
     <Compile Include="IServices\ICreditorAccountService.cs" />
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
@@ -230,7 +233,14 @@
     <Compile Include="Services\CreditorService.cs" />
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
+    <Compile Include="Services\DebtorViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
+    <Compile Include="ViewModels\CreditorListViewModel.cs" />
+    <Compile Include="ViewModels\CreditorViewModel.cs" />
+    <Compile Include="ViewModels\DebtorListViewModel.cs" />
+    <Compile Include="ViewModels\DebtorViewModel.cs" />
+    <Compile Include="ViewModels\TransactionOutListViewModel.cs" />
+    <Compile Include="ViewModels\TransactionOutViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -288,6 +298,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Debtor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
