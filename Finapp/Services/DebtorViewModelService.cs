@@ -21,7 +21,7 @@ namespace Finapp.Services
         {
             IEnumerable<Debtor> debtors = _context.Debtor.ToList();
 
-            DebtorListViewModel debtorsViewModel = new DebtorListViewModel();
+            var debtorsViewModel = new DebtorListViewModel();
 
             foreach (var debtor in debtors)
             {
@@ -31,7 +31,7 @@ namespace Finapp.Services
                     APR = debtor.APR,
                     EAPR = debtor.EAPR,
                     Debet = debtor.Debet,
-                    FinalDebet = debtor.Finapp_Debet
+                    FinappDebet = debtor.Finapp_Debet
                 });
             }
 

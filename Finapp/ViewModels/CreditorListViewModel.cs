@@ -7,6 +7,11 @@ namespace Finapp.ViewModels
 {
     public class CreditorListViewModel
     {
-        public IEnumerable<CreditorViewModel> List { get; set; }
+        public CreditorListViewModel()
+        {
+            List = new List<CreditorViewModel>();
+        }
+
+        public List<CreditorViewModel> List { get; set; }
     }
 }

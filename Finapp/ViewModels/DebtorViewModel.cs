@@ -11,6 +11,6 @@ namespace Finapp.ViewModels
         public float? APR { get; set; }
         public float? EAPR { get; set; }
         public int Debet { get; set; }
-        public int FinalDebet { get; set; }
+        public int FinappDebet { get; set; }
     }
 }

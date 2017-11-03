@@ -70,6 +70,7 @@ namespace Finapp.App_Start
             kernel.Bind<IAlgorithms>().To<Algorithms>().InRequestScope();
             kernel.Bind<ITransactionOutService>().To<TransactionOutService>().InRequestScope();
             kernel.Bind<IDebtorViewModelService>().To<DebtorViewModelService>().InRequestScope();
+            kernel.Bind<ICreditorViewModelService>().To<CreditorViewModelService>().InRequestScope();
         }
     }
 }

@@ -11,12 +11,10 @@ namespace Finapp.Controllers
 {
     public class DebtorController : Controller
     {
-        private readonly FinapEntities _context;
         private readonly IDebtorViewModelService _debtorViewModelService;
 
-        public DebtorController(FinapEntities context, IDebtorViewModelService debtorViewModelService)
+        public DebtorController(IDebtorViewModelService debtorViewModelService)
         {
-            _context = context;
             _debtorViewModelService = debtorViewModelService;
         }
         // GET: Debtor
