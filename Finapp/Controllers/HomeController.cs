@@ -1,4 +1,6 @@
-﻿using Finapp.Models;
+﻿using Finapp.Implementations;
+using Finapp.Interfaces;
+using Finapp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +11,18 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly FinapEntities _context;
-        public HomeController(FinapEntities context)
+        private readonly IAlgorithms _algorithm;
+
+        public HomeController(IAlgorithms algorithm)
         {
-            _context = context;
+            _algorithm = algorithm;
         }
 
         public ActionResult Index()
         {
-
+            _algorithm.Associating();
            
+            return View();
         }
 
         public ActionResult About()

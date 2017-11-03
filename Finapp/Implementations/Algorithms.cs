@@ -1,5 +1,7 @@
 ﻿using Finapp.Interfaces;
+using Finapp.IServices;
 using Finapp.Models;
+using Finapp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,85 +11,81 @@ namespace Finapp.Implementations
 {
     public class Algorithms : IAlgorithms
     {
-        public Queue<Debtor> AddDebtorsToQueue()
+        private readonly FinapEntities _context;
+        private readonly ICreditorService _creditorService;
+        private readonly IDebtorService _debtorService;
+
+        public Algorithms(FinapEntities context, ICreditorService creditorService, IDebtorService debtorService)
         {
-            FinapEntities context = new FinapEntities();
-            var debtorsList = context.Debtor.ToList();
-            Queue<Debtor> debtors = new Queue<Debtor>();
-
-            foreach (var debtor in debtorsList)
-            {
-                debtors.Enqueue(debtor);
-            }
-
-            return debtors;
+            _context = context;
+            _creditorService = creditorService;
+            _debtorService = debtorService;
         }
 
-        public Queue<Creditor> AddCreditorsToQueue()
+        public IEnumerable<Debtor> AddDebtorsToQueue()
         {
-            FinapEntities context = new FinapEntities();
-            var creditorList = context.Creditor.ToList();
-            Queue<Creditor> creditors = new Queue<Creditor>();
+            var debtorsList = _debtorService.GetAvailableDebtors();
 
-            foreach (var creditor in creditorList)
-            {
-                creditors.Enqueue(creditor);
-            }
+            if (debtorsList == null)
+                return null;
 
-            return creditors;
+            debtorsList.OrderBy(d => d.Queue_Date);
+
+            return debtorsList;
+        }
+
+        public IEnumerable<Creditor> AddCreditorsToQueue()
+        {
+            var creditorsList = _creditorService.GetAvailableCreditors();
+
+            if (creditorsList == null)
+                return null;
+
+            creditorsList.OrderBy(d => d.Queue_Date);
+
+            return creditorsList;
         }
 
         public bool Associating()
         {
-            FinapEntities context = new FinapEntities();
-            Queue<Debtor> debtors = AddDebtorsToQueue();
-            Queue<Creditor> creditors = AddCreditorsToQueue();
+            IEnumerable<Debtor> debtors = AddDebtorsToQueue();
+            IEnumerable<Creditor> creditors = AddCreditorsToQueue();
 
-            if (debtors.Count == 0)
+            if (debtors == null || creditors == null)
                 return false;
-            debtors.Dequeue();
-            debtors.Dequeue();
-            Debtor debtor = debtors.Dequeue();
-            int collectedMoney = 0;
-            int moneyFromLastCreditor;
 
-            Queue<Creditor> selectedCreditors = new Queue<Creditor>();
-
-            foreach (var creditor in creditors)
+            foreach (var debtor in debtors)
             {
-                if (creditor.EROI < debtor.EAPR)
+                foreach (var creditor in creditors)
                 {
-                    selectedCreditors.Enqueue(creditor);
-                    collectedMoney += creditor.Finapp_Balance;
-
-                    if (collectedMoney >= debtor.Debet)
+                    if (debtor.EAPR > creditor.EROI)
                     {
-                        moneyFromLastCreditor = debtor.Debet - Math.Abs(collectedMoney - creditor.Finapp_Balance);
-
-                        context.Transaction_Out.Add(new Transaction_Out
+                        if (creditor.Finapp_Balance > debtor.Finapp_Debet)
                         {
-                            Ammount = moneyFromLastCreditor,
-                            Date_Of_Transaction = DateTime.Now,
-                            Creditor_Account_Id = creditor.Creditor_Id,
-                            Debtor_Account_Id = debtor.Debtor_Id
-                        });
-                        context.SaveChanges();
+                            creditor.Finapp_Balance -= debtor.Finapp_Debet;
+                            _creditorService.ModifyCreditor(creditor);
 
-                        break;
+                            debtor.Finapp_Debet = 0;
+                            debtor.Available = false;
+                            _debtorService.ModifyDebtor(debtor);
+
+                            break;
+                        }
+                        else
+                        {
+                            debtor.Finapp_Debet -= creditor.Finapp_Balance;
+                            _debtorService.ModifyDebtor(debtor);
+
+                            creditor.Finapp_Balance = 0;
+                            creditor.Available = false;
+                            _creditorService.ModifyCreditor(creditor);
+
+                            if (debtor.Finapp_Debet == 0)
+                                break;
+                        }
                     }
-
-                    context.Transaction_Out.Add(new Transaction_Out
-                    {
-                        Ammount = creditor.Finapp_Balance,
-                        Date_Of_Transaction = DateTime.Now,
-                        Creditor_Account_Id = creditor.Creditor_Id,
-                        Debtor_Account_Id = debtor.Debtor_Id
-                    });
-                    context.SaveChanges();
                 }
             }
-
-
 
             return true;
         }
