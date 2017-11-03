@@ -41,7 +41,21 @@ namespace Finapp.Services
             }
             catch (Exception)
             {
-                throw ;
+                throw;
+            }
+        }
+
+        public IEnumerable<Debtor> GetAllDeptors()
+        {
+            try
+            {
+                return _context.Debtor
+                    .OrderBy(d => d.Queue_Date)
+                    .ToList();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

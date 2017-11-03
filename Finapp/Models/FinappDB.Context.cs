@@ -12,19 +12,20 @@ namespace Finapp.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class FinapEntities : DbContext
     {
         public FinapEntities()
             : base("name=FinapEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Creditor> Creditor { get; set; }
         public virtual DbSet<Creditor_Account> Creditor_Account { get; set; }
         public virtual DbSet<Debtor> Debtor { get; set; }

@@ -1,7 +1,30 @@
-﻿
+﻿@model IEnumerable<Finapp.Models.Debtor>
 @{
     ViewBag.Title = "Index";
 }
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>APR</th>
+                <th>EAPR</th>
+                <th>Debet</th>
 
-<h2>Index</h2>
-
+                <th>Finapp_Debet</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Debtor in Model)
+            {
+                <tr>
+                    <td>@Debtor.username</td>
+                    <td>@Debtor.APR</td>
+                    <td>@Debtor.EAPR</td>
+                    <td>@Debtor.Debet</td>
+                    <td>@Debtor.Finapp_Debet</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
