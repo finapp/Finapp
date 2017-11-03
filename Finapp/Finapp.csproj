@@ -185,21 +185,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Creditor.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Creditor_Account.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\database_firewall_rules.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Debtor.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Debtor_Account.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\FinappDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,15 +195,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FinappDB1.cs" />
-    <Compile Include="Models\FinappDB2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Transaction_Out.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,13 +209,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FinappDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\FinappDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FinappDB2.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
