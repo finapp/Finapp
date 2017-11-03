@@ -29,5 +29,18 @@ namespace Finapp.Services
                 return null;
             }
         }
+
+        public int GetAccountIdByCreditorId(int id)
+        {
+            try
+            {
+                var account = _context.Creditor_Account.Where(a => a.Creditor_Id == id).FirstOrDefault();
+                return account.Creditor_Account_Id;
+            }
+            catch(Exception e)
+            {
+                return -1;
+            }
+        }
     }
 }

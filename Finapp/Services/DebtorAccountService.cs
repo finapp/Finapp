@@ -28,5 +28,17 @@ namespace Finapp.Services
                 return null;
             }
         }
+        public int GetAccountIdByDebtorId(int id)
+        {
+            try
+            {
+                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == id).FirstOrDefault();
+                return account.Debtor_Account_Id;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
     }
 }

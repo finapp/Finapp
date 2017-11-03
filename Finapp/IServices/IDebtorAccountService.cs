@@ -9,5 +9,6 @@ namespace Finapp.IServices
     public interface IDebtorAccountService
     {
         Debtor_Account GetAccountByDebtorId(int id);
+        int GetAccountIdByDebtorId(int id);
     }
 }

@@ -9,9 +9,6 @@ namespace Finapp.Interfaces
 {
     public interface IAlgorithms
     {
-        IEnumerable<Debtor> AddDebtorsToQueue();
-        IEnumerable<Creditor> AddCreditorsToQueue();
         bool Associating();
-
     }
 }

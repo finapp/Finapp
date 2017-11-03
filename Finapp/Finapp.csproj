@@ -189,6 +189,7 @@
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
+    <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="Models\Creditor.cs">
       <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
@@ -229,6 +230,7 @@
     <Compile Include="Services\CreditorService.cs" />
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
+    <Compile Include="Services\TransactionOutService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

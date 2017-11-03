@@ -10,5 +10,6 @@ namespace Finapp.IServices
     public interface ICreditorAccountService
     {
         Creditor_Account GetAccountByCreditorId(int id);
+        int GetAccountIdByCreditorId(int id);
     }
 }
