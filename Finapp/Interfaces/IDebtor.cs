@@ -10,7 +10,7 @@ namespace Finapp.Interfaces
     public interface IDebtor
     {
 
-        Debtor getAvaialbleDebtor(); 
-
+        Debtor GetAvaialbleDebtor();
+        bool ModifyDebtor(Debtor debtor);
     }
 }

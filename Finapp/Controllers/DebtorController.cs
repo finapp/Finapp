@@ -15,9 +15,10 @@ namespace Finapp.Controllers
         {
             debtorService = _debtorService;
         }
+
         public ActionResult Index()
         {
-            var debtor = debtorService.getAvaialbleDebtor();
+            var debtor = debtorService.GetAvaialbleDebtor();
             return View();
         }
     }

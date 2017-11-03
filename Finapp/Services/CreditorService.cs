@@ -9,22 +9,23 @@ namespace Finapp.Services
 {
     public class CreditorService : ICreditor
     {
-        FinapEntities context;
+        private readonly FinapEntities _context;
 
-        public CreditorService(FinapEntities _context)
+        public CreditorService(FinapEntities context)
         {
-            context = _context;
+            _context = context;
         }
 
-        public IEnumerable<Creditor> getAvailableCreditors()
+        public IEnumerable<Creditor> GetAvailableCreditors()
         {
             try
             {
-                return context.Creditor.Where(c => c.Available == true).OrderBy(c => c.Queue_Date).ToList();
+                return _context.Creditor.Where(c => c.Available == true)
+                    .OrderBy(c => c.Queue_Date)
+                    .ToList();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

@@ -16,6 +16,7 @@ namespace Finapp.App_Start
     using Finapp.Models;
     using Finapp.Interfaces;
     using Finapp.Services;
+    using Finapp.Algorithm;
 
     public static class NinjectWebCommon
     {
@@ -63,6 +64,7 @@ namespace Finapp.App_Start
             kernel.Bind<FinapEntities>().ToSelf().InRequestScope();
             kernel.Bind<ICreditor>().To<CreditorService>().InRequestScope();
             kernel.Bind<IDebtor>().To<DebtorService>().InRequestScope();
+            kernel.Bind<IAlgorithm>().To<Algorithm>().InRequestScope();
         }
     }
 }
