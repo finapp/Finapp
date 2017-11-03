@@ -185,6 +185,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\Algorithms.cs" />
+    <Compile Include="Interfaces\IAlgorithms.cs" />
     <Compile Include="Models\Creditor.cs">
       <DependentUpon>FinappDB.tt</DependentUpon>
     </Compile>
@@ -282,7 +284,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
