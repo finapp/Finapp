@@ -12,22 +12,7 @@ namespace Finapp.Controllers
     
         public ActionResult Index()
         {
-            FinapEntities context = new FinapEntities();
-            Random rand = new Random();
-            for (int i = 1; i <= 50; i++)
-            {
-                DateTime d = DateTime.Now.AddDays(30);
-                Debtor c = context.Debtor.Where(x => x.Debtor_Id == i).FirstOrDefault();
-                context.Debtor_Account.Add(new Debtor_Account
-                {
-                    Debtor_Id = i,
-                    Debet = c.debet,
-                    Expiration_Date = d,
-                    Credit_Line_Date = d
-                });
-                context.SaveChanges();
-            }
-
+           
             return View();
         }
 
