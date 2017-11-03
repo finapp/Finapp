@@ -18,7 +18,7 @@ namespace Finapp.Controllers
 
         public ActionResult Index()
         {
-            _algorithmService.MergeDebtorWithCreditors();
+            while (_algorithmService.MergeDebtorWithCreditors() == true) ;
             return View();
         }
     }

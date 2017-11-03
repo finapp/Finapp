@@ -15,7 +15,6 @@ namespace Finapp.Algorithm
         private readonly IDebtorAccount _debtorAccountService;
         private readonly ITransactionOut _transactionService;
 
-
         public Algorithm(IDebtor debtorService, ICreditor creditorService, ICreditorAccount creditorAccountService, IDebtorAccount debtorAccountService, ITransactionOut transactionService)
         {
             _debtorService = debtorService;
@@ -37,9 +36,6 @@ namespace Finapp.Algorithm
 
             var selectedeCreditorsToMerge = SelectCreditorsToMerge(selectedDebtor, availableCreditors);
 
-
-
-
             return true;
         }
 
@@ -50,7 +46,7 @@ namespace Finapp.Algorithm
 
             foreach (var creditor in availablesCreditors)
             {
-                if (suma + creditor.Balance < debtor.Debet && creditor.Available == true)
+                if (suma + creditor.Finapp_Balance <= debtor.Finapp_Debet && creditor.Available == true)
                 {
                     suma += creditor.Balance;
 
@@ -58,17 +54,18 @@ namespace Finapp.Algorithm
                     _debtorService.ModifyDebtor(debtor);
 
                     creditor.Available = false;
-                    CreateTransactionOut(debtor, creditor, creditor.Balance);
-
                     creditor.Finapp_Balance = 0;
                     _creditorService.ModifyCreditor(creditor);
+
+                    CreateTransactionOut(debtor, creditor, creditor.Balance);
 
                     selectedCreditors.Add(creditor);
 
                 }
                 else if (creditor.Available == true)
                 {
-                    creditor.Finapp_Balance -= debtor.Debet - suma;
+                    var a = debtor.Finapp_Debet - suma;
+                    creditor.Finapp_Balance -= a;
                     _creditorService.ModifyCreditor(creditor);
 
                     CreateTransactionOut(debtor, creditor, debtor.Debet - suma);
