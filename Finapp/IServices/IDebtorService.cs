@@ -12,5 +12,6 @@ namespace Finapp.IServices
         IEnumerable<Debtor> GetAllDebtors();
         Debtor GetDebtorById(int id);
         IEnumerable<Debtor> GetDebtorsWithDebet();
+        bool ModifyDebtor(Debtor debtor);
     }
 }

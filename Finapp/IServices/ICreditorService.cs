@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Finapp.IServices
 {
-    interface ICreditorService
+    public interface ICreditorService
     {
         IEnumerable<Creditor> GetAllCreditors();
         Creditor GetCreditorById(int id);
-        IEnumerable<Creditor> GetDebtorsWithDebet();
+        IEnumerable<Creditor> GetCreditorsWithBalance();
+        IEnumerable<Creditor> GetAvailableCreditors();
+        bool ModifyCreditor(Creditor creditor);
     }
 }

@@ -1,12 +1,14 @@
-﻿using Finapp.Models;
+﻿using Finapp.IServices;
+using Finapp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace Finapp.Services
 {
-    public class CreditorService
+    public class CreditorService : ICreditorService
     {
         private readonly FinapEntities _context;
 
@@ -19,7 +21,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.ToList();
+                return _context.Creditor
+                    .ToList();
             }
             catch (Exception e)
             {
@@ -31,7 +34,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(d => d.Creditor_Id == id).FirstOrDefault();
+                return _context.Creditor.Where(c => c.Creditor_Id == id)
+                    .FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -39,16 +43,45 @@ namespace Finapp.Services
             }
         }
 
-        public IEnumerable<Creditor> GetDebtorsWithDebet()
+        public IEnumerable<Creditor> GetCreditorsWithBalance()
         {
             try
             {
-                return _context.Creditor.Where(d => d.Finapp_Balance > 0).ToList();
+                return _context.Creditor.Where(c => c.Finapp_Balance > 0)
+                    .ToList();
             }
             catch (Exception e)
             {
                 return null;
             }
         }
+
+        public IEnumerable<Creditor> GetAvailableCreditors()
+        {
+            try
+            {
+                return _context.Creditor.Where(c => c.Available == true)
+                    .ToList();
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
+
+        public bool ModifyCreditor(Creditor creditor)
+        {
+            try
+            {
+                _context.Entry(creditor).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+
     }
 }

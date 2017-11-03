@@ -3,6 +3,7 @@ using Finapp.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -53,6 +54,32 @@ namespace Finapp.Services
             }
         }
 
+        public IEnumerable<Debtor> GetAvailableDebtors()
+        {
+            try
+            {
+                return _context.Debtor.Where(d => d.Available == true)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public bool ModifyDebtor(Debtor debtor)
+        {
+            try
+            {
+                _context.Entry(debtor).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
     }
 }
