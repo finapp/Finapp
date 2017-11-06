@@ -3,6 +3,7 @@ using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,9 +53,9 @@ namespace Finapp.Controllers
         }
 
 
-        public ActionResult Algorithm()
+        public async Task<ActionResult> Algorithm()
         {
-            while (_algorithmService.MergeDebtorWithCreditors() == true) ;
+            while (await Task.Run(() => _algorithmService.MergeDebtorWithCreditors()) == true) ;
 
             return RedirectToAction("Index");
         }

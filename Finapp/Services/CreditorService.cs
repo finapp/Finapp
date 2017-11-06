@@ -17,6 +17,7 @@ namespace Finapp.Services
             _context = context;
         }
 
+
         public IEnumerable<Creditor> GetAvailableCreditors(Debtor debtor)
         {
             try
@@ -38,6 +39,33 @@ namespace Finapp.Services
                 _context.Entry(creditor).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<Creditor> GetAllCreditors()
+        {
+            try
+            {
+                return _context.Creditor
+                    .ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public Creditor GetCreditorById(int id)
+        {
+            try
+            {
+                return _context.Creditor
+                    .Where(c => c.Creditor_Id == id)
+                    .FirstOrDefault();
             }
             catch (Exception)
             {

@@ -1,0 +1,32 @@
+﻿@model Finapp.ViewModels.CreditorViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>ROI</th>
+                <th>EROI</th>
+                <th>Balance</th>
+                <th>Finapp_Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Creditor in Model.Creditors)
+            {
+                <tr>
+                    <td>@Creditor.username</td>
+                    <td>@Creditor.ROI</td>
+                    <td>@Creditor.EROI</td>
+                    <td>@Creditor.Balance</td>
+                    <td>@Creditor.Finapp_Balance</td>
+                    <td>@Html.ActionLink("Sprawdz historie transakcji", "TransactionForCreditor", "Creditor", new { id = Creditor.Creditor_Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

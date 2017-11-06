@@ -34,11 +34,23 @@ namespace Finapp.Services
             }
         }
 
+        public IEnumerable<Transaction_Out> GetTransactionByCreditorId(int creditorId)
+        {
+            try
+            {
+                return _context.Transaction_Out.Where(t => t.Creditor_Account_Id == creditorId).ToList(); 
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<Transaction_Out> GetTransactionByDebtorId(int debtorId)
         {
             try
             {
-                return _context.Transaction_Out.Where(t => t.Debtor_Account_Id == debtorId).ToList(); ;
+                return _context.Transaction_Out.Where(t => t.Debtor_Account_Id == debtorId).ToList(); 
             }
             catch (Exception e)
             {

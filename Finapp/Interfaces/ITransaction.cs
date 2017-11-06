@@ -12,6 +12,8 @@ namespace Finapp.Interfaces
 
         bool CreateTransaction(Transaction_Out newTransaction);
 
-        IEnumerable<Transaction_Out> GetTransactionByDebtorId(int debtorId); 
+        IEnumerable<Transaction_Out> GetTransactionByDebtorId(int debtorId);
+
+        IEnumerable<Transaction_Out> GetTransactionByCreditorId(int creditorId);
     }
 }

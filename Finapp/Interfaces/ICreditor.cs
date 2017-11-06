@@ -14,6 +14,9 @@ namespace Finapp.Interfaces
 
         bool ModifyCreditor(Creditor creditor);
 
+        IEnumerable<Creditor> GetAllCreditors();
+
+        Creditor GetCreditorById(int id);
 
     }
 }
