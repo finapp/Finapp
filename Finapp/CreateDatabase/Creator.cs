@@ -15,6 +15,7 @@ namespace Finapp.CreateDatabase
 
             Random rand = new Random();
 
+            context.Database.ExecuteSqlCommand("Delete from [Return_Transaction]");
             context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
             context.Database.ExecuteSqlCommand("Delete from [Creditor_Account]");
             context.Database.ExecuteSqlCommand("Delete from [Debtor_Account]");

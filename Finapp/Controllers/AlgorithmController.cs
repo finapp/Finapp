@@ -21,7 +21,7 @@ namespace Finapp.Controllers
         public async Task<ActionResult> Index()
         {
             await Task.Run(() => _algorithm.Associating());
-            return RedirectToAction("");
+            return RedirectToAction("Index", "Debtor");
         }
     }
 }

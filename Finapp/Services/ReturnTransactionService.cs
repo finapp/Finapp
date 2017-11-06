@@ -13,7 +13,6 @@ namespace Finapp.Services
 
         public ReturnTransactionService(FinapEntities1 context)
         {
-
             _context = context;
         }
 
