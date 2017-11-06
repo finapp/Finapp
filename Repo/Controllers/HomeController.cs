@@ -14,7 +14,7 @@ namespace Repo.Controllers
             FinapEntities context = new FinapEntities();
 
             Random rand = new Random();
-
+      
             for (int i = 1; i <= 50; i++)
             {
                 var roi = rand.Next(0, 3);
@@ -77,7 +77,7 @@ namespace Repo.Controllers
                 context.SaveChanges();
             }
 
-
+        
             return View();
         }
 
