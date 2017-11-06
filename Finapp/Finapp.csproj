@@ -279,6 +279,7 @@
       <DependentUpon>FinappDB.edmx</DependentUpon>
     </None>
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\FinappAlgorithm - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
