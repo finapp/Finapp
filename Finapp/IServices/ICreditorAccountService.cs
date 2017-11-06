@@ -11,5 +11,7 @@ namespace Finapp.IServices
     {
         Creditor_Account GetAccountByCreditorId(int id);
         int GetAccountIdByCreditorId(int id);
+        int GetAccountIdByCreditorUsername(string username);
+        int GetCreditorIdByAccountId(int id);
     }
 }

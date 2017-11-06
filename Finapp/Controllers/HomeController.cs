@@ -4,6 +4,7 @@ using Finapp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,12 +21,12 @@ namespace Finapp.Controllers
             _context = context;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-           // _algorithm.Associating();
-           
+            await Task.Run(() => _algorithm.Associating());
 
-           
+
+
             return View();
         }
 

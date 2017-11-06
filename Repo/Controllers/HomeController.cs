@@ -58,10 +58,10 @@ namespace Repo.Controllers
             for (int i = 1; i <= 50; i++)
             {
                 DateTime d = DateTime.Now.AddDays(30);
-                Debtor c = context.Debtor.Where(x => x.Debtor_Id == i+550).FirstOrDefault();
+                Debtor c = context.Debtor.Where(x => x.Debtor_Id == i+700).FirstOrDefault();
                 context.Debtor_Account.Add(new Debtor_Account
                 {
-                    Debtor_Id = i+550,
+                    Debtor_Id = i+700,
                     Debet = c.Debet,
                     Expiration_Date = d,
                     Credit_Line_Date = d
@@ -72,10 +72,10 @@ namespace Repo.Controllers
             for (int i = 1; i <= 50; i++)
             {
                 DateTime d = DateTime.Now.AddDays(30);
-                Creditor c = context.Creditor.Where(x => x.Creditor_Id == i + 550).FirstOrDefault();
+                Creditor c = context.Creditor.Where(x => x.Creditor_Id == i + 700).FirstOrDefault();
                 context.Creditor_Account.Add(new Creditor_Account
                 {
-                    Creditor_Id = i + 550,
+                    Creditor_Id = i + 700,
                     Balance = c.Balance,
                     Expiration_Date = d,
                     Min_Balance = 0

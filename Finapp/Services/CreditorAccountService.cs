@@ -42,5 +42,31 @@ namespace Finapp.Services
                 return -1;
             }
         }
+
+        public int GetAccountIdByCreditorUsername(string username)
+        {
+            try
+            {
+                var creditor = _context.Creditor.Where(c => c.username == username).FirstOrDefault();
+                var account = _context.Creditor_Account.Where(a => a.Creditor_Id == creditor.Creditor_Id).FirstOrDefault();
+                return account.Creditor_Account_Id;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        public int GetCreditorIdByAccountId(int id)
+        {
+            try
+            {
+                return _context.Creditor_Account.Where(t => t.Creditor_Account_Id == id).FirstOrDefault().Creditor_Id;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
     }
 }

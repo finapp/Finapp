@@ -83,5 +83,18 @@ namespace Finapp.Services
             }
         }
 
+        public string GetCreditorUsernameById(int id)
+        {
+            try
+            {
+                return _context.Creditor.Where(c => c.Creditor_Id == id)
+                    .FirstOrDefault().username;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
     }
 }

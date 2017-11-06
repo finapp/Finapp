@@ -9,7 +9,10 @@ namespace Finapp.IServices
 {
     public interface ITransactionViewModelService
     {
+        TransactionOutListViewModel GetAllTransactions();
         TransactionOutListViewModel GetTransactionByDeptorId(int id);
         TransactionOutListViewModel GetTransactionByCreditorId(int id);
+        TransactionOutListViewModel GetTransactionByCreditorUsername(string username);
+        TransactionOutListViewModel GetTransactionByDebtorUsername(string username);
     }
 }

@@ -9,5 +9,7 @@ namespace Finapp.ViewModels
     {
         public int Amount { get; set; }
         public DateTime? Date { get; set; }
+        public string CreditorUsername { get; set; }
+        public string DebtorUsername { get; set; }
     }
 }

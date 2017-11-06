@@ -3,12 +3,28 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<ul>
-    @foreach (var item in Model.List)
-    {
-        <li>@item.Username</li>
+<h2>Debtors</h2>
 
-    }
-
-</ul>
+<table class="table table-responsive table-striped">
+    <thead>
+    <th>Username</th>
+    <th>APR</th>
+    <th>EAPR</th>
+    <th>Debet</th>
+    <th>FinApp debet</th>
+    <th>Details</th>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.List)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.APR</td>
+                <td>@user.EAPR</td>
+                <td>@user.Debet</td>
+                <td>@user.FinappDebet</td>
+                <td>@Html.ActionLink("Details", "DebtorTransactions", "Transaction", new { username = user.Username }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

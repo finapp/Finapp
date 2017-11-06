@@ -10,5 +10,7 @@ namespace Finapp.IServices
     {
         Debtor_Account GetAccountByDebtorId(int id);
         int GetAccountIdByDebtorId(int id);
+        int GetAccountIdByDebtorUsername(string username);
+        int GetDebtorIdByAccountId(int id);
     }
 }

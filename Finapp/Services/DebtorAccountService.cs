@@ -40,5 +40,31 @@ namespace Finapp.Services
                 return -1;
             }
         }
+
+        public int GetAccountIdByDebtorUsername(string username)
+        {
+            try
+            {
+                var debtor = _context.Creditor.Where(d => d.username == username).FirstOrDefault();
+                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == debtor.Creditor_Id).FirstOrDefault();
+                return account.Debtor_Account_Id;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        public int GetDebtorIdByAccountId(int id)
+        {
+            try
+            {
+                return _context.Debtor_Account.Where(t => t.Debtor_Account_Id == id).FirstOrDefault().Debtor_Id;
+            }
+            catch(Exception e)
+            {
+                return -1;
+            }
+        }
     }
 }
