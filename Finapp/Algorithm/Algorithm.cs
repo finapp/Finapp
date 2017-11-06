@@ -69,7 +69,7 @@ namespace Finapp.Algorithm
                     creditor.Finapp_Balance -= a;
                     _creditorService.ModifyCreditor(creditor);
 
-                    CreateTransactionOut(debtor, creditor, debtor.Debet - suma);
+                    CreateTransactionOut(debtor, creditor, debtor.Finapp_Debet - suma);
 
                     debtor.Finapp_Debet = 0;
                     _debtorService.ModifyDebtor(debtor);
