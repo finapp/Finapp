@@ -21,7 +21,7 @@ namespace Repo.Controllers
                 var eroi = rand.Next(3, 8);
                 var balance = rand.Next(500, 50000);
                 DateTime d = DateTime.Now.AddDays(30);
-                context.Creditor.Add(new Creditor
+                var c = new Creditor
                 {
                     username = "Ewa" + i,
                     ROI = roi,
@@ -30,6 +30,17 @@ namespace Repo.Controllers
                     Available = true,
                     Finapp_Balance = balance,
                     Queue_Date = DateTime.Now.AddMinutes(-i)
+                };
+
+                context.Creditor.Add(c);
+                context.SaveChanges();
+
+                context.Creditor_Account.Add(new Creditor_Account
+                {
+                    Creditor_Id = c.Creditor_Id,
+                    Balance = c.Balance,
+                    Expiration_Date = d,
+                    Min_Balance = 0
                 });
                 context.SaveChanges();
             }
@@ -42,7 +53,8 @@ namespace Repo.Controllers
                     eapr = 18;
                 var debet = rand.Next(1000, 50000);
                 DateTime d = DateTime.Now.AddDays(30);
-                context.Debtor.Add(new Debtor
+
+                var deb = new Debtor
                 {
                     username = "Adam" + i,
                     APR = apr,
@@ -51,37 +63,21 @@ namespace Repo.Controllers
                     Available = true,
                     Finapp_Debet = debet,
                     Queue_Date = DateTime.Now.AddMinutes(-i)
-                });
+                };
+                context.Debtor.Add(deb);
                 context.SaveChanges();
-            }
 
-            for (int i = 1; i <= 50; i++)
-            {
-                DateTime d = DateTime.Now.AddDays(30);
-                Debtor c = context.Debtor.Where(x => x.Debtor_Id == i+700).FirstOrDefault();
                 context.Debtor_Account.Add(new Debtor_Account
                 {
-                    Debtor_Id = i+700,
-                    Debet = c.Debet,
+                    Debtor_Id = deb.Debtor_Id,
+                    Debet = deb.Debet,
                     Expiration_Date = d,
                     Credit_Line_Date = d
                 });
                 context.SaveChanges();
             }
 
-            for (int i = 1; i <= 50; i++)
-            {
-                DateTime d = DateTime.Now.AddDays(30);
-                Creditor c = context.Creditor.Where(x => x.Creditor_Id == i + 700).FirstOrDefault();
-                context.Creditor_Account.Add(new Creditor_Account
-                {
-                    Creditor_Id = i + 700,
-                    Balance = c.Balance,
-                    Expiration_Date = d,
-                    Min_Balance = 0
-                });
-                context.SaveChanges();
-            }
+        
             return View();
         }
 
