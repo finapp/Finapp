@@ -12,11 +12,31 @@ namespace Finapp.Controllers
         // GET: CreateDB
         public ActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create()
+        {
             Creator create = new Creator();
+            var amountOfCreditors = Request["amountOfCreditors"];
+            var amountOfDebtors = Request["amountOfDebtors"];
 
-            create.CreateDB();
+            try
+            {
+                var creditors = int.Parse(amountOfCreditors);
+                var debtors = int.Parse(amountOfDebtors);
+                create.CreateDB(debtors, creditors);
+                return RedirectToAction("Index", "Debtor");
+            }
+            catch(Exception e)
+            {
+                ViewBag.ErrorMessage = "Please enter valid data";
+                return View("Index");
+            }
+            
 
-            return RedirectToAction("Index", "Debtor");
+
         }
     }
 }

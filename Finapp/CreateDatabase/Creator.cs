@@ -8,7 +8,7 @@ namespace Finapp.CreateDatabase
 {
     public class Creator
     {
-        public void CreateDB()
+        public void CreateDB(int amountOfDebtors, int amountOfCreditors)
         {
             FinapEntities1 context = new FinapEntities1();
 
@@ -20,7 +20,7 @@ namespace Finapp.CreateDatabase
             context.Database.ExecuteSqlCommand("Delete from [Creditor]");
             context.Database.ExecuteSqlCommand("Delete from [Debtor]");
 
-            for (int i = 1; i <= 50; i++)
+            for (int i = 1; i <= amountOfCreditors; i++)
             {
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(3, 8);
@@ -50,7 +50,7 @@ namespace Finapp.CreateDatabase
                 context.SaveChanges();
             }
 
-            for (int i = 1; i <= 50; i++)
+            for (int i = 1; i <= amountOfDebtors; i++)
             {
                 var apr = rand.Next(8, 30);
                 var eapr = rand.Next(3, apr - 2);

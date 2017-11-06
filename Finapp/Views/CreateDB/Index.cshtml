@@ -2,6 +2,28 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="text-center">
+    <h2>Set attributes</h2>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="alert-danger">@ViewBag.ErrorMessage</p>
+    }
+</div>
 
-<h2>Index</h2>
+<div class="text-center">
+    @using (Html.BeginForm("Create", "CreateDB", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
 
+        <fieldset>
+            <label for="amountOfDebtors">Amount of debtors</label><br/>
+            <input type="text" name="amountOfDebtors"/><br/>
+
+            <label for="amountOfCreditors">Amount of creditors</label><br/>
+            <input type="text" name="amountOfCreditors" /><br/><br/>
+
+            <input type="submit" value="Submit" class="btn btn-success"/>
+
+        </fieldset>
+    }
+</div>
