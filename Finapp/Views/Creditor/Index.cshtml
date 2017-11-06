@@ -19,7 +19,7 @@
                 <td>@user.EROI</td>
                 <td>@user.Balance</td>
                 <td>@user.FinappBalance</td>
-                <td>@Html.ActionLink("Details", "CreditorTransactions", "Transaction", new { username = user.Username}, null)</td>
+                <td>@Html.ActionLink("Show transactions", "CreditorTransactions", "Transaction", new { username = user.Username}, null)</td>
             </tr>
         }
     </tbody>

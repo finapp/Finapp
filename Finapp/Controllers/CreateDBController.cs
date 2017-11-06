@@ -34,9 +34,6 @@ namespace Finapp.Controllers
                 ViewBag.ErrorMessage = "Please enter valid data";
                 return View("Index");
             }
-            
-
-
         }
     }
 }
