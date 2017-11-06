@@ -49,7 +49,7 @@ namespace Finapp.Algorithm
             {
                 if (suma + creditor.Finapp_Balance <= debtor.Finapp_Debet && creditor.Available == true)
                 {
-                    suma += creditor.Balance;
+                    suma += creditor.Finapp_Balance;
 
                     debtor.Finapp_Debet -= creditor.Finapp_Balance;
                     _debtorService.ModifyDebtor(debtor);
