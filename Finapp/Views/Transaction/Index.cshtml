@@ -1,23 +1,5 @@
-﻿@model Finapp.ViewModels.TransactionOutListViewModel
-
+﻿
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Transactions</h2>
-<table class="table table-responsive table-striped">
-    <thead>
-        <th>Date</th><th>Amount</th><th>Creditor</th><th>Debtor</th>
-    </thead>
-    <tbody>
-        @foreach (var transaction in Model.List)
-        {
-            <tr>
-                <td>@transaction.Date</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.CreditorUsername</td>
-                <td>@transaction.DebtorUsername</td>
-            </tr>
-        }
-    </tbody>
-</table>

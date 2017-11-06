@@ -45,8 +45,8 @@ namespace Finapp.Services
         {
             try
             {
-                var debtor = _context.Creditor.Where(d => d.username == username).FirstOrDefault();
-                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == debtor.Creditor_Id).FirstOrDefault();
+                var debtor = _context.Debtor.Where(d => d.username == username).FirstOrDefault();
+                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == debtor.Debtor_Id).FirstOrDefault();
                 return account.Debtor_Account_Id;
             }
             catch (Exception e)

@@ -12,21 +12,15 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAlgorithms _algorithm;
         private readonly FinapEntities _context;
 
         public HomeController(IAlgorithms algorithm, FinapEntities context)
         {
-            _algorithm = algorithm;
             _context = context;
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            await Task.Run(() => _algorithm.Associating());
-
-
-
             return View();
         }
 

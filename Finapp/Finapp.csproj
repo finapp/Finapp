@@ -179,6 +179,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\CreditorController.cs" />
     <Compile Include="Controllers\DebtorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -311,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Algorithm\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
