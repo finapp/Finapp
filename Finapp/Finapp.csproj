@@ -180,10 +180,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlgorithmController.cs" />
+    <Compile Include="Controllers\CreateDBController.cs" />
     <Compile Include="Controllers\CreditorController.cs" />
     <Compile Include="Controllers\DebtorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="CreateDatabase\Creator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,39 +200,35 @@
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="IServices\ITransactionViewModelService.cs" />
     <Compile Include="Models\Creditor.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Creditor_Account.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\database_firewall_rules.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Debtor.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Debtor_Account.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>FinappDB.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Models\FinappDB.cs" />
-    <Compile Include="Models\FinappDB.Designer.cs">
+    <Compile Include="Models\FinappDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FinappDB.edmx</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinappDb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinappDb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDB1.cs" />
-    <Compile Include="Models\FinappDB2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinappDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Transaction_Out.cs">
-      <DependentUpon>FinappDB.tt</DependentUpon>
+      <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CreditorAccountService.cs" />
@@ -258,10 +256,12 @@
     <Content Include="Models\FinappDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FinappDB.Context.cs</LastGenOutput>
+      <DependentUpon>FinappDb.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\FinappDB.tt">
+    <Content Include="Models\FinappDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FinappDB2.cs</LastGenOutput>
+      <DependentUpon>FinappDb.edmx</DependentUpon>
+      <LastGenOutput>FinappDb.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
@@ -271,14 +271,14 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\FinappDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FinappDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\FinappDB.edmx.diagram">
-      <DependentUpon>FinappDB.edmx</DependentUpon>
-    </None>
     <Content Include="Scripts\angular.min.js.map" />
+    <EntityDeploy Include="Models\FinappDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FinappDb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\FinappDb.edmx.diagram">
+      <DependentUpon>FinappDb.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FinappAlgorithm - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -310,6 +310,7 @@
     <Content Include="Views\Creditor\Index.cshtml" />
     <Content Include="Views\Transaction\DebtorTransactions.cshtml" />
     <Content Include="Views\Transaction\CreditorTransactions.cshtml" />
+    <Content Include="Views\CreateDB\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

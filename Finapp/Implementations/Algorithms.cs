@@ -11,14 +11,14 @@ namespace Finapp.Implementations
 {
     public class Algorithms : IAlgorithms
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
         private readonly ITransactionOutService _transactionOutService;
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
 
-        public Algorithms(FinapEntities context, ICreditorService creditorService, IDebtorService debtorService,
+        public Algorithms(FinapEntities1 context, ICreditorService creditorService, IDebtorService debtorService,
             ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService,
             IDebtorAccountService debtorAccountService)
         {

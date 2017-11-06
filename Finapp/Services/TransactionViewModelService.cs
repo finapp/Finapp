@@ -10,13 +10,13 @@ namespace Finapp.Services
 {
     public class TransactionViewModelService : ITransactionViewModelService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
         private readonly IDebtorAccountService _debtorAccountService;
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorService _debtorService;
         private readonly ICreditorService _creditorService;
 
-        public TransactionViewModelService(FinapEntities context, IDebtorAccountService debtorAccountService, ICreditorAccountService creditorAccountService,
+        public TransactionViewModelService(FinapEntities1 context, IDebtorAccountService debtorAccountService, ICreditorAccountService creditorAccountService,
             IDebtorService debtorService, ICreditorService creditorService)
         {
             _context = context;

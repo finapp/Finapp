@@ -10,9 +10,9 @@ namespace Finapp.Services
 {
     public class CreditorService : ICreditorService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public CreditorService(FinapEntities context)
+        public CreditorService(FinapEntities1 context)
         {
             _context = context;
         }

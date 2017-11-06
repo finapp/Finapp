@@ -22,8 +22,8 @@ namespace Finapp.Models
     
         public int Creditor_Id { get; set; }
         public string username { get; set; }
-        public Nullable<float> ROI { get; set; }
-        public Nullable<float> EROI { get; set; }
+        public Nullable<double> ROI { get; set; }
+        public Nullable<double> EROI { get; set; }
         public int Balance { get; set; }
         public bool Available { get; set; }
         public int Finapp_Balance { get; set; }

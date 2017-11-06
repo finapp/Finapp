@@ -12,9 +12,9 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public HomeController(IAlgorithms algorithm, FinapEntities context)
+        public HomeController(IAlgorithms algorithm, FinapEntities1 context)
         {
             _context = context;
         }

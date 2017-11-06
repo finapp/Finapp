@@ -24,8 +24,8 @@ namespace Finapp.Models
         public string username { get; set; }
         public Nullable<float> APR { get; set; }
         public Nullable<float> EAPR { get; set; }
-        public int Debet { get; set; }
         public bool Available { get; set; }
+        public int Debet { get; set; }
         public int Finapp_Debet { get; set; }
         public Nullable<System.DateTime> Queue_Date { get; set; }
     

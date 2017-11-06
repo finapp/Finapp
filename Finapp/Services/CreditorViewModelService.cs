@@ -10,9 +10,9 @@ namespace Finapp.Services
 {
     public class CreditorViewModelService : ICreditorViewModelService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public CreditorViewModelService(FinapEntities context)
+        public CreditorViewModelService(FinapEntities1 context)
         {
             _context = context;
         }
@@ -28,8 +28,8 @@ namespace Finapp.Services
                 creditorViewModel.List.Add(new CreditorViewModel
                 {
                     Username = creditor.username,
-                    ROI = creditor.ROI,
-                    EROI = creditor.EROI,
+                    ROI = (float)creditor.ROI,
+                    EROI = (float)creditor.EROI,
                     Balance = creditor.Balance,
                     FinappBalance = creditor.Finapp_Balance
                 });

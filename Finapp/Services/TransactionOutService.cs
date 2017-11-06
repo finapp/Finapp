@@ -9,9 +9,9 @@ namespace Finapp.Services
 {
     public class TransactionOutService : ITransactionOutService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public TransactionOutService(FinapEntities context)
+        public TransactionOutService(FinapEntities1 context)
         {
             _context = context;
         }

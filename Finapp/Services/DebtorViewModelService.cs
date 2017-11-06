@@ -10,9 +10,9 @@ namespace Finapp.Services
 {
     public class DebtorViewModelService : IDebtorViewModelService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public DebtorViewModelService(FinapEntities context)
+        public DebtorViewModelService(FinapEntities1 context)
         {
             _context = context;
         }
