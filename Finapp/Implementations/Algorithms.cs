@@ -56,14 +56,17 @@ namespace Finapp.Implementations
             {
                 if (creditor.Finapp_Balance > debtor.Finapp_Debet)
                 {
-                    _transactionOutService.AddTransaction(new Transaction_Out
+                    var t_out = new Transaction_Out
                     {
                         Ammount = debtor.Finapp_Debet,
                         Date_Of_Transaction = DateTime.Now,
                         Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
                         Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
                         ROI = (float)EROI
-                    });
+                    };
+
+                    _transactionOutService.AddTransaction(t_out);
+                    _returnTransactionService.AddReturnTransaction(t_out);
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
                     _creditorService.ModifyCreditor(creditor);
@@ -76,14 +79,17 @@ namespace Finapp.Implementations
                 }
                 else
                 {
-                    _transactionOutService.AddTransaction(new Transaction_Out
+                    var t_out = new Transaction_Out
                     {
                         Ammount = creditor.Finapp_Balance,
                         Date_Of_Transaction = DateTime.Now,
                         Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
                         Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
                         ROI = (float)EROI
-                    });
+                    };
+
+                    _transactionOutService.AddTransaction(t_out);
+                    _returnTransactionService.AddReturnTransaction(t_out);
 
                     debtor.Finapp_Debet -= creditor.Finapp_Balance;
                     _debtorService.ModifyDebtor(debtor);
