@@ -47,7 +47,7 @@ namespace Finapp.Algorithm
 
             foreach (var creditor in availablesCreditors)
             {
-                if (suma + creditor.Finapp_Balance <= debtor.Finapp_Debet && creditor.Available == true)
+                if (suma + creditor.Finapp_Balance <= debtor.Debet && creditor.Available == true)
                 {
                     suma += creditor.Finapp_Balance;
 
@@ -65,7 +65,7 @@ namespace Finapp.Algorithm
                 }
                 else if (creditor.Available == true)
                 {
-                    var a = debtor.Finapp_Debet - suma;
+                    var a = debtor.Debet- suma;
                     creditor.Finapp_Balance -= a;
                     _creditorService.ModifyCreditor(creditor);
 
