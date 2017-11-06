@@ -65,11 +65,11 @@ namespace Finapp.Algorithm
                 }
                 else if (creditor.Available == true)
                 {
-                    var a = debtor.Debet- suma;
+                    var a = debtor.Debet - suma;
                     creditor.Finapp_Balance -= a;
                     _creditorService.ModifyCreditor(creditor);
 
-                    CreateTransactionOut(debtor, creditor, debtor.Finapp_Debet - suma);
+                    CreateTransactionOut(debtor, creditor, a);
 
                     debtor.Finapp_Debet = 0;
                     _debtorService.ModifyDebtor(debtor);
