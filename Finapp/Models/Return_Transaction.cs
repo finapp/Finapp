@@ -12,24 +12,18 @@ namespace Finapp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction_Out
+    public partial class Return_Transaction
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Transaction_Out()
-        {
-            this.Return_Transaction = new HashSet<Return_Transaction>();
-        }
-    
+        public int Id { get; set; }
         public int Transaction_Out_Id { get; set; }
-        public int Ammount { get; set; }
-        public Nullable<System.DateTime> Date_Of_Transaction { get; set; }
-        public int Creditor_Account_Id { get; set; }
+        public int Amount { get; set; }
+        public System.DateTime Execution_Date { get; set; }
         public int Debtor_Account_Id { get; set; }
-        public Nullable<float> ROI { get; set; }
+        public int Creditor_Account_Id { get; set; }
+        public string Return_Transaction_Status { get; set; }
     
         public virtual Creditor_Account Creditor_Account { get; set; }
         public virtual Debtor_Account Debtor_Account { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Return_Transaction> Return_Transaction { get; set; }
+        public virtual Transaction_Out Transaction_Out { get; set; }
     }
 }

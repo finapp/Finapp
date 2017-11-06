@@ -51,6 +51,18 @@
           <Property Name="Expiration_Date" Type="date" />
           <Property Name="Credit_Line_Date" Type="date" />
         </EntityType>
+        <EntityType Name="Return_Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transaction_Out_Id" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Execution_Date" Type="date" Nullable="false" />
+          <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="Return_Transaction_Status" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
             <PropertyRef Name="Transaction_Out_Id" />
@@ -86,6 +98,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk1">
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction_Out">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
@@ -115,6 +163,7 @@
           <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Return_Transaction" EntityType="Self.Return_Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="aasassasa" Association="Self.aasassasa">
             <End Role="Creditor_Account" EntitySet="Creditor_Account" />
@@ -123,6 +172,18 @@
           <AssociationSet Name="asasa" Association="Self.asasa">
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="fk1" Association="Self.fk1">
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
           </AssociationSet>
           <AssociationSet Name="fkfkfsasdd" Association="Self.fkfkfsasdd">
             <End Role="Creditor" EntitySet="Creditor" />
@@ -162,6 +223,7 @@
           <Property Name="Expiration_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Creditor" Relationship="Self.fkfkfsasdd" FromRole="Creditor_Account" ToRole="Creditor" />
           <NavigationProperty Name="Transaction_Out" Relationship="Self.aasassasa" FromRole="Creditor_Account" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk3" FromRole="Creditor_Account" ToRole="Return_Transaction" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -188,6 +250,7 @@
           <Property Name="Credit_Line_Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Debtor" Relationship="Self.fkfkfsd" FromRole="Debtor_Account" ToRole="Debtor" />
           <NavigationProperty Name="Transaction_Out" Relationship="Self.asasa" FromRole="Debtor_Account" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk2" FromRole="Debtor_Account" ToRole="Return_Transaction" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -201,6 +264,7 @@
           <NavigationProperty Name="Creditor_Account" Relationship="Self.aasassasa" FromRole="Transaction_Out" ToRole="Creditor_Account" />
           <NavigationProperty Name="Debtor_Account" Relationship="Self.asasa" FromRole="Transaction_Out" ToRole="Debtor_Account" />
           <Property Name="ROI" Type="Single" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk1" FromRole="Transaction_Out" ToRole="Return_Transaction" />
         </EntityType>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
@@ -272,7 +336,71 @@
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
+          <EntitySet Name="Return_Transaction" EntityType="FinapModel.Return_Transaction" />
+          <AssociationSet Name="fk3" Association="FinapModel.fk3">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="FinapModel.fk2">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk1" Association="FinapModel.fk1">
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Return_Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transaction_Out_Id" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Execution_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Return_Transaction_Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Creditor_Account" Relationship="FinapModel.fk3" FromRole="Return_Transaction" ToRole="Creditor_Account" />
+          <NavigationProperty Name="Debtor_Account" Relationship="FinapModel.fk2" FromRole="Return_Transaction" ToRole="Debtor_Account" />
+          <NavigationProperty Name="Transaction_Out" Relationship="FinapModel.fk1" FromRole="Return_Transaction" ToRole="Transaction_Out" />
+        </EntityType>
+        <Association Name="fk3">
+          <End Type="FinapModel.Creditor_Account" Role="Creditor_Account" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Type="FinapModel.Debtor_Account" Role="Debtor_Account" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1">
+          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction_Out">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -338,6 +466,19 @@
                 <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />
                 <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
                 <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Return_Transaction">
+            <EntityTypeMapping TypeName="FinapModel.Return_Transaction">
+              <MappingFragment StoreEntitySet="Return_Transaction">
+                <ScalarProperty Name="Return_Transaction_Status" ColumnName="Return_Transaction_Status" />
+                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
+                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+                <ScalarProperty Name="Execution_Date" ColumnName="Execution_Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

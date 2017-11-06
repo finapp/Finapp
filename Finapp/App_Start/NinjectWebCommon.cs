@@ -75,6 +75,7 @@ namespace Finapp.App_Start
             kernel.Bind<ICreditorViewModelService>().To<CreditorViewModelService>().InRequestScope();
             kernel.Bind<ITransactionViewModelService>().To<TransactionViewModelService>().InRequestScope();
             kernel.Bind<ICreator>().To<Creator>().InRequestScope();
+            kernel.Bind<IReturnTransactionService>().To<ReturnTransactionService>().InRequestScope();
         }
     }
 }

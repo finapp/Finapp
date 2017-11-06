@@ -18,6 +18,7 @@ namespace Finapp.Models
         public Creditor_Account()
         {
             this.Transaction_Out = new HashSet<Transaction_Out>();
+            this.Return_Transaction = new HashSet<Return_Transaction>();
         }
     
         public int Creditor_Account_Id { get; set; }
@@ -29,5 +30,7 @@ namespace Finapp.Models
         public virtual Creditor Creditor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction_Out> Transaction_Out { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Return_Transaction> Return_Transaction { get; set; }
     }
 }

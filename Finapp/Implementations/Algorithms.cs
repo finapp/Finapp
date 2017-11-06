@@ -17,10 +17,11 @@ namespace Finapp.Implementations
         private readonly ITransactionOutService _transactionOutService;
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
+        private readonly IReturnTransactionService _returnTransactionService;
 
         public Algorithms(FinapEntities1 context, ICreditorService creditorService, IDebtorService debtorService,
             ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService,
-            IDebtorAccountService debtorAccountService)
+            IDebtorAccountService debtorAccountService, IReturnTransactionService returnTransactionService)
         {
             _context = context;
             _creditorService = creditorService;
@@ -28,6 +29,7 @@ namespace Finapp.Implementations
             _transactionOutService = transactionOutService;
             _creditorAccountService = creditorAccountService;
             _debtorAccountService = debtorAccountService;
+            _returnTransactionService = returnTransactionService;
         }
 
         public bool Associating()

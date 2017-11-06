@@ -14,6 +14,10 @@
         <AssociationConnector Association="FinapModel.aasassasa" ManuallyRouted="false" />
         <AssociationConnector Association="FinapModel.fkfkfsd" ManuallyRouted="false" />
         <AssociationConnector Association="FinapModel.asasa" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FinapModel.Return_Transaction" Width="1.5" PointX="7.5" PointY="2.875" />
+        <AssociationConnector Association="FinapModel.fk3" />
+        <AssociationConnector Association="FinapModel.fk2" />
+        <AssociationConnector Association="FinapModel.fk1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

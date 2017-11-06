@@ -198,6 +198,7 @@
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
+    <Compile Include="IServices\IReturnTransactionService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="IServices\ITransactionViewModelService.cs" />
     <Compile Include="Models\Creditor.cs">
@@ -228,6 +229,9 @@
       <DependentUpon>FinappDb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDB1.cs" />
+    <Compile Include="Models\Return_Transaction.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transaction_Out.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
@@ -238,6 +242,7 @@
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
+    <Compile Include="Services\ReturnTransactionService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="Services\TransactionViewModelService.cs" />
     <Compile Include="ViewModels\CreditorListViewModel.cs" />
