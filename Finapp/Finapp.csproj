@@ -189,6 +189,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ICreateDatabase\ICreator.cs" />
     <Compile Include="Implementations\Algorithms.cs" />
     <Compile Include="Interfaces\IAlgorithms.cs" />
     <Compile Include="IServices\ICreditorViewModelService.cs" />

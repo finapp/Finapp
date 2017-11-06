@@ -1,4 +1,5 @@
 ﻿using Finapp.CreateDatabase;
+using Finapp.ICreateDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace Finapp.Controllers
 {
     public class CreateDBController : Controller
     {
+        private readonly ICreator _creator;
+
+        public CreateDBController(ICreator creator)
+        {
+            _creator = creator;
+        }
+
         // GET: CreateDB
         public ActionResult Index()
         {
@@ -18,7 +26,6 @@ namespace Finapp.Controllers
         [HttpPost]
         public ActionResult Create()
         {
-            Creator create = new Creator();
             var amountOfCreditors = Request["amountOfCreditors"];
             var amountOfDebtors = Request["amountOfDebtors"];
 
@@ -26,7 +33,8 @@ namespace Finapp.Controllers
             {
                 var creditors = int.Parse(amountOfCreditors);
                 var debtors = int.Parse(amountOfDebtors);
-                create.CreateDB(debtors, creditors);
+                _creator.CreateDB(debtors, creditors);
+
                 return RedirectToAction("Index", "Debtor");
             }
             catch(Exception e)

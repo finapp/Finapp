@@ -18,6 +18,8 @@ namespace Finapp.App_Start
     using Finapp.Services;
     using Finapp.Interfaces;
     using Finapp.Implementations;
+    using Finapp.CreateDatabase;
+    using Finapp.ICreateDatabase;
 
     public static class NinjectWebCommon
     {
@@ -72,6 +74,7 @@ namespace Finapp.App_Start
             kernel.Bind<IDebtorViewModelService>().To<DebtorViewModelService>().InRequestScope();
             kernel.Bind<ICreditorViewModelService>().To<CreditorViewModelService>().InRequestScope();
             kernel.Bind<ITransactionViewModelService>().To<TransactionViewModelService>().InRequestScope();
+            kernel.Bind<ICreator>().To<Creator>().InRequestScope();
         }
     }
 }
