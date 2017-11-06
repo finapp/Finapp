@@ -39,7 +39,8 @@ namespace Finapp.Services
                     Amount = transaction.Ammount,
                     Date = transaction.Date_Of_Transaction,
                     DebtorUsername = _debtorService.GetDebtorUsernameById(_debtorAccountService.GetDebtorIdByAccountId(transaction.Debtor_Account_Id)),
-                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id))
+                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id)),
+                    ROI = (float)transaction.ROI
                 });
             }
 
@@ -59,7 +60,8 @@ namespace Finapp.Services
                     Amount = transaction.Ammount,
                     Date = transaction.Date_Of_Transaction,
                     DebtorUsername = _debtorService.GetDebtorUsernameById(_debtorAccountService.GetDebtorIdByAccountId(transaction.Debtor_Account_Id)),
-                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id))
+                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id)),
+                    ROI = (float)transaction.ROI
                 });
             }
 
@@ -79,7 +81,8 @@ namespace Finapp.Services
                     Amount = transaction.Ammount,
                     Date = transaction.Date_Of_Transaction,
                     DebtorUsername = _debtorService.GetDebtorUsernameById(_debtorAccountService.GetDebtorIdByAccountId(transaction.Debtor_Account_Id)),
-                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id))
+                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id)),
+                    ROI = (float)transaction.ROI
                 });
             }
 
@@ -99,7 +102,8 @@ namespace Finapp.Services
                     Amount = transaction.Ammount,
                     Date = transaction.Date_Of_Transaction,
                     DebtorUsername = _debtorService.GetDebtorUsernameById(_debtorAccountService.GetDebtorIdByAccountId(transaction.Debtor_Account_Id)),
-                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id))
+                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id)),
+                    ROI = (float)transaction.ROI
                 });
             }
 
@@ -119,7 +123,8 @@ namespace Finapp.Services
                     Amount = transaction.Ammount,
                     Date = transaction.Date_Of_Transaction,
                     DebtorUsername = _debtorService.GetDebtorUsernameById(_debtorAccountService.GetDebtorIdByAccountId(transaction.Debtor_Account_Id)),
-                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id))
+                    CreditorUsername = _creditorService.GetCreditorUsernameById(_creditorAccountService.GetCreditorIdByAccountId(transaction.Creditor_Account_Id)),
+                    ROI = (float)transaction.ROI
                 });
             }
 

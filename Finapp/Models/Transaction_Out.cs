@@ -19,6 +19,7 @@ namespace Finapp.Models
         public Nullable<System.DateTime> Date_Of_Transaction { get; set; }
         public int Creditor_Account_Id { get; set; }
         public int Debtor_Account_Id { get; set; }
+        public Nullable<float> ROI { get; set; }
     
         public virtual Creditor_Account Creditor_Account { get; set; }
         public virtual Debtor_Account Debtor_Account { get; set; }

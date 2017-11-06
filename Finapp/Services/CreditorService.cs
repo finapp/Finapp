@@ -56,11 +56,11 @@ namespace Finapp.Services
             }
         }
 
-        public IEnumerable<Creditor> GetAvailableCreditors()
+        public IEnumerable<Creditor> GetAvailableCreditors(float eapr)
         {
             try
             {
-                return _context.Creditor.Where(c => c.Available == true)
+                return _context.Creditor.Where(c => c.Available == true && eapr>c.EROI)
                     .ToList();
             }
             catch(Exception e)

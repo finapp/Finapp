@@ -11,6 +11,7 @@
     <th>Amount</th>
     <th>Creditor</th>
     <th>Debtor</th>
+    <th>ROI</th>
     </thead>
     <tbody>
         @foreach (var transaction in Model.List)
@@ -20,6 +21,7 @@
                 <td>@transaction.Amount</td>
                 <td>@transaction.CreditorUsername</td>
                 <td>@transaction.DebtorUsername</td>
+                <td>@transaction.ROI</td>
             </tr>
         }
     </tbody>

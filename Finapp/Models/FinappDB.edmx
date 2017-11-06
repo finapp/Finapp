@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Creditor">
           <Key>
             <PropertyRef Name="Creditor_Id" />
@@ -60,6 +60,7 @@
           <Property Name="Date_Of_Transaction" Type="date" />
           <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
           <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="ROI" Type="real" />
         </EntityType>
         <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
@@ -132,8 +133,7 @@
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FinapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -200,6 +200,7 @@
           <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Creditor_Account" Relationship="Self.aasassasa" FromRole="Transaction_Out" ToRole="Creditor_Account" />
           <NavigationProperty Name="Debtor_Account" Relationship="Self.asasa" FromRole="Transaction_Out" ToRole="Debtor_Account" />
+          <Property Name="ROI" Type="Single" />
         </EntityType>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
@@ -331,6 +332,7 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
                 <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
                 <ScalarProperty Name="Ammount" ColumnName="Ammount" />
                 <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />

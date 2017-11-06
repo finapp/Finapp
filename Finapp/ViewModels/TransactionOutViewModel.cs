@@ -11,5 +11,6 @@ namespace Finapp.ViewModels
         public DateTime? Date { get; set; }
         public string CreditorUsername { get; set; }
         public string DebtorUsername { get; set; }
+        public float ROI { get; set; }
     }
 }
