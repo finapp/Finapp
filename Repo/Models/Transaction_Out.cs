@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Finapp.Models
+namespace Repo.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class database_firewall_rules
+    public partial class Transaction_Out
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string start_ip_address { get; set; }
-        public string end_ip_address { get; set; }
-        public System.DateTime create_date { get; set; }
-        public System.DateTime modify_date { get; set; }
+        public int Transaction_Out_Id { get; set; }
+        public int Ammount { get; set; }
+        public Nullable<System.DateTime> Date_Of_Transaction { get; set; }
+        public int Creditor_Account_Id { get; set; }
+        public int Debtor_Account_Id { get; set; }
+    
+        public virtual Creditor_Account Creditor_Account { get; set; }
+        public virtual Debtor_Account Debtor_Account { get; set; }
     }
 }

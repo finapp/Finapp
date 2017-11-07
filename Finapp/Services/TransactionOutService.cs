@@ -1,36 +1,55 @@
-﻿using Finapp.Interfaces;
+﻿using Finapp.IServices;
+using Finapp.Models;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
-using Finapp.Models;
 
 namespace Finapp.Services
 {
-    public class TransactionOutService : ITransactionOut
+    public class TransactionOutService : ITransactionOutService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public TransactionOutService(FinapEntities context)
+        public TransactionOutService(FinapEntities1 context)
         {
             _context = context;
         }
 
-        public bool CreateTransaction(Transaction_Out newTransaction)
+        public bool AddTransaction(Transaction_Out transaction)
         {
-
             try
             {
-                _context.Transaction_Out.Add(newTransaction);
+                _context.Transaction_Out.Add(transaction);
                 _context.SaveChanges();
 
                 return true;
-
             }
             catch(Exception e)
             {
-                throw;
+                return false;
+            }
+        }
+
+        public bool AddTransaction(int amount, DateTime date, int creditorAccountId, int debtorAccountId)
+        {
+            try
+            {
+                _context.Transaction_Out.Add(new Transaction_Out
+                {
+                    Ammount = amount,
+                    Date_Of_Transaction = date,
+                    Creditor_Account_Id = creditorAccountId,
+                    Debtor_Account_Id = debtorAccountId
+                });
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
             }
         }
     }

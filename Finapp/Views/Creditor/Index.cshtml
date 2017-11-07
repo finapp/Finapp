@@ -1,0 +1,26 @@
+﻿@model  Finapp.ViewModels.CreditorListViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Creditors</h2>
+@Html.ActionLink("Refresh", "Index", "Creditor")
+
+<table class="table table-responsive table-striped">
+    <thead>
+        <th>Username</th><th>ROI</th><th>EROI</th><th>Balance</th><th>FinApp balance</th><th>Details</th>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.List)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.ROI</td>
+                <td>@user.EROI</td>
+                <td>@user.Balance</td>
+                <td>@user.FinappBalance</td>
+                <td>@Html.ActionLink("Show transactions", "CreditorTransactions", "Transaction", new { username = user.Username}, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

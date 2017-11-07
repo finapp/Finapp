@@ -14,9 +14,12 @@ namespace Finapp.App_Start
     using Ninject.Web.WebApi;
     using Ninject.Web.Common.WebHost;
     using Finapp.Models;
-    using Finapp.Interfaces;
+    using Finapp.IServices;
     using Finapp.Services;
-    using Finapp.Algorithm;
+    using Finapp.Interfaces;
+    using Finapp.Implementations;
+    using Finapp.CreateDatabase;
+    using Finapp.ICreateDatabase;
 
     public static class NinjectWebCommon
     {
@@ -61,14 +64,18 @@ namespace Finapp.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<FinapEntities>().ToSelf().InRequestScope();
-            kernel.Bind<ICreditor>().To<CreditorService>().InRequestScope();
-            kernel.Bind<IDebtor>().To<DebtorService>().InRequestScope();
-            kernel.Bind<IAlgorithm>().To<Algorithm>().InRequestScope();
-            kernel.Bind<ITransactionOut>().To<TransactionOutService>().InRequestScope();
-            kernel.Bind<IDebtorAccount>().To<DebtorAccountService>().InRequestScope();
-            kernel.Bind<ICreditorAccount>().To<CreditorAccountService>().InRequestScope();
-
+            kernel.Bind<FinapEntities1>().ToSelf().InRequestScope();
+            kernel.Bind<ICreditorAccountService>().To<CreditorAccountService>().InRequestScope();
+            kernel.Bind<IDebtorAccountService>().To<DebtorAccountService>().InRequestScope();
+            kernel.Bind<IDebtorService>().To<DebtorService>().InRequestScope();
+            kernel.Bind<ICreditorService>().To<CreditorService>().InRequestScope();
+            kernel.Bind<IAlgorithms>().To<Algorithms>().InRequestScope();
+            kernel.Bind<ITransactionOutService>().To<TransactionOutService>().InRequestScope();
+            kernel.Bind<IDebtorViewModelService>().To<DebtorViewModelService>().InRequestScope();
+            kernel.Bind<ICreditorViewModelService>().To<CreditorViewModelService>().InRequestScope();
+            kernel.Bind<ITransactionViewModelService>().To<TransactionViewModelService>().InRequestScope();
+            kernel.Bind<ICreator>().To<Creator>().InRequestScope();
+            kernel.Bind<IReturnTransactionService>().To<ReturnTransactionService>().InRequestScope();
         }
     }
 }

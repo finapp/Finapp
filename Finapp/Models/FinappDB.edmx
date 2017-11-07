@@ -11,8 +11,8 @@
           </Key>
           <Property Name="Creditor_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="20" />
-          <Property Name="ROI" Type="real" />
-          <Property Name="EROI" Type="real" />
+          <Property Name="ROI" Type="float" />
+          <Property Name="EROI" Type="float" />
           <Property Name="Balance" Type="int" Nullable="false" />
           <Property Name="Available" Type="bit" Nullable="false" />
           <Property Name="Finapp_Balance" Type="int" Nullable="false" />
@@ -25,21 +25,21 @@
           <Property Name="Creditor_Account_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Creditor_Id" Type="int" Nullable="false" />
           <Property Name="Balance" Type="int" Nullable="false" />
-          <Property Name="Expiration_Date" Type="date" />
           <Property Name="Min_Balance" Type="int" />
+          <Property Name="Expiration_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
             <PropertyRef Name="Debtor_Id" />
           </Key>
           <Property Name="Debtor_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="nvarchar" MaxLength="20" />
+          <Property Name="username" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="APR" Type="real" />
           <Property Name="EAPR" Type="real" />
-          <Property Name="Debet" Type="int" Nullable="false" />
           <Property Name="Available" Type="bit" Nullable="false" />
+          <Property Name="Debet" Type="int" Nullable="false" />
           <Property Name="Finapp_Debet" Type="int" Nullable="false" />
-          <Property Name="Queue_Date" Type="datetime" />
+          <Property Name="Queue_Date" Type="date" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -51,6 +51,18 @@
           <Property Name="Expiration_Date" Type="date" />
           <Property Name="Credit_Line_Date" Type="date" />
         </EntityType>
+        <EntityType Name="Return_Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transaction_Out_Id" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Execution_Date" Type="date" Nullable="false" />
+          <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="Return_Transaction_Status" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
             <PropertyRef Name="Transaction_Out_Id" />
@@ -60,62 +72,9 @@
           <Property Name="Date_Of_Transaction" Type="date" />
           <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
           <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
+          <Property Name="ROI" Type="real" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="database_firewall_rules">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="create_date" Type="datetime" Nullable="false" />
-          <Property Name="modify_date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <Association Name="ss">
-          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
-          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Debtor">
-              <PropertyRef Name="Debtor_Id" />
-            </Principal>
-            <Dependent Role="Debtor_Account">
-              <PropertyRef Name="Debtor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ss2">
-          <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
-          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Creditor">
-              <PropertyRef Name="Creditor_Id" />
-            </Principal>
-            <Dependent Role="Creditor_Account">
-              <PropertyRef Name="Creditor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ss4">
-          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
-          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Debtor_Account">
-              <PropertyRef Name="Debtor_Account_Id" />
-            </Principal>
-            <Dependent Role="Transaction_Out">
-              <PropertyRef Name="Debtor_Account_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ss5">
+        <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
           <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
@@ -127,37 +86,112 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="asasa">
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1">
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction_Out">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
+          <End Role="Return_Transaction" Type="Self.Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkfkfsasdd">
+          <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
+          <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor">
+              <PropertyRef Name="Creditor_Id" />
+            </Principal>
+            <Dependent Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkfkfsd">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FinapModelStoreContainer">
           <EntitySet Name="Creditor" EntityType="Self.Creditor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Return_Transaction" EntityType="Self.Return_Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
-            <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="ss" Association="Self.ss">
-            <End Role="Debtor" EntitySet="Debtor" />
-            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+          <AssociationSet Name="aasassasa" Association="Self.aasassasa">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
-          <AssociationSet Name="ss2" Association="Self.ss2">
+          <AssociationSet Name="asasa" Association="Self.asasa">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="fk1" Association="Self.fk1">
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fkfkfsasdd" Association="Self.fkfkfsasdd">
             <End Role="Creditor" EntitySet="Creditor" />
             <End Role="Creditor_Account" EntitySet="Creditor_Account" />
           </AssociationSet>
-          <AssociationSet Name="ss4" Association="Self.ss4">
+          <AssociationSet Name="fkfkfsd" Association="Self.fkfkfsd">
+            <End Role="Debtor" EntitySet="Debtor" />
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
-          </AssociationSet>
-          <AssociationSet Name="ss5" Association="Self.ss5">
-            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -170,13 +204,13 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
           </Key>
           <Property Name="Creditor_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ROI" Type="Single" />
-          <Property Name="EROI" Type="Single" />
-          <NavigationProperty Name="Creditor_Account" Relationship="Self.ss2" FromRole="Creditor" ToRole="Creditor_Account" />
+          <Property Name="ROI" Type="Double" />
+          <Property Name="EROI" Type="Double" />
           <Property Name="Balance" Type="Int32" Nullable="false" />
           <Property Name="Available" Type="Boolean" Nullable="false" />
           <Property Name="Finapp_Balance" Type="Int32" Nullable="false" />
           <Property Name="Queue_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Creditor_Account" Relationship="Self.fkfkfsasdd" FromRole="Creditor" ToRole="Creditor_Account" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -185,24 +219,25 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
           <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Creditor_Id" Type="Int32" Nullable="false" />
           <Property Name="Balance" Type="Int32" Nullable="false" />
-          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
           <Property Name="Min_Balance" Type="Int32" />
-          <NavigationProperty Name="Creditor" Relationship="Self.ss2" FromRole="Creditor_Account" ToRole="Creditor" />
-          <NavigationProperty Name="Transaction_Out" Relationship="Self.ss5" FromRole="Creditor_Account" ToRole="Transaction_Out" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Creditor" Relationship="Self.fkfkfsasdd" FromRole="Creditor_Account" ToRole="Creditor" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.aasassasa" FromRole="Creditor_Account" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk3" FromRole="Creditor_Account" ToRole="Return_Transaction" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
             <PropertyRef Name="Debtor_Id" />
           </Key>
           <Property Name="Debtor_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="APR" Type="Single" />
           <Property Name="EAPR" Type="Single" />
-          <NavigationProperty Name="Debtor_Account" Relationship="Self.ss" FromRole="Debtor" ToRole="Debtor_Account" />
-          <Property Name="Debet" Type="Int32" Nullable="false" />
           <Property Name="Available" Type="Boolean" Nullable="false" />
+          <Property Name="Debet" Type="Int32" Nullable="false" />
           <Property Name="Finapp_Debet" Type="Int32" Nullable="false" />
-          <Property Name="Queue_Date" Type="DateTime" Precision="3" />
+          <Property Name="Queue_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Debtor_Account" Relationship="Self.fkfkfsd" FromRole="Debtor" ToRole="Debtor_Account" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -213,8 +248,9 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
           <Property Name="Debet" Type="Int32" Nullable="false" />
           <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
           <Property Name="Credit_Line_Date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Debtor" Relationship="Self.ss" FromRole="Debtor_Account" ToRole="Debtor" />
-          <NavigationProperty Name="Transaction_Out" Relationship="Self.ss4" FromRole="Debtor_Account" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Debtor" Relationship="Self.fkfkfsd" FromRole="Debtor_Account" ToRole="Debtor" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.asasa" FromRole="Debtor_Account" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk2" FromRole="Debtor_Account" ToRole="Return_Transaction" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -225,10 +261,12 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
           <Property Name="Date_Of_Transaction" Type="DateTime" Precision="0" />
           <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
           <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Creditor_Account" Relationship="Self.ss5" FromRole="Transaction_Out" ToRole="Creditor_Account" />
-          <NavigationProperty Name="Debtor_Account" Relationship="Self.ss4" FromRole="Transaction_Out" ToRole="Debtor_Account" />
+          <NavigationProperty Name="Creditor_Account" Relationship="Self.aasassasa" FromRole="Transaction_Out" ToRole="Creditor_Account" />
+          <NavigationProperty Name="Debtor_Account" Relationship="Self.asasa" FromRole="Transaction_Out" ToRole="Debtor_Account" />
+          <Property Name="ROI" Type="Single" />
+          <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk1" FromRole="Transaction_Out" ToRole="Return_Transaction" />
         </EntityType>
-        <Association Name="ss2">
+        <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -240,7 +278,7 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ss5">
+        <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
           <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
@@ -252,7 +290,7 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ss">
+        <Association Name="fkfkfsd">
           <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
           <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -264,7 +302,7 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ss4">
+        <Association Name="asasa">
           <End Role="Debtor_Account" Type="Self.Debtor_Account" Multiplicity="1" />
           <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
@@ -276,63 +314,110 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FinapEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Creditor" EntityType="Self.Creditor" />
           <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" />
-          <AssociationSet Name="ss2" Association="Self.ss2">
+          <AssociationSet Name="fkfkfsasdd" Association="Self.fkfkfsasdd">
             <End Role="Creditor" EntitySet="Creditor" />
             <End Role="Creditor_Account" EntitySet="Creditor_Account" />
           </AssociationSet>
-          <AssociationSet Name="ss5" Association="Self.ss5">
+          <AssociationSet Name="aasassasa" Association="Self.aasassasa">
             <End Role="Creditor_Account" EntitySet="Creditor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
-          <AssociationSet Name="ss" Association="Self.ss">
+          <AssociationSet Name="fkfkfsd" Association="Self.fkfkfsd">
             <End Role="Debtor" EntitySet="Debtor" />
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
           </AssociationSet>
-          <AssociationSet Name="ss4" Association="Self.ss4">
+          <AssociationSet Name="asasa" Association="Self.asasa">
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
-          <EntitySet Name="database_firewall_rules" EntityType="FinapModel.database_firewall_rules" />
+          <EntitySet Name="Return_Transaction" EntityType="FinapModel.Return_Transaction" />
+          <AssociationSet Name="fk3" Association="FinapModel.fk3">
+            <End Role="Creditor_Account" EntitySet="Creditor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="FinapModel.fk2">
+            <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk1" Association="FinapModel.fk1">
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+            <End Role="Return_Transaction" EntitySet="Return_Transaction" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="database_firewall_rules">
+        <EntityType Name="Return_Transaction">
           <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transaction_Out_Id" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Execution_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Return_Transaction_Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Creditor_Account" Relationship="FinapModel.fk3" FromRole="Return_Transaction" ToRole="Creditor_Account" />
+          <NavigationProperty Name="Debtor_Account" Relationship="FinapModel.fk2" FromRole="Return_Transaction" ToRole="Debtor_Account" />
+          <NavigationProperty Name="Transaction_Out" Relationship="FinapModel.fk1" FromRole="Return_Transaction" ToRole="Transaction_Out" />
         </EntityType>
+        <Association Name="fk3">
+          <End Type="FinapModel.Creditor_Account" Role="Creditor_Account" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor_Account">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Creditor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Type="FinapModel.Debtor_Account" Role="Debtor_Account" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor_Account">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1">
+          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="1" />
+          <End Type="FinapModel.Return_Transaction" Role="Return_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction_Out">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Principal>
+            <Dependent Role="Return_Transaction">
+              <PropertyRef Name="Transaction_Out_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FinapModelStoreContainer" CdmEntityContainer="FinapEntities">
+        <EntityContainerMapping StorageEntityContainer="FinapModelStoreContainer" CdmEntityContainer="FinapEntities1">
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
-                <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
-                <ScalarProperty Name="Finapp_Balance" ColumnName="Finapp_Balance" />
-                <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="ROI" ColumnName="ROI" />
                 <ScalarProperty Name="EROI" ColumnName="EROI" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Finapp_Balance" ColumnName="Finapp_Balance" />
+                <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -342,22 +427,22 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
                 <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Min_Balance" ColumnName="Min_Balance" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
-                <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
-                <ScalarProperty Name="Finapp_Debet" ColumnName="Finapp_Debet" />
-                <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="Debet" ColumnName="Debet" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="APR" ColumnName="APR" />
                 <ScalarProperty Name="EAPR" ColumnName="EAPR" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Debet" ColumnName="Debet" />
+                <ScalarProperty Name="Finapp_Debet" ColumnName="Finapp_Debet" />
+                <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -375,6 +460,7 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
                 <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
                 <ScalarProperty Name="Ammount" ColumnName="Ammount" />
                 <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />
@@ -383,15 +469,16 @@ warning 6002: The table/view 'Finap.sys.database_firewall_rules' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="database_firewall_rules">
-            <EntityTypeMapping TypeName="FinapModel.database_firewall_rules">
-              <MappingFragment StoreEntitySet="database_firewall_rules">
-                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+          <EntitySetMapping Name="Return_Transaction">
+            <EntityTypeMapping TypeName="FinapModel.Return_Transaction">
+              <MappingFragment StoreEntitySet="Return_Transaction">
+                <ScalarProperty Name="Return_Transaction_Status" ColumnName="Return_Transaction_Status" />
+                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
+                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+                <ScalarProperty Name="Execution_Date" ColumnName="Execution_Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

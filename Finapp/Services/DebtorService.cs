@@ -1,5 +1,6 @@
-﻿using Finapp.Interfaces;
+﻿using Finapp.IServices;
 using Finapp.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,13 +9,62 @@ using System.Web;
 
 namespace Finapp.Services
 {
-    public class DebtorService : IDebtor
+    public class DebtorService : IDebtorService
     {
-        private readonly FinapEntities _context;
+        private readonly FinapEntities1 _context;
 
-        public DebtorService(FinapEntities context)
+        public DebtorService(FinapEntities1 context)
         {
             _context = context;
+        }
+
+        public IEnumerable<Debtor> GetAllDebtors()
+        {
+            try
+            {
+                return _context.Debtor.ToList(); ;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }       
+        }
+
+        public Debtor GetDebtorById(int id)
+        {
+            try
+            {
+                return _context.Debtor.Where(d => d.Debtor_Id == id).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<Debtor> GetDebtorsWithDebet()
+        {
+            try
+            {
+                return _context.Debtor.Where(d => d.Finapp_Debet > 0).ToList();
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<Debtor> GetAvailableDebtors()
+        {
+            try
+            {
+                return _context.Debtor.Where(d => d.Available == true)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public bool ModifyDebtor(Debtor debtor)
@@ -25,24 +75,24 @@ namespace Finapp.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return false;
             }
         }
 
-        public Debtor GetAvaialbleDebtor()
+        public string GetDebtorUsernameById(int id)
         {
             try
             {
-                return _context.Debtor.Where(d => d.Available == true)
-                    .OrderBy(d => d.Queue_Date)
-                    .FirstOrDefault();
+                return _context.Debtor.Where(d => d.Debtor_Id == id)
+                    .FirstOrDefault().username;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw ;
+                return null;
             }
         }
+
     }
 }

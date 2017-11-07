@@ -13,10 +13,10 @@ namespace Finapp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FinapEntities : DbContext
+    public partial class FinapEntities1 : DbContext
     {
-        public FinapEntities()
-            : base("name=FinapEntities")
+        public FinapEntities1()
+            : base("name=FinapEntities1")
         {
         }
     
@@ -30,5 +30,6 @@ namespace Finapp.Models
         public virtual DbSet<Debtor> Debtor { get; set; }
         public virtual DbSet<Debtor_Account> Debtor_Account { get; set; }
         public virtual DbSet<Transaction_Out> Transaction_Out { get; set; }
+        public virtual DbSet<Return_Transaction> Return_Transaction { get; set; }
     }
 }
