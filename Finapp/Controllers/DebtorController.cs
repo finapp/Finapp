@@ -19,11 +19,7 @@ namespace Finapp.Controllers
         }
 
         // GET: Debtor
-        private readonly IAlgorithm _algorithmService;
-        public DebtorController(IAlgorithm algorithmService)
-        {
-            _algorithmService = algorithmService;
-        }
+
 
         public ActionResult Index()
         {
