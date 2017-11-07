@@ -24,9 +24,20 @@ namespace Finapp.CreateDatabase
 
             for (int i = 1; i <= amountOfCreditors; i++)
             {
+                int balance = 0;
+                var propability = rand.Next(1, 20);
+                if (propability > 1 && propability < 20)
+                    balance = rand.Next(10, 100)*100;
+                else if (propability == 0)
+                {
+                    balance = rand.Next(1, 10)*100;
+                }
+                else
+                {
+                    balance = rand.Next(100, 500)*100;
+                }
                 var roi = rand.Next(0, 3);
-                var eroi = rand.Next(3, 8);
-                var balance = rand.Next(500, 50000);
+                var eroi = rand.Next(4, 8);
                 DateTime d = DateTime.Now.AddDays(30);
                 var c = new Creditor
                 {
@@ -54,11 +65,28 @@ namespace Finapp.CreateDatabase
 
             for (int i = 1; i <= amountOfDebtors; i++)
             {
-                var apr = rand.Next(8, 30);
-                var eapr = rand.Next(3, apr - 2);
-                if (eapr > 18)
-                    eapr = 18;
-                var debet = rand.Next(1000, 50000);
+                var propability = rand.Next(1, 20);
+                float apr = 0, eapr = 0;
+                int debet = 0;
+                if (propability > 1 && propability < 20)
+                {
+                    apr = rand.Next(10, 16);
+                    eapr = rand.Next(6, (int)apr - 2);
+                    debet = rand.Next(50, 300) * 100;
+                }
+                else if (propability == 1)
+                {
+                    apr = rand.Next(5, 10);
+                    eapr = rand.Next(3, (int)apr - 1);
+                    debet = rand.Next(0, 50) * 100;
+                }
+                else
+                {
+                    apr = rand.Next(17, 40);
+                    eapr = rand.Next(14, (int)apr - 3);
+                    debet = rand.Next(300, 500)*100;
+                }
+
                 DateTime d = DateTime.Now.AddDays(30);
 
                 var deb = new Debtor
