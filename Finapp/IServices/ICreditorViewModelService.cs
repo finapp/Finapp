@@ -9,6 +9,8 @@ namespace Finapp.IServices
 {
     public interface ICreditorViewModelService
     {
-        CreditorListViewModel CreditorsViewModel();
+        CreditorListViewModel GetAllCreditorsViewModel();
+
+        CreditorListViewModel GetWithBalanceCreditorsViewModel();
     }
 }

@@ -15,7 +15,8 @@ namespace Finapp.CreateDatabase
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
 
-        public Creator(IDebtorService debtorService, ICreditorService creditorService, ICreditorAccountService creditorAccountService, IDebtorAccountService debtorAccountService)
+        public Creator(IDebtorService debtorService, ICreditorService creditorService,
+            ICreditorAccountService creditorAccountService, IDebtorAccountService debtorAccountService)
         {
             _debtorService = debtorService;
             _creditorService = creditorService;
