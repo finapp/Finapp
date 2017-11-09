@@ -41,7 +41,7 @@ namespace Finapp.Services
             }
             catch (Exception e)
             {
-                return null;
+                throw e;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Finapp.Services
             }
             catch (Exception e)
             {
-                return -1;
+                throw e;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Finapp.Services
             }
             catch (Exception e)
             {
-                return -1;
+                throw e;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Finapp.Services
             }
             catch (Exception e)
             {
-                return -1;
+                throw e;
             }
         }
     }

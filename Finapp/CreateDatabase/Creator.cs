@@ -38,7 +38,6 @@ namespace Finapp.CreateDatabase
 
         public void CreateDB(int amountOfDebtors, int amountOfCreditors)
         {
-
             Random rand = new Random();
 
             for (int i = 1; i <= amountOfCreditors; i++)
