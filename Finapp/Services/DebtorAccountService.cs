@@ -35,19 +35,19 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Debtor_Account.Where(a => a.Debtor_Id == id)
+                return _context.Debtor_Account.Where(d => d.Debtor_Id == id)
                     .FirstOrDefault();
             }
             catch(Exception e)
             {
-                return null;
+                throw e;
             }
         }
         public int GetAccountIdByDebtorId(int id)
         {
             try
             {
-                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == id).FirstOrDefault();
+                var account = _context.Debtor_Account.Where(d => d.Debtor_Id == id).FirstOrDefault();
                 return account.Debtor_Account_Id;
             }
             catch (Exception e)
@@ -61,7 +61,7 @@ namespace Finapp.Services
             try
             {
                 var debtor = _context.Debtor.Where(d => d.username == username).FirstOrDefault();
-                var account = _context.Debtor_Account.Where(a => a.Debtor_Id == debtor.Debtor_Id).FirstOrDefault();
+                var account = _context.Debtor_Account.Where(d => d.Debtor_Id == debtor.Debtor_Id).FirstOrDefault();
                 return account.Debtor_Account_Id;
             }
             catch (Exception e)

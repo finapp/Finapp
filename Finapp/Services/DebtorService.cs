@@ -48,7 +48,9 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Debtor.Where(d => d.Finapp_Debet > 0).ToList();
+                return _context.Debtor.Where(d => d.Finapp_Debet > 0)
+                    .OrderBy(d=>d.Queue_Date)
+                    .ToList();
             }
             catch(Exception e)
             {
@@ -76,6 +78,7 @@ namespace Finapp.Services
             {
                 _context.Entry(debtor).State = EntityState.Modified;
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -103,6 +106,7 @@ namespace Finapp.Services
             {
                 _context.Entry(debtor).State = EntityState.Added;
                 _context.SaveChanges();
+
                 return true;
             }
             catch(Exception)
