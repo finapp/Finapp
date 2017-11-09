@@ -93,20 +93,23 @@ namespace Finapp.Services
                     (t, ca) => new { Transaction_Out = t, Creditor_Account = ca }).FirstOrDefault();
 
                 var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
-                var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI/100));
-                var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.Debtor.APR - debtor.Debtor.EAPR) / 100));
+                var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
+                var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
 
                 listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
                     Amount = transaction.Transaction_Out.Ammount,
-                    DebtorAccountFinappAmount = transaction.Transaction_Out.Finapp_Debetor??0,
+                    DebtorAccountFinappAmount = transaction.Transaction_Out.Finapp_Debetor ?? 0,
                     DebtorUsername = debtor.Debtor.username,
-                    Date = transaction.Transaction_Out.Date_Of_Transaction??DateTime.Now,
+                    Date = transaction.Transaction_Out.Date_Of_Transaction ?? DateTime.Now,
                     ROI = (float)transaction.Transaction_Out.ROI,
                     CreditorUsername = creditor.username,
-                    CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor??100,
-                    CreditorBenefits = (int)creditorBenefits,
-                    DebtorBenefits = (int)debtorBenefits
+                    CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
+                    CreditorBenefits = creditorBenefits ?? 0,
+                    DebtorBenefits = debtorBenefits ?? 0,
+                    RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                    RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds??0
                 });
             }
 
@@ -148,8 +151,10 @@ namespace Finapp.Services
                     (t, da) => new { Transaction_Out = t, Debtor_Account = da }).FirstOrDefault();
 
                 var debtor = _debtorService.GetDebtorById(debtorAccount.Debtor_Account.Debtor_Id);
-                var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI / 100));
-                var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.APR - debtor.EAPR) / 100));
+                var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
+                var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
+                //var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI / 100));
+               // var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.APR - debtor.EAPR) / 100));
 
                 listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
@@ -160,8 +165,11 @@ namespace Finapp.Services
                     ROI = (float)transaction.Transaction_Out.ROI,
                     CreditorUsername = creditor.Creditor.username,
                     CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
-                    CreditorBenefits = (int)creditorBenefits,
-                    DebtorBenefits = (int)debtorBenefits
+                    CreditorBenefits = creditorBenefits ?? 0,
+                    DebtorBenefits = debtorBenefits ?? 0,
+                    RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                    RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds ?? 0
                 });
             }
 
@@ -206,8 +214,8 @@ namespace Finapp.Services
                         (t, ca) => new { Transaction_Out = t, Creditor_Account = ca }).FirstOrDefault();
 
                     var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
-                    var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI / 100));
-                    var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.Debtor.APR - debtor.Debtor.EAPR) / 100));
+                    var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
+                    var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
 
                     listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                     {
@@ -218,8 +226,11 @@ namespace Finapp.Services
                         ROI = (float)transaction.Transaction_Out.ROI,
                         CreditorUsername = creditor.username,
                         CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
-                        CreditorBenefits = (int)creditorBenefits,
-                        DebtorBenefits = (int)debtorBenefits
+                        CreditorBenefits = creditorBenefits??0,
+                        DebtorBenefits = debtorBenefits??0,
+                        RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                        RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
+                        DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds ?? 0
                     });
                 }
             }
