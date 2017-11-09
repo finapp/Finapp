@@ -17,10 +17,22 @@ namespace Finapp.Services
             _creditorService = creditorService;
         }
 
-        public CreditorListViewModel CreditorsViewModel()
+        public CreditorListViewModel GetAllCreditorsViewModel()
         {
             IEnumerable<Creditor> creditors = _creditorService.GetAllCreditors();
 
+            return CreateCreditorsViewModel(creditors);
+        }
+
+        public CreditorListViewModel GetWithBalanceCreditorsViewModel()
+        {
+            IEnumerable<Creditor> creditors = _creditorService.GetCreditorsWithBalance();
+
+            return CreateCreditorsViewModel(creditors);
+        }
+
+        private CreditorListViewModel CreateCreditorsViewModel(IEnumerable<Creditor> creditors)
+        {
             var creditorViewModel = new CreditorListViewModel();
 
             foreach (var creditor in creditors)

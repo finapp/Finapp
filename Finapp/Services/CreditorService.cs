@@ -77,6 +77,7 @@ namespace Finapp.Services
             {
                 _context.Entry(creditor).State = EntityState.Modified;
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -104,6 +105,7 @@ namespace Finapp.Services
             {
                 _context.Entry(creditor).State = EntityState.Added;
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception)

@@ -17,10 +17,22 @@ namespace Finapp.Services
             _debtorService = debtorService;
         }
 
-        public DebtorListViewModel DebtorsViewModel()
+        public DebtorListViewModel GetAllDebtorsViewModel()
         {
             IEnumerable<Debtor> debtors = _debtorService.GetAllDebtors();
 
+            return CreateListViewModel(debtors);
+        }
+
+        public DebtorListViewModel GetWithDebetDebtorsViewModel()
+        {
+            IEnumerable<Debtor> debtors = _debtorService.GetDebtorsWithDebet();
+
+            return CreateListViewModel(debtors);
+        }
+
+        private DebtorListViewModel CreateListViewModel(IEnumerable<Debtor> debtors)
+        {
             var debtorsViewModel = new DebtorListViewModel();
 
             foreach (var debtor in debtors)
@@ -34,10 +46,9 @@ namespace Finapp.Services
                     FinappDebet = debtor.Finapp_Debet,
                     Expiration_Date = debtor.Expiration_Date ?? DateTime.Now,
                     Queue_Date = debtor.Queue_Date ?? DateTime.Now
-                    
+
                 });
             }
-
             return debtorsViewModel;
         }
     }

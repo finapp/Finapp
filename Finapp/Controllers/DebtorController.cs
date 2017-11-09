@@ -20,13 +20,15 @@ namespace Finapp.Controllers
             _transactionOutService = transactionOutService;
         }
 
-        // GET: Debtor
-
-
         public ActionResult Index()
         {
-           // var a = _transactionOutService.GetTransactionsWithDebtorByDebtorId(1996);
-            return View(_transactionOutService.GetTransactionsWithDebtorByDebtorId(1919));
+            return View(_debtorViewModelService.GetAllDebtorsViewModel());
+        }
+
+        public ActionResult DebtorsQueue()
+        {
+            return View("Index",_debtorViewModelService.GetWithDebetDebtorsViewModel());
+
         }
     }
 }
