@@ -57,7 +57,9 @@ namespace Finapp.CreateDatabase
                 }
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(4, 8);
+
                 DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
+
                 var c = new Creditor
                 {
                     username = "Ewa" + i,
