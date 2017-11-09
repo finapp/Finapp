@@ -18,9 +18,6 @@ namespace Finapp.Controllers
             _debtorViewModelService = debtorViewModelService;
         }
 
-        // GET: Debtor
-
-
         public ActionResult Index()
         {
             return View(_debtorViewModelService.GetAllDebtorsViewModel());
