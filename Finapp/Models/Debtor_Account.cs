@@ -24,7 +24,6 @@ namespace Finapp.Models
         public int Debtor_Account_Id { get; set; }
         public int Debtor_Id { get; set; }
         public int Debet { get; set; }
-        public Nullable<System.DateTime> Expiration_Date { get; set; }
         public Nullable<System.DateTime> Credit_Line_Date { get; set; }
     
         public virtual Debtor Debtor { get; set; }

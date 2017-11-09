@@ -47,7 +47,8 @@ namespace Finapp.CreateDatabase
                     Balance = balance,
                     Available = true,
                     Finapp_Balance = balance,
-                    Queue_Date = DateTime.Now.AddHours(-rand.Next(1,30))
+                    Queue_Date = DateTime.Now.AddHours(-rand.Next(1,30)),
+                    Expiration_Date = d,
                 };
 
                 context.Creditor.Add(c);
@@ -57,7 +58,6 @@ namespace Finapp.CreateDatabase
                 {
                     Creditor_Id = c.Creditor_Id,
                     Balance = c.Balance,
-                    Expiration_Date = d,
                     Min_Balance = 0
                 });
                 context.SaveChanges();
@@ -97,7 +97,8 @@ namespace Finapp.CreateDatabase
                     Debet = debet,
                     Available = true,
                     Finapp_Debet = debet,
-                    Queue_Date = DateTime.Now.AddMinutes(-i)
+                    Queue_Date = DateTime.Now.AddMinutes(-i),
+                    Expiration_Date = d
                 };
                 context.Debtor.Add(deb);
                 context.SaveChanges();
@@ -106,7 +107,6 @@ namespace Finapp.CreateDatabase
                 {
                     Debtor_Id = deb.Debtor_Id,
                     Debet = deb.Debet,
-                    Expiration_Date = d,
                     Credit_Line_Date = d
                 });
                 context.SaveChanges();

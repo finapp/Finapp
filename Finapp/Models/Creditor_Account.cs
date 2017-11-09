@@ -25,7 +25,6 @@ namespace Finapp.Models
         public int Creditor_Id { get; set; }
         public int Balance { get; set; }
         public Nullable<int> Min_Balance { get; set; }
-        public Nullable<System.DateTime> Expiration_Date { get; set; }
     
         public virtual Creditor Creditor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

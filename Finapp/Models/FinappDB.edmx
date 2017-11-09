@@ -17,6 +17,7 @@
           <Property Name="Available" Type="bit" Nullable="false" />
           <Property Name="Finapp_Balance" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="datetime" />
+          <Property Name="Expiration_Date" Type="date" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -26,7 +27,6 @@
           <Property Name="Creditor_Id" Type="int" Nullable="false" />
           <Property Name="Balance" Type="int" Nullable="false" />
           <Property Name="Min_Balance" Type="int" />
-          <Property Name="Expiration_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -40,6 +40,7 @@
           <Property Name="Debet" Type="int" Nullable="false" />
           <Property Name="Finapp_Debet" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="date" />
+          <Property Name="Expiration_Date" Type="date" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -48,7 +49,6 @@
           <Property Name="Debtor_Account_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Debtor_Id" Type="int" Nullable="false" />
           <Property Name="Debet" Type="int" Nullable="false" />
-          <Property Name="Expiration_Date" Type="date" />
           <Property Name="Credit_Line_Date" Type="date" />
         </EntityType>
         <EntityType Name="Return_Transaction">
@@ -211,6 +211,7 @@
           <Property Name="Finapp_Balance" Type="Int32" Nullable="false" />
           <Property Name="Queue_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Creditor_Account" Relationship="Self.fkfkfsasdd" FromRole="Creditor" ToRole="Creditor_Account" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -220,7 +221,6 @@
           <Property Name="Creditor_Id" Type="Int32" Nullable="false" />
           <Property Name="Balance" Type="Int32" Nullable="false" />
           <Property Name="Min_Balance" Type="Int32" />
-          <Property Name="Expiration_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Creditor" Relationship="Self.fkfkfsasdd" FromRole="Creditor_Account" ToRole="Creditor" />
           <NavigationProperty Name="Transaction_Out" Relationship="Self.aasassasa" FromRole="Creditor_Account" ToRole="Transaction_Out" />
           <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk3" FromRole="Creditor_Account" ToRole="Return_Transaction" />
@@ -238,6 +238,7 @@
           <Property Name="Finapp_Debet" Type="Int32" Nullable="false" />
           <Property Name="Queue_Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Debtor_Account" Relationship="Self.fkfkfsd" FromRole="Debtor" ToRole="Debtor_Account" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -246,7 +247,6 @@
           <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Debtor_Id" Type="Int32" Nullable="false" />
           <Property Name="Debet" Type="Int32" Nullable="false" />
-          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
           <Property Name="Credit_Line_Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Debtor" Relationship="Self.fkfkfsd" FromRole="Debtor_Account" ToRole="Debtor" />
           <NavigationProperty Name="Transaction_Out" Relationship="Self.asasa" FromRole="Debtor_Account" ToRole="Transaction_Out" />
@@ -410,6 +410,7 @@
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="ROI" ColumnName="ROI" />
@@ -428,13 +429,13 @@
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Min_Balance" ColumnName="Min_Balance" />
-                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="APR" ColumnName="APR" />
@@ -452,7 +453,6 @@
                 <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="Debet" ColumnName="Debet" />
-                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Credit_Line_Date" ColumnName="Credit_Line_Date" />
               </MappingFragment>
             </EntityTypeMapping>
