@@ -12,6 +12,8 @@ namespace Finapp.IServices
     {
         bool AddTransaction(Transaction_Out transaction);
         bool AddTransaction(int amount, DateTime date, int creditorAccountId, int debtorAccountId);
-        IEnumerable<TransactionWithUserViewModel> GetTransactionsWithDebtorByDebtorId(int id);
+        IEnumerable<TransactionWithUserViewModel> GetTransactionsWithDebtorByDebtorUsername(string username);
+        IEnumerable<TransactionWithUserViewModel> GetTransactionWithCreditorByCreditorUsername(string username);
+        IEnumerable<TransactionWithUserViewModel> GetTransactions();
     }
 }

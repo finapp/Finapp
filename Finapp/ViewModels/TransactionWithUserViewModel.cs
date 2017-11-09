@@ -8,7 +8,7 @@ namespace Finapp.ViewModels
     public class TransactionWithUserViewModel
     {
         public int Amount { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         public string CreditorUsername { get; set; }
         public string DebtorUsername { get; set; }
         public float ROI { get; set; }
