@@ -23,7 +23,13 @@ namespace Finapp.Controllers
 
         public ActionResult Index()
         {
-            return View(_debtorViewModelService.DebtorsViewModel());
+            return View(_debtorViewModelService.GetAllDebtorsViewModel());
+        }
+
+        public ActionResult DebtorsQueue()
+        {
+            return View("Index",_debtorViewModelService.GetWithDebetDebtorsViewModel());
+
         }
     }
 }
