@@ -27,18 +27,18 @@ namespace Finapp.CreateDatabase
                 int balance = 0;
                 var propability = rand.Next(1, 20);
                 if (propability > 1 && propability < 20)
-                    balance = rand.Next(10, 100)*100;
+                    balance = rand.Next(10, 100) * 100;
                 else if (propability == 0)
                 {
-                    balance = rand.Next(1, 10)*100;
+                    balance = rand.Next(1, 10) * 100;
                 }
                 else
                 {
-                    balance = rand.Next(100, 500)*100;
+                    balance = rand.Next(100, 500) * 100;
                 }
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(4, 8);
-                DateTime d = DateTime.Now.AddDays(30);
+                DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
                 var c = new Creditor
                 {
                     username = "Ewa" + i,
@@ -47,7 +47,8 @@ namespace Finapp.CreateDatabase
                     Balance = balance,
                     Available = true,
                     Finapp_Balance = balance,
-                    Queue_Date = DateTime.Now.AddMinutes(-i)
+                    Queue_Date = DateTime.Now.AddHours(-rand.Next(1,30)),
+                    Expiration_Date = d,
                 };
 
                 context.Creditor.Add(c);
@@ -57,7 +58,6 @@ namespace Finapp.CreateDatabase
                 {
                     Creditor_Id = c.Creditor_Id,
                     Balance = c.Balance,
-                    Expiration_Date = d,
                     Min_Balance = 0
                 });
                 context.SaveChanges();
@@ -84,10 +84,10 @@ namespace Finapp.CreateDatabase
                 {
                     apr = rand.Next(17, 40);
                     eapr = rand.Next(14, (int)apr - 3);
-                    debet = rand.Next(300, 500)*100;
+                    debet = rand.Next(300, 500) * 100;
                 }
 
-                DateTime d = DateTime.Now.AddDays(30);
+                DateTime d = DateTime.Now.AddDays(365);
 
                 var deb = new Debtor
                 {
@@ -97,7 +97,8 @@ namespace Finapp.CreateDatabase
                     Debet = debet,
                     Available = true,
                     Finapp_Debet = debet,
-                    Queue_Date = DateTime.Now.AddMinutes(-i)
+                    Queue_Date = DateTime.Now.AddMinutes(-i),
+                    Expiration_Date = d
                 };
                 context.Debtor.Add(deb);
                 context.SaveChanges();
@@ -106,7 +107,6 @@ namespace Finapp.CreateDatabase
                 {
                     Debtor_Id = deb.Debtor_Id,
                     Debet = deb.Debet,
-                    Expiration_Date = d,
                     Credit_Line_Date = d
                 });
                 context.SaveChanges();

@@ -12,5 +12,7 @@ namespace Finapp.ViewModels
         public float? EAPR { get; set; }
         public int Debet { get; set; }
         public int FinappDebet { get; set; }
+        public DateTime Expiration_Date { get; set; }
+
     }
 }
