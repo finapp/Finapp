@@ -1,4 +1,5 @@
 ﻿using Finapp.Models;
+using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Finapp.IServices
     {
         bool AddTransaction(Transaction_Out transaction);
         bool AddTransaction(int amount, DateTime date, int creditorAccountId, int debtorAccountId);
+        IEnumerable<TransactionWithDebtorViewModel> GetTransactionsWithDebtorByDebtorId(int id);
     }
 }

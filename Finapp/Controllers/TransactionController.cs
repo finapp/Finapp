@@ -10,15 +10,18 @@ namespace Finapp.Controllers
     public class TransactionController : Controller
     {
         private readonly ITransactionViewModelService _transactionViewModelService;
+        private readonly ITransactionOutService _transactionService;
 
-        public TransactionController(ITransactionViewModelService transactionViewModelService)
+        public TransactionController(ITransactionViewModelService transactionViewModelService, ITransactionOutService transactionService)
         {
             _transactionViewModelService = transactionViewModelService;
+            _transactionService = transactionService;
         }
 
         // GET: Transaction
         public ActionResult Index(string username)
         {
+            _transactionService.GetTransactionsWithDebtorByDebtorId(1799);
             return View();
         }
 
