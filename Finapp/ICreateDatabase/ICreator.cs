@@ -9,6 +9,6 @@ namespace Finapp.ICreateDatabase
     public interface ICreator
     {
         void CreateDB(int amountOfDebtors, int amountOfCreditors);
-        void clearDB();
+        void ClearDB();
     }
 }
