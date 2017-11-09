@@ -24,7 +24,7 @@ namespace Finapp.CreateDatabase
             _debtorAccountService = debtorAccountService;
         }
 
-        public void clearDB()
+        public void ClearDB()
         {
             FinapEntities1 context = new FinapEntities1();
 
@@ -38,7 +38,6 @@ namespace Finapp.CreateDatabase
 
         public void CreateDB(int amountOfDebtors, int amountOfCreditors)
         {
-
             Random rand = new Random();
 
             for (int i = 1; i <= amountOfCreditors; i++)
@@ -97,7 +96,7 @@ namespace Finapp.CreateDatabase
                 {
                     apr = rand.Next(5, 10);
                     eapr = rand.Next(3, (int)apr - 1);
-                    debet = rand.Next(0, 50) * 100;
+                    debet = rand.Next(1, 50) * 100;
                 }
                 else
                 {

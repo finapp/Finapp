@@ -33,7 +33,7 @@ namespace Finapp.Controllers
             {
                 var creditors = int.Parse(amountOfCreditors);
                 var debtors = int.Parse(amountOfDebtors);
-                _creator.clearDB();
+                _creator.ClearDB();
                 _creator.CreateDB(debtors, creditors);
 
                 return RedirectToAction("Index", "Debtor");
