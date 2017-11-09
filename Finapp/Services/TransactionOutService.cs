@@ -11,9 +11,9 @@ namespace Finapp.Services
     public class TransactionOutService : ITransactionOutService
     {
         private readonly FinapEntities1 _context;
-        private readonly ICreditorAccountService _creditorService;
+        private readonly ICreditorService _creditorService;
 
-        public TransactionOutService(FinapEntities1 context, ICreditorAccountService creditorService)
+        public TransactionOutService(FinapEntities1 context, ICreditorService creditorService)
         {
             _context = context;
             _creditorService = creditorService;
@@ -91,9 +91,7 @@ namespace Finapp.Services
                     ca => ca.Creditor_Account_Id,
                     (t, ca) => new { Transaction_Out = t, Creditor_Account = ca }).FirstOrDefault();
 
-                var creditor = _creditorService.GetCreditorIdByAccountId(creditorAccount.Creditor_Account.Creditor_Account_Id);
-
-
+                var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
 
                 listOfDebtorTransactions.Add(new TransactionWithDebtorViewModel
                 {
@@ -102,7 +100,7 @@ namespace Finapp.Services
                     DebtorUsername = debtor.Debtor.username,
                     Date = transaction.Transaction_Out.Date_Of_Transaction,
                     ROI = (float)transaction.Transaction_Out.ROI,
-                    
+                    CreditorUsername = creditor.username
                 });
             }
 

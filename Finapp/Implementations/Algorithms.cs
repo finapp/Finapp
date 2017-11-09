@@ -62,7 +62,10 @@ namespace Finapp.Implementations
                         Date_Of_Transaction = DateTime.Now,
                         Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
                         Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
-                        ROI = (float)EROI
+                        ROI = (float)EROI,
+                        Finapp_Debetor = 0,
+                        Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
+                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days
                     };
 
                     _transactionOutService.AddTransaction(t_out);
@@ -85,7 +88,10 @@ namespace Finapp.Implementations
                         Date_Of_Transaction = DateTime.Now,
                         Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
                         Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
-                        ROI = (float)EROI
+                        ROI = (float)EROI,
+                        Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
+                        Finapp_Creditor = 0,
+                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days
                     };
 
                     _transactionOutService.AddTransaction(t_out);
