@@ -43,5 +43,10 @@ namespace Finapp.Controllers
                 return View("Index");
             }
         }
+
+        public ActionResult AddNewCustomers()
+        {
+            return View("Index");
+        }
     }
 }
