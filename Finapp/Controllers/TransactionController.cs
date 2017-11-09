@@ -21,7 +21,7 @@ namespace Finapp.Controllers
         // GET: Transaction
         public ActionResult Index(string username)
         {
-            _transactionService.GetTransactionsByDebtorId(5);
+            _transactionService.GetTransactionsWithDebtorByDebtorId(1799);
             return View();
         }
 
