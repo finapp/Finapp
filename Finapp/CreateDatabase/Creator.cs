@@ -47,7 +47,7 @@ namespace Finapp.CreateDatabase
                     Balance = balance,
                     Available = true,
                     Finapp_Balance = balance,
-                    Queue_Date = DateTime.Now.AddHours(-rand.Next(1,30)),
+                    Queue_Date = DateTime.Now.AddDays(-rand.Next(1, 30)),
                     Expiration_Date = d,
                 };
 
@@ -87,7 +87,7 @@ namespace Finapp.CreateDatabase
                     debet = rand.Next(300, 500) * 100;
                 }
 
-                DateTime d = DateTime.Now.AddDays(365);
+                DateTime d = DateTime.Now.AddDays(rand.Next(15, 50) * 7);
 
                 var deb = new Debtor
                 {
@@ -97,7 +97,7 @@ namespace Finapp.CreateDatabase
                     Debet = debet,
                     Available = true,
                     Finapp_Debet = debet,
-                    Queue_Date = DateTime.Now.AddMinutes(-i),
+                    Queue_Date = DateTime.Now.AddDays(-rand.Next(1, 30)),
                     Expiration_Date = d
                 };
                 context.Debtor.Add(deb);

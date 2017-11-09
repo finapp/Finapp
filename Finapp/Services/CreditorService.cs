@@ -22,6 +22,7 @@ namespace Finapp.Services
             try
             {
                 return _context.Creditor
+                    .OrderBy(c=>c.Queue_Date)
                     .ToList();
             }
             catch (Exception e)

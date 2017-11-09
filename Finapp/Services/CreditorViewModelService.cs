@@ -32,7 +32,8 @@ namespace Finapp.Services
                     EROI = (float)creditor.EROI,
                     Balance = creditor.Balance,
                     FinappBalance = creditor.Finapp_Balance,
-                    Expiration_Date = creditor.Expiration_Date ?? DateTime.Now
+                    Expiration_Date = creditor.Expiration_Date ?? DateTime.Now,
+                    Queue_Date = creditor.Queue_Date ?? DateTime.Now
                 });
             }
 

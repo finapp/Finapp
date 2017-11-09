@@ -32,7 +32,8 @@ namespace Finapp.Services
                     EAPR = debtor.EAPR,
                     Debet = debtor.Debet,
                     FinappDebet = debtor.Finapp_Debet,
-                    Expiration_Date = debtor.Expiration_Date ?? DateTime.Now
+                    Expiration_Date = debtor.Expiration_Date ?? DateTime.Now,
+                    Queue_Date = debtor.Queue_Date ?? DateTime.Now
                     
                 });
             }

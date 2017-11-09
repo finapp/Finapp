@@ -113,7 +113,6 @@ namespace Finapp.Implementations
             if (debtorsList == null)
                 return null;
 
-            debtorsList.OrderBy(d => d.Queue_Date);
 
             return debtorsList;
         }

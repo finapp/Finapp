@@ -8,7 +8,16 @@
 
 <table class="table table-responsive table-striped">
     <thead>
-        <th>Username</th><th>ROI</th><th>EROI</th><th>Balance</th><th>FinApp balance</th><th>Expiration Date</th><th>Details</th>
+        <tr>
+            <th>Username</th>
+            <th>ROI</th>
+            <th>EROI</th>
+            <th>Balance</th>
+            <th>FinApp balance</th>
+            <th>Date of access to funds</th>
+            <th>Date added to queue</th>
+            <th>Details</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var user in Model.List)
@@ -19,8 +28,9 @@
                 <td>@user.EROI</td>
                 <td>@user.Balance</td>
                 <td>@user.FinappBalance</td>
-                <td>@user.Expiration_Date</td>
-                <td>@Html.ActionLink("Show transactions", "CreditorTransactions", "Transaction", new { username = user.Username}, null)</td>
+                <td>@user.Expiration_Date.ToString("dd/MM/yyyy")</td>
+                <td>@user.Queue_Date.ToString("dd/MM/yyyy")</td>
+                <td>@Html.ActionLink("Show transactions", "CreditorTransactions", "Transaction", new { username = user.Username }, null)</td>
             </tr>
         }
     </tbody>

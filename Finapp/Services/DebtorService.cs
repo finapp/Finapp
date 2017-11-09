@@ -22,7 +22,9 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Debtor.ToList(); ;
+                return _context.Debtor
+                    .OrderBy(d=>d.Queue_Date)
+                    .ToList(); 
             }
             catch(Exception e)
             {
@@ -59,6 +61,7 @@ namespace Finapp.Services
             try
             {
                 return _context.Debtor.Where(d => d.Available == true)
+                    .OrderBy(d=>d.Queue_Date)
                     .ToList();
             }
             catch (Exception e)
