@@ -65,7 +65,9 @@ namespace Finapp.Implementations
                         ROI = (float)EROI,
                         Finapp_Debetor = 0,
                         Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
-                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days
+                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+                        Creditor_Benefits_Per_Annum = (int)(debtor.Finapp_Debet * ((float)(creditor.EROI - creditor.ROI)/100)),
+                        Debtor_Benefits_Per_Annum = (int)(debtor.Finapp_Debet * (float)(debtor.APR - debtor.EAPR)/100)
                     };
 
                     _transactionOutService.AddTransaction(t_out);
@@ -91,7 +93,9 @@ namespace Finapp.Implementations
                         ROI = (float)EROI,
                         Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
                         Finapp_Creditor = 0,
-                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days
+                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+                        Creditor_Benefits_Per_Annum = (int)(creditor.Finapp_Balance * ((float)(creditor.EROI - creditor.ROI) / 100)),
+                        Debtor_Benefits_Per_Annum = (int)(creditor.Finapp_Balance * (float)(debtor.APR - debtor.EAPR) / 100)
                     };
 
                     _transactionOutService.AddTransaction(t_out);

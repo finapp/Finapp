@@ -9,13 +9,13 @@
         <tr>
             <th>Amount</th>
             <th>Date</th>
-            <th>Creditor Username</th>
-            <th>Debtor Username</th>
+            <th>Creditor</th>
+            <th>Debtor</th>
             <th>ROI</th>
-            <th>Debtor Finapp</th>
-            <th>Creditor Finapp</th>
-            <th>Creditor Benefits</th>
-            <th>Debtor Benefits</th>
+            <th>Deb Finapp</th>
+            <th>Deb Benefits</th>
+            <th>Cred Finapp</th>
+            <th>Cred Benefits</th>
         </tr>
     </thead>
     <tbody>
@@ -41,13 +41,13 @@
                     @transaction.DebtorAccountFinappAmount
                 </td>
                 <td>
+                    @transaction.DebtorBenefits
+                </td>
+                <td>
                     @transaction.CreditorAccountFinappAmount
                 </td>
                 <td>
                     @transaction.CreditorBenefits
-                </td>
-                <td>
-                    @transaction.DebtorBenefits
                 </td>
             </tr>
         }
