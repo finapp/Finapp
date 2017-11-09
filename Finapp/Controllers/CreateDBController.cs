@@ -33,6 +33,7 @@ namespace Finapp.Controllers
             {
                 var creditors = int.Parse(amountOfCreditors);
                 var debtors = int.Parse(amountOfDebtors);
+                _creator.clearDB();
                 _creator.CreateDB(debtors, creditors);
 
                 return RedirectToAction("Index", "Debtor");
@@ -44,9 +45,29 @@ namespace Finapp.Controllers
             }
         }
 
+        public ActionResult NewCustomers()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult AddNewCustomers()
         {
-            return View("Index");
+            var amountOfCreditors = Request["amountOfCreditors"];
+            var amountOfDebtors = Request["amountOfDebtors"];
+
+            try
+            {
+                var creditors = int.Parse(amountOfCreditors);
+                var debtors = int.Parse(amountOfDebtors);
+
+                return RedirectToAction("Index", "Debtor");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "Please enter valid data";
+                return View("Index");
+            }
         }
     }
 }

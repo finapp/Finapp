@@ -12,5 +12,6 @@ namespace Finapp.IServices
         int GetAccountIdByDebtorId(int id);
         int GetAccountIdByDebtorUsername(string username);
         int GetDebtorIdByAccountId(int id);
+        bool AddDebtorAccount(Debtor_Account debtorAccount)
     }
 }

@@ -2,6 +2,7 @@
 using Finapp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,20 @@ namespace Finapp.Services
         public DebtorAccountService(FinapEntities1 context)
         {
             _context = context;
+        }
+
+        public bool AddDebtorAccount(Debtor_Account debtorAccount)
+        {
+            try
+            {
+                _context.Entry(debtorAccount).State = EntityState.Added;
+                _context.SaveChanges();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         public Debtor_Account GetAccountByDebtorId(int id)

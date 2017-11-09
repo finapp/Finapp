@@ -2,6 +2,7 @@
 using Finapp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,20 @@ namespace Finapp.Services
         public CreditorAccountService(FinapEntities1 context)
         {
             _context = context;
+        }
+
+        public bool AddCreditorAccount(Creditor_Account creditor_Account)
+        {
+            try
+            {
+                _context.Entry(creditor_Account).State = EntityState.Added;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public Creditor_Account GetAccountByCreditorId(int id)

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "AddNewCustomers";
+}
+
+
+<div class="text-center">
+    @using (Html.BeginForm("AddNewCustomers", "CreateDB", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <label for="amountOfDebtors">Amount of debtors</label><br />
+            <input type="text" name="amountOfDebtors" /><br />
+
+            <label for="amountOfCreditors">Amount of creditors</label><br />
+            <input type="text" name="amountOfCreditors" /><br /><br />
+
+            <input type="submit" value="Submit" class="btn btn-success" />
+
+        </fieldset>
+    }
+</div>

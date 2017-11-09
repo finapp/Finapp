@@ -1,4 +1,5 @@
 ﻿using Finapp.ICreateDatabase;
+using Finapp.IServices;
 using Finapp.Models;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,22 @@ namespace Finapp.CreateDatabase
 {
     public class Creator : ICreator
     {
-        public void CreateDB(int amountOfDebtors, int amountOfCreditors)
+        private readonly IDebtorService _debtorService;
+        private readonly ICreditorService _creditorService;
+        private readonly ICreditorAccountService _creditorAccountService;
+        private readonly IDebtorAccountService _debtorAccountService;
+
+        public Creator(IDebtorService debtorService, ICreditorService creditorService, ICreditorAccountService creditorAccountService, IDebtorAccountService debtorAccountService)
+        {
+            _debtorService = debtorService;
+            _creditorService = creditorService;
+            _creditorAccountService = creditorAccountService;
+            _debtorAccountService = debtorAccountService;
+        }
+
+        public void clearDB()
         {
             FinapEntities1 context = new FinapEntities1();
-
-            Random rand = new Random();
 
             context.Database.ExecuteSqlCommand("Delete from [Return_Transaction]");
             context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
@@ -21,6 +33,13 @@ namespace Finapp.CreateDatabase
             context.Database.ExecuteSqlCommand("Delete from [Debtor_Account]");
             context.Database.ExecuteSqlCommand("Delete from [Creditor]");
             context.Database.ExecuteSqlCommand("Delete from [Debtor]");
+        }
+
+        public void CreateDB(int amountOfDebtors, int amountOfCreditors)
+        {
+            FinapEntities1 context = new FinapEntities1();
+
+            Random rand = new Random();
 
             for (int i = 1; i <= amountOfCreditors; i++)
             {
@@ -51,16 +70,14 @@ namespace Finapp.CreateDatabase
                     Expiration_Date = d,
                 };
 
-                context.Creditor.Add(c);
-                context.SaveChanges();
-
-                context.Creditor_Account.Add(new Creditor_Account
+                _creditorService.AddNewCreditor(c);
+                _creditorAccountService.AddCreditorAccount(new Creditor_Account
                 {
                     Creditor_Id = c.Creditor_Id,
                     Balance = c.Balance,
                     Min_Balance = 0
                 });
-                context.SaveChanges();
+
             }
 
             for (int i = 1; i <= amountOfDebtors; i++)
@@ -100,16 +117,15 @@ namespace Finapp.CreateDatabase
                     Queue_Date = DateTime.Now.AddDays(-rand.Next(1, 30)),
                     Expiration_Date = d
                 };
-                context.Debtor.Add(deb);
-                context.SaveChanges();
+                _debtorService.AddNewDebtor(deb);
 
-                context.Debtor_Account.Add(new Debtor_Account
+                _debtorAccountService.AddDebtorAccount(new Debtor_Account
                 {
                     Debtor_Id = deb.Debtor_Id,
                     Debet = deb.Debet,
                     Credit_Line_Date = d
                 });
-                context.SaveChanges();
+
             }
 
         }

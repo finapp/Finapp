@@ -15,5 +15,6 @@ namespace Finapp.IServices
         IEnumerable<Creditor> GetAvailableCreditors(float eapr);
         bool ModifyCreditor(Creditor creditor);
         string GetCreditorUsernameById(int id);
+        bool AddNewCreditor(Creditor creditor)
     }
 }

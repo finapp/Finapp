@@ -13,5 +13,6 @@ namespace Finapp.IServices
         int GetAccountIdByCreditorId(int id);
         int GetAccountIdByCreditorUsername(string username);
         int GetCreditorIdByAccountId(int id);
+        bool AddCreditorAccount(Creditor_Account creditor_Account);
     }
 }

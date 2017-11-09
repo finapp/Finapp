@@ -97,5 +97,18 @@ namespace Finapp.Services
             }
         }
 
+        public bool AddNewDebtor(Debtor debtor)
+        {
+            try
+            {
+                _context.Entry(debtor).State = EntityState.Added;
+                _context.SaveChanges();
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
     }
 }

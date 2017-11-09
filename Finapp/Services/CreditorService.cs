@@ -22,7 +22,7 @@ namespace Finapp.Services
             try
             {
                 return _context.Creditor
-                    .OrderBy(c=>c.Queue_Date)
+                    .OrderBy(c => c.Queue_Date)
                     .ToList();
             }
             catch (Exception e)
@@ -61,11 +61,11 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Available == true && eapr>c.EROI)
-                    .OrderBy(c=>c.Queue_Date)
+                return _context.Creditor.Where(c => c.Available == true && eapr > c.EROI)
+                    .OrderBy(c => c.Queue_Date)
                     .ToList();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
@@ -79,7 +79,7 @@ namespace Finapp.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
@@ -98,5 +98,18 @@ namespace Finapp.Services
             }
         }
 
+        public bool AddNewCreditor(Creditor creditor)
+        {
+            try
+            {
+                _context.Entry(creditor).State = EntityState.Added;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
