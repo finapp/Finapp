@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<Finapp.ViewModels.TransactionWithUserViewModel>
+﻿@model IEnumerable<Finapp.ViewModels.TransactionWithUserViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -16,6 +16,7 @@
             <th>Deb Benefits</th>
             <th>Cred Finapp</th>
             <th>Cred Benefits</th>
+            <th>Days</th>
         </tr>
     </thead>
     <tbody>
@@ -41,11 +42,29 @@
                     @transaction.DebtorAccountFinappAmount
                 </td>
                 <td>
-                    @transaction.DebtorBenefits
+                    @transaction.RealDebtorBenefits
                 </td>
                 <td>
                     @transaction.CreditorAccountFinappAmount
                 </td>
+                <td>
+                    @transaction.RealCreditorBenefits
+                </td>
+                <td>
+                    @transaction.DayAccessToFunds
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Per Annum</td>
+                <td>
+                    @transaction.DebtorBenefits
+                </td>
+                <td>Per Annum</td>
                 <td>
                     @transaction.CreditorBenefits
                 </td>
