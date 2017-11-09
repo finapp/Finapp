@@ -49,6 +49,7 @@ namespace Finapp.Services
             try
             {
                 return _context.Creditor.Where(c => c.Finapp_Balance > 0)
+                    .OrderBy(c=>c.Queue_Date)
                     .ToList();
             }
             catch (Exception e)
