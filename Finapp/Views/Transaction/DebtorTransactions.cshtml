@@ -1,27 +1,54 @@
-﻿@model Finapp.ViewModels.TransactionOutListViewModel
+﻿@model  IEnumerable<Finapp.ViewModels.TransactionWithUserViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Transactions</h2>
 <table class="table table-responsive table-striped">
     <thead>
-    <th>Date</th>
-    <th>Amount</th>
-    <th>Creditor</th>
-    <th>Debtor</th>
-    <th>ROI</th>
+        <tr>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Creditor Username</th>
+            <th>Debtor Username</th>
+            <th>ROI</th>
+            <th>Debtor Finapp</th>
+            <th>Creditor Finapp</th>
+            <th>Creditor Benefits</th>
+            <th>Debtor Benefits</th>
+        </tr>
     </thead>
     <tbody>
-        @foreach (var transaction in Model.List)
+        @foreach (var transaction in Model)
         {
             <tr>
-                <td>@transaction.Date</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.CreditorUsername</td>
-                <td>@transaction.DebtorUsername</td>
-                <td>@transaction.ROI</td>
+                <td>
+                    @transaction.Amount
+                </td>
+                <td>
+                    @transaction.Date
+                </td>
+                <td>
+                    @transaction.CreditorUsername
+                </td>
+                <td>
+                    @transaction.DebtorUsername
+                </td>
+                <td>
+                    @transaction.ROI
+                </td>
+                <td>
+                    @transaction.DebtorAccountFinappAmount
+                </td>
+                <td>
+                    @transaction.CreditorAccountFinappAmount
+                </td>
+                <td>
+                    @transaction.CreditorBenefits
+                </td>
+                <td>
+                    @transaction.DebtorBenefits
+                </td>
             </tr>
         }
     </tbody>
