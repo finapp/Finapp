@@ -1,5 +1,55 @@
-﻿
+﻿@model  IEnumerable<Finapp.ViewModels.TransactionWithUserViewModel>
+
 @{
     ViewBag.Title = "Index";
 }
 
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Creditor Username</th>
+            <th>Debtor Username</th>
+            <th>ROI</th>
+            <th>Debtor Finapp</th>
+            <th>Creditor Finapp</th>
+            <th>Creditor Benefits</th>
+            <th>Debtor Benefits</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>
+                    @transaction.Amount
+                </td>
+                <td>
+                    @transaction.Date
+                </td>
+                <td>
+                    @transaction.CreditorUsername
+                </td>
+                <td>
+                    @transaction.DebtorUsername
+                </td>
+                <td>
+                    @transaction.ROI
+                </td>
+                <td>
+                    @transaction.DebtorAccountFinappAmount
+                </td>
+                <td>
+                    @transaction.CreditorAccountFinappAmount
+                </td>
+                <td>
+                    @transaction.CreditorBenefits
+                </td>
+                <td>
+                    @transaction.DebtorBenefits
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

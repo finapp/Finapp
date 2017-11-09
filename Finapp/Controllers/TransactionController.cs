@@ -30,9 +30,9 @@ namespace Finapp.Controllers
             return View(_transactionViewModelService.GetTransactionByCreditorUsername(username));
         }
 
-        public ActionResult DebtorTransactions(string username)
+        public ActionResult DebtorTransactions(int id)
         {
-            return View(_transactionViewModelService.GetTransactionByDebtorUsername(username));
+            return View(_transactionService.GetTransactionsWithDebtorByDebtorId(id));
         }
     }
 }

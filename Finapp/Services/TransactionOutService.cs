@@ -56,7 +56,7 @@ namespace Finapp.Services
             }
         }
 
-        public IEnumerable<TransactionWithDebtorViewModel> GetTransactionsWithDebtorByDebtorId(int id)
+        public IEnumerable<TransactionWithUserViewModel> GetTransactionsWithDebtorByDebtorId(int id)
         {
             var debtor = _context.Debtor.Where(d => d.Debtor_Id == id)
                 .Join(_context.Debtor_Account,
@@ -81,7 +81,7 @@ namespace Finapp.Services
             if (transactions == null)
                 return null;
 
-            List<TransactionWithDebtorViewModel> listOfDebtorTransactions = new List<TransactionWithDebtorViewModel>();
+            List<TransactionWithUserViewModel> listOfDebtorTransactions = new List<TransactionWithUserViewModel>();
 
             foreach (var transaction in transactions)
             {
@@ -92,15 +92,20 @@ namespace Finapp.Services
                     (t, ca) => new { Transaction_Out = t, Creditor_Account = ca }).FirstOrDefault();
 
                 var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
+                var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI/100));
+                var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.Debtor.APR - debtor.Debtor.EAPR) / 100));
 
-                listOfDebtorTransactions.Add(new TransactionWithDebtorViewModel
+                listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
                     Amount = transaction.Transaction_Out.Ammount,
-                    DebtorAccountFinappAmount = debtor.Debtor.Finapp_Debet,
+                    DebtorAccountFinappAmount = transaction.Transaction_Out.Finapp_Debetor??0,
                     DebtorUsername = debtor.Debtor.username,
                     Date = transaction.Transaction_Out.Date_Of_Transaction,
                     ROI = (float)transaction.Transaction_Out.ROI,
-                    CreditorUsername = creditor.username
+                    CreditorUsername = creditor.username,
+                    CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor??100,
+                    CreditorBenefits = (int)creditorBenefits,
+                    DebtorBenefits = (int)debtorBenefits
                 });
             }
 

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Finapp.ViewModels
 {
-    public class TransactionWithDebtorViewModel
+    public class TransactionWithUserViewModel
     {
         public int Amount { get; set; }
         public DateTime? Date { get; set; }
@@ -13,5 +13,8 @@ namespace Finapp.ViewModels
         public string DebtorUsername { get; set; }
         public float ROI { get; set; }
         public int DebtorAccountFinappAmount { get; set; }
+        public int CreditorAccountFinappAmount { get; set; }
+        public int CreditorBenefits { get; set; }
+        public int DebtorBenefits { get; set; }
     }
 }
