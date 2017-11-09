@@ -55,9 +55,16 @@ namespace Finapp.Services
             }
         }
 
-        public IEnumerable<Transaction_Out> GetTransactionsByUserId(int id)
+        public void GetTransactionsByDebtorId(int id)
         {
+            var a = _context.Transaction_Out.Join(
+                _context.Debtor_Account,
+                t => t.Debtor_Account_Id,
+                d => d.Debtor_Id,
+                (t, d) => new { Transaction_Out = t, Debtor_Account = d }
+                ).ToList();
 
+            int b = 5;
         }
     }
 }

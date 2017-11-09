@@ -11,5 +11,6 @@ namespace Finapp.IServices
     {
         bool AddTransaction(Transaction_Out transaction);
         bool AddTransaction(int amount, DateTime date, int creditorAccountId, int debtorAccountId);
+        void GetTransactionsByDebtorId(int id);
     }
 }

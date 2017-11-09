@@ -28,6 +28,7 @@ namespace Finapp.Models
         public bool Available { get; set; }
         public int Finapp_Balance { get; set; }
         public Nullable<System.DateTime> Queue_Date { get; set; }
+        public Nullable<System.DateTime> Expiration_Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Creditor_Account> Creditor_Account { get; set; }
