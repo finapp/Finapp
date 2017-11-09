@@ -12,10 +12,12 @@ namespace Finapp.Controllers
     public class DebtorController : Controller
     {
         private readonly IDebtorViewModelService _debtorViewModelService;
+        private readonly ITransactionOutService _transactionOutService;
 
-        public DebtorController(IDebtorViewModelService debtorViewModelService)
+        public DebtorController(IDebtorViewModelService debtorViewModelService, ITransactionOutService transactionOutService)
         {
             _debtorViewModelService = debtorViewModelService;
+            _transactionOutService = transactionOutService;
         }
 
         public ActionResult Index()
