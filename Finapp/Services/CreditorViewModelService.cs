@@ -10,16 +10,16 @@ namespace Finapp.Services
 {
     public class CreditorViewModelService : ICreditorViewModelService
     {
-        private readonly FinapEntities1 _context;
+        private readonly ICreditorService _creditorService;
 
-        public CreditorViewModelService(FinapEntities1 context)
+        public CreditorViewModelService(ICreditorService creditorService)
         {
-            _context = context;
+            _creditorService = creditorService;
         }
 
         public CreditorListViewModel CreditorsViewModel()
         {
-            IEnumerable<Creditor> creditors = _context.Creditor.ToList();
+            IEnumerable<Creditor> creditors = _creditorService.GetAllCreditors();
 
             var creditorViewModel = new CreditorListViewModel();
 

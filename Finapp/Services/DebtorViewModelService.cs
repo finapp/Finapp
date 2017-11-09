@@ -10,16 +10,16 @@ namespace Finapp.Services
 {
     public class DebtorViewModelService : IDebtorViewModelService
     {
-        private readonly FinapEntities1 _context;
+        private readonly IDebtorService _debtorService;
 
-        public DebtorViewModelService(FinapEntities1 context)
+        public DebtorViewModelService(IDebtorService debtorService)
         {
-            _context = context;
+            _debtorService = debtorService;
         }
 
         public DebtorListViewModel DebtorsViewModel()
         {
-            IEnumerable<Debtor> debtors = _context.Debtor.ToList();
+            IEnumerable<Debtor> debtors = _debtorService.GetAllDebtors();
 
             var debtorsViewModel = new DebtorListViewModel();
 

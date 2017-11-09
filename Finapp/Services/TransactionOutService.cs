@@ -16,6 +16,8 @@ namespace Finapp.Services
             _context = context;
         }
 
+
+
         public bool AddTransaction(Transaction_Out transaction)
         {
             try
@@ -51,6 +53,11 @@ namespace Finapp.Services
             {
                 return false;
             }
+        }
+
+        public IEnumerable<Transaction_Out> GetTransactionsByUserId(int id)
+        {
+
         }
     }
 }
