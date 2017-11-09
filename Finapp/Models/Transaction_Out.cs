@@ -29,6 +29,8 @@ namespace Finapp.Models
         public Nullable<int> Finapp_Debetor { get; set; }
         public Nullable<int> Finapp_Creditor { get; set; }
         public Nullable<int> Day_Access_To_Funds { get; set; }
+        public Nullable<int> Creditor_Benefits_Per_Annum { get; set; }
+        public Nullable<int> Debtor_Benefits_Per_Annum { get; set; }
     
         public virtual Creditor_Account Creditor_Account { get; set; }
         public virtual Debtor_Account Debtor_Account { get; set; }

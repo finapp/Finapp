@@ -76,6 +76,8 @@
           <Property Name="Finapp_Debetor" Type="int" />
           <Property Name="Finapp_Creditor" Type="int" />
           <Property Name="Day_Access_To_Funds" Type="int" />
+          <Property Name="Creditor_Benefits_Per_Annum" Type="int" />
+          <Property Name="Debtor_Benefits_Per_Annum" Type="int" />
         </EntityType>
         <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
@@ -271,6 +273,8 @@
           <Property Name="Finapp_Debetor" Type="Int32" />
           <Property Name="Finapp_Creditor" Type="Int32" />
           <Property Name="Day_Access_To_Funds" Type="Int32" />
+          <Property Name="Creditor_Benefits_Per_Annum" Type="Int32" />
+          <Property Name="Debtor_Benefits_Per_Annum" Type="Int32" />
         </EntityType>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
@@ -466,6 +470,8 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="Debtor_Benefits_Per_Annum" ColumnName="Debtor_Benefits_Per_Annum" />
+                <ScalarProperty Name="Creditor_Benefits_Per_Annum" ColumnName="Creditor_Benefits_Per_Annum" />
                 <ScalarProperty Name="Day_Access_To_Funds" ColumnName="Day_Access_To_Funds" />
                 <ScalarProperty Name="Finapp_Creditor" ColumnName="Finapp_Creditor" />
                 <ScalarProperty Name="Finapp_Debetor" ColumnName="Finapp_Debetor" />
