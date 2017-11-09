@@ -102,7 +102,6 @@ namespace Finapp.Implementations
                         break;
                 }
             }
-
             return true;
         }
 
@@ -113,7 +112,6 @@ namespace Finapp.Implementations
             if (debtorsList == null)
                 return null;
 
-
             return debtorsList;
         }
 
@@ -123,8 +121,6 @@ namespace Finapp.Implementations
 
             if (creditorsList == null)
                 return null;
-
-            creditorsList.OrderBy(d => d.Queue_Date);
 
             return creditorsList;
         }

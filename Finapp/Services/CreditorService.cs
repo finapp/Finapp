@@ -62,6 +62,7 @@ namespace Finapp.Services
             try
             {
                 return _context.Creditor.Where(c => c.Available == true && eapr>c.EROI)
+                    .OrderBy(c=>c.Queue_Date)
                     .ToList();
             }
             catch(Exception e)
