@@ -37,7 +37,6 @@ namespace Finapp.CreateDatabase
 
         public void CreateDB(int amountOfDebtors, int amountOfCreditors)
         {
-            FinapEntities1 context = new FinapEntities1();
 
             Random rand = new Random();
 
@@ -59,10 +58,10 @@ namespace Finapp.CreateDatabase
                 var eroi = rand.Next(4, 8);
 
                 DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
-
+                var number = _creditorService.GetAllCreditors().Count();
                 var c = new Creditor
                 {
-                    username = "Ewa" + i,
+                    username = "Jan" + number ,
                     ROI = roi,
                     EROI = eroi,
                     Balance = balance,
@@ -108,9 +107,11 @@ namespace Finapp.CreateDatabase
 
                 DateTime d = DateTime.Now.AddDays(rand.Next(15, 50) * 7);
 
+                var number = _debtorService.GetAllDebtors().Count();
+
                 var deb = new Debtor
                 {
-                    username = "Adam" + i,
+                    username = "Ewa" + number ,
                     APR = apr,
                     EAPR = eapr,
                     Debet = debet,
@@ -127,9 +128,7 @@ namespace Finapp.CreateDatabase
                     Debet = deb.Debet,
                     Credit_Line_Date = d
                 });
-
             }
-
         }
     }
 }
