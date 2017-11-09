@@ -26,6 +26,9 @@ namespace Finapp.Models
         public int Creditor_Account_Id { get; set; }
         public int Debtor_Account_Id { get; set; }
         public Nullable<float> ROI { get; set; }
+        public Nullable<int> Finapp_Debetor { get; set; }
+        public Nullable<int> Finapp_Creditor { get; set; }
+        public Nullable<int> Day_Access_To_Funds { get; set; }
     
         public virtual Creditor_Account Creditor_Account { get; set; }
         public virtual Debtor_Account Debtor_Account { get; set; }

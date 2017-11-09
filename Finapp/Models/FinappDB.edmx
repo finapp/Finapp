@@ -73,6 +73,9 @@
           <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
           <Property Name="Debtor_Account_Id" Type="int" Nullable="false" />
           <Property Name="ROI" Type="real" />
+          <Property Name="Finapp_Debetor" Type="int" />
+          <Property Name="Finapp_Creditor" Type="int" />
+          <Property Name="Day_Access_To_Funds" Type="int" />
         </EntityType>
         <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
@@ -265,6 +268,9 @@
           <NavigationProperty Name="Debtor_Account" Relationship="Self.asasa" FromRole="Transaction_Out" ToRole="Debtor_Account" />
           <Property Name="ROI" Type="Single" />
           <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk1" FromRole="Transaction_Out" ToRole="Return_Transaction" />
+          <Property Name="Finapp_Debetor" Type="Int32" />
+          <Property Name="Finapp_Creditor" Type="Int32" />
+          <Property Name="Day_Access_To_Funds" Type="Int32" />
         </EntityType>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
@@ -460,6 +466,9 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="Day_Access_To_Funds" ColumnName="Day_Access_To_Funds" />
+                <ScalarProperty Name="Finapp_Creditor" ColumnName="Finapp_Creditor" />
+                <ScalarProperty Name="Finapp_Debetor" ColumnName="Finapp_Debetor" />
                 <ScalarProperty Name="ROI" ColumnName="ROI" />
                 <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
                 <ScalarProperty Name="Ammount" ColumnName="Ammount" />
