@@ -30,7 +30,7 @@ namespace Finapp.Services
 
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -52,7 +52,7 @@ namespace Finapp.Services
 
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -217,7 +217,8 @@ namespace Finapp.Services
 
                 foreach (var transaction in transactions)
                 {
-                    var creditorAccount = _context.Transaction_Out.Where(t => t.Transaction_Out_Id == transaction.Transaction_Out.Transaction_Out_Id)
+                    var creditorAccount = _context.Transaction_Out
+                        .Where(t => t.Transaction_Out_Id == transaction.Transaction_Out.Transaction_Out_Id)
                         .Join(_context.Creditor_Account,
                         t => t.Creditor_Account_Id,
                         ca => ca.Creditor_Account_Id,
@@ -227,7 +228,7 @@ namespace Finapp.Services
                     var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
                     var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
                     var days = transaction.Transaction_Out.Day_Access_To_Funds;
-                    var partOfYear = (float)((float)days / 365);
+                    var partOfYear = ((float)days / 365);
                     var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
                     var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
 
@@ -241,17 +242,59 @@ namespace Finapp.Services
                         APR = debtor.Debtor.Delta_APR,
                         CreditorUsername = creditor.username,
                         CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
-                        CreditorBenefits = creditorBenefits??0,
-                        DebtorBenefits = debtorBenefits??0,
+                        CreditorBenefits = creditorBenefits ?? 0,
+                        DebtorBenefits = debtorBenefits ?? 0,
                         RealCreditorBenefits = realCreditorBenefits,
                         RealDebtorBenefits = realDebtorBenefits,
                         DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
                     });
-                    int a = 6;
                 }
             }
-           
+
             return listOfDebtorTransactions;
+        }
+
+        public TransactionWithUserViewModel CreateTransactionWithUserViewModel(Transaction_Out transaction)
+        {
+            var transactionCreditor = _context.Transaction_Out
+                .Where(t => t.Transaction_Out_Id == transaction.Transaction_Out_Id)
+                .Join(_context.Creditor_Account,
+                t => t.Creditor_Account_Id,
+                ca => ca.Creditor_Account_Id,
+                (t, ca) => new { Transaction_Out = t, Creditor_Account = ca })
+                .FirstOrDefault();
+
+            var transactionDebtor = _context.Transaction_Out
+                .Where(t => t.Transaction_Out_Id == transaction.Transaction_Out_Id)
+                .Join(_context.Debtor_Account,
+                t => t.Debtor_Account_Id,
+                da => da.Debtor_Account_Id,
+                (t, da) => new { Transaction_Out = t, Debtor_Account = da })
+                .FirstOrDefault();
+
+            var debtor = _debtorService.GetDebtorById(transactionDebtor.Debtor_Account.Debtor_Id);
+            var creditor = _creditorService.GetCreditorById(transactionCreditor.Creditor_Account.Creditor_Id);
+            var days = transaction.Day_Access_To_Funds;
+            var partOfYear = (float)((float)days / 365);
+            var realCreditorBenefits = ((int)((float)partOfYear * transaction.Creditor_Benefits_Per_Annum ?? 0));
+            var realDebtorBenefits = ((int)((float)partOfYear * transaction.Debtor_Benefits_Per_Annum ?? 0));
+
+            return new TransactionWithUserViewModel
+            {
+                Amount = transaction.Ammount,
+                DebtorAccountFinappAmount = transaction.Finapp_Debetor ?? 0,
+                DebtorUsername = debtor.username,
+                Date = transaction.Date_Of_Transaction ?? DateTime.Now,
+                ROI = (float)transaction.ROI,
+                APR = debtor.Delta_APR,
+                CreditorUsername = creditor.username,
+                CreditorAccountFinappAmount = transaction.Finapp_Creditor ?? 100,
+                CreditorBenefits = transaction.Creditor_Benefits_Per_Annum ?? 0,
+                DebtorBenefits = transaction.Debtor_Benefits_Per_Annum ?? 0,
+                RealCreditorBenefits = realCreditorBenefits,
+                RealDebtorBenefits = realDebtorBenefits,
+                DayAccessToFunds = transaction.Day_Access_To_Funds
+            };
         }
     }
 }

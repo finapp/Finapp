@@ -41,25 +41,24 @@ namespace Finapp.Implementations
             if (debtors == null)
                 return false;
 
+            var associate = new Associate
+            {
+                Date_Of_Associating = DateTime.Now
+            };
+            _associateService.AddNewAssociate(associate);
+
             foreach (var debtor in debtors)
             {
                 IEnumerable<Creditor> creditors = AddCreditorsToQueue(debtor.EAPR??0);
-                CreateTransaction(debtor, creditors);
+                CreateTransaction(debtor, creditors, associate);
             }
 
             return true;
         }
 
-        private bool CreateTransaction(Debtor debtor, IEnumerable<Creditor> creditors)
+        private bool CreateTransaction(Debtor debtor, IEnumerable<Creditor> creditors, Associate associate)
         {
             var EROI = creditors.Max(e=>e.EROI);
-
-            var associate = new Associate
-            {
-                Date_Of_Associating = DateTime.Now
-            };
-
-            _associateService.AddNewAssociate(associate);
 
             foreach (var creditor in creditors)
             {

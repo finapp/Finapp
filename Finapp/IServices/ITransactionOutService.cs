@@ -15,5 +15,6 @@ namespace Finapp.IServices
         IEnumerable<TransactionWithUserViewModel> GetTransactionsWithDebtorByDebtorUsername(string username);
         IEnumerable<TransactionWithUserViewModel> GetTransactionWithCreditorByCreditorUsername(string username);
         IEnumerable<TransactionWithUserViewModel> GetTransactions();
+        TransactionWithUserViewModel CreateTransactionWithUserViewModel(Transaction_Out transaction);
     }
 }

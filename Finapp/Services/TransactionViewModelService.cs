@@ -16,8 +16,8 @@ namespace Finapp.Services
         private readonly IDebtorService _debtorService;
         private readonly ICreditorService _creditorService;
 
-        public TransactionViewModelService(FinapEntities1 context, IDebtorAccountService debtorAccountService, ICreditorAccountService creditorAccountService,
-            IDebtorService debtorService, ICreditorService creditorService)
+        public TransactionViewModelService(FinapEntities1 context, IDebtorAccountService debtorAccountService, 
+            ICreditorAccountService creditorAccountService, IDebtorService debtorService, ICreditorService creditorService)
         {
             _context = context;
             _debtorAccountService = debtorAccountService;
