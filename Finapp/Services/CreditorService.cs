@@ -61,7 +61,7 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Available == true && eapr > c.EROI)
+                return _context.Creditor.Where(c => c.Available == true && eapr > c.Delta_ROI)
                     .OrderBy(c => c.Queue_Date)
                     .ToList();
             }

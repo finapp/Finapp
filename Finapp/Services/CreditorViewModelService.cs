@@ -38,6 +38,7 @@ namespace Finapp.Services
             foreach (var creditor in creditors)
             {
                 var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)accessDays / 365);
                 creditorViewModel.List.Add(new CreditorViewModel
                 {
                     Username = creditor.username,
@@ -47,7 +48,8 @@ namespace Finapp.Services
                     FinappBalance = creditor.Finapp_Balance,
                     Expiration_Date = creditor.Expiration_Date ?? DateTime.Now,
                     Queue_Date = creditor.Queue_Date ?? DateTime.Now,
-                    AccessDays = accessDays
+                    AccessDays = accessDays,
+                    ExpectedProfits = expectedProfits
                 });
             }
 

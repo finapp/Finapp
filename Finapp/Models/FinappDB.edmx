@@ -18,6 +18,7 @@
           <Property Name="Finapp_Balance" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="datetime" />
           <Property Name="Expiration_Date" Type="date" />
+          <Property Name="Delta_ROI" Type="float" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -41,6 +42,7 @@
           <Property Name="Finapp_Debet" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="date" />
           <Property Name="Expiration_Date" Type="date" />
+          <Property Name="Delta_APR" Type="real" Nullable="false" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -217,6 +219,7 @@
           <Property Name="Queue_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Creditor_Account" Relationship="Self.fkfkfsasdd" FromRole="Creditor" ToRole="Creditor_Account" />
           <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+          <Property Name="Delta_ROI" Type="Single" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -244,6 +247,7 @@
           <Property Name="Queue_Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Debtor_Account" Relationship="Self.fkfkfsd" FromRole="Debtor" ToRole="Debtor_Account" />
           <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
+          <Property Name="Delta_APR" Type="Single" Nullable="false" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -420,6 +424,7 @@
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="Delta_ROI" ColumnName="Delta_ROI" />
                 <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -445,6 +450,7 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="Delta_APR" ColumnName="Delta_APR" />
                 <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />

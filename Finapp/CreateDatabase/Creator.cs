@@ -56,6 +56,7 @@ namespace Finapp.CreateDatabase
                 }
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(4, 8);
+                var droi = eroi - roi;
 
                 DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
                 var number = _creditorService.GetAllCreditors().Count();
@@ -64,6 +65,7 @@ namespace Finapp.CreateDatabase
                     username = "Jan" + number ,
                     ROI = roi,
                     EROI = eroi,
+                    Delta_ROI = droi,
                     Balance = balance,
                     Available = true,
                     Finapp_Balance = balance,
@@ -105,6 +107,7 @@ namespace Finapp.CreateDatabase
                     debet = rand.Next(300, 500) * 100;
                 }
 
+                var dapr = apr - eapr;
                 DateTime d = DateTime.Now.AddDays(rand.Next(15, 50) * 7);
 
                 var number = _debtorService.GetAllDebtors().Count();
@@ -114,6 +117,7 @@ namespace Finapp.CreateDatabase
                     username = "Ewa" + number ,
                     APR = apr,
                     EAPR = eapr,
+                    Delta_APR = dapr,
                     Debet = debet,
                     Available = true,
                     Finapp_Debet = debet,

@@ -68,6 +68,7 @@ namespace Finapp.Implementations
                         Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
                         Creditor_Benefits_Per_Annum = (int)((float)((EROI/100)*debtor.Finapp_Debet)),
                         Debtor_Benefits_Per_Annum = (int)((float)(((debtor.APR - debtor.EAPR) / 100)*debtor.Finapp_Debet)),
+
                     };
 
                     _transactionOutService.AddTransaction(t_out);

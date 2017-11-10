@@ -8,14 +8,15 @@
     <thead>
         <tr>
             <th>Amount</th>
-            <th>Creditor</th>
-            <th>Debtor</th>
-            <th>Exp Profits</th>
-            <th>Deb Finapp</th>
-            <th>Savings</th>
-            <th>Cred Finapp</th>
-            <th>Profits</th>
             <th>Days</th>
+            <th>Debtor</th>
+            <th>Deb Finapp</th>
+            <th>Exp Savings</th>
+            <th>Savings</th>
+            <th>Creditor</th>
+            <th>Cred Finapp</th>
+            <th>Exp Profits</th>
+            <th>Profits</th>
         </tr>
     </thead>
     <tbody>
@@ -23,31 +24,35 @@
         {
             <tr>
                 <td>
-                    @transaction.Amount
+                    @transaction.Amount PLN
                 </td>
                 <td>
-                    @transaction.CreditorUsername
+                    @transaction.DayAccessToFunds
                 </td>
                 <td>
                     @transaction.DebtorUsername
                 </td>
                 <td>
-                    @transaction.ROI
+                    @transaction.DebtorAccountFinappAmount PLN
                 </td>
                 <td>
-                    @transaction.DebtorAccountFinappAmount
+                    @transaction.APR %
                 </td>
                 <td>
-                    @transaction.RealDebtorBenefits
+                    @transaction.RealDebtorBenefits PLN
+                </td>
+
+                <td>
+                    @transaction.CreditorUsername
                 </td>
                 <td>
-                    @transaction.CreditorAccountFinappAmount
+                    @transaction.CreditorAccountFinappAmount PLN
                 </td>
                 <td>
-                    @transaction.RealCreditorBenefits
+                    @transaction.ROI %
                 </td>
                 <td>
-                    @transaction.DayAccessToFunds
+                    @transaction.RealCreditorBenefits PLN
                 </td>
             </tr>
         }
