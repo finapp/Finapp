@@ -28,7 +28,6 @@ namespace Finapp.Controllers
         public ActionResult DebtorsQueue()
         {
             return View("Index", _debtorViewModelService.GetWithDebetDebtorsViewModel());
-
         }
     }
 }

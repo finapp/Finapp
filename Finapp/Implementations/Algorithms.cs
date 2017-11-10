@@ -134,6 +134,5 @@ namespace Finapp.Implementations
 
             return creditorsList;
         }
-
     }
 }

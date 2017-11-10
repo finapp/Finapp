@@ -61,7 +61,7 @@ namespace Finapp.CreateDatabase
                 var number = _creditorService.GetAllCreditors().Count();
                 var c = new Creditor
                 {
-                    username = "Jan" + number ,
+                    username = "Jan" + number,
                     ROI = roi,
                     EROI = eroi,
                     Balance = balance,
@@ -111,7 +111,7 @@ namespace Finapp.CreateDatabase
 
                 var deb = new Debtor
                 {
-                    username = "Ewa" + number ,
+                    username = "Ewa" + number,
                     APR = apr,
                     EAPR = eapr,
                     Debet = debet,
