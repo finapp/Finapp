@@ -44,6 +44,18 @@ namespace Finapp.Services
             }
         }
 
+        public Debtor GetDebtorByUsername(string username)
+        {
+            try
+            {
+                return _context.Debtor.Where(d => d.username == username).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public IEnumerable<Debtor> GetDebtorsWithDebet()
         {
             try

@@ -9,12 +9,10 @@ namespace Finapp.Controllers
 {
     public class TransactionController : Controller
     {
-        private readonly ITransactionOutService _transactionService;
         private readonly IAssociateViewModelService _associateService;
 
-        public TransactionController(ITransactionOutService transactionService, IAssociateViewModelService associateService)
+        public TransactionController(IAssociateViewModelService associateService)
         {
-            _transactionService = transactionService;
             _associateService = associateService;
         }
 
@@ -25,12 +23,12 @@ namespace Finapp.Controllers
 
         public ActionResult CreditorTransactions(string username)
         {
-            return View("Index", _transactionService.GetTransactionWithCreditorByCreditorUsername(username));
+            return View("Index", _associateService.GetTransactionsByCreditorUsername(username));
         }
 
         public ActionResult DebtorTransactions(string username)
         {
-            return View("Index", _transactionService.GetTransactionsWithDebtorByDebtorUsername(username));
+            return View("Index", _associateService.GetTransactionsByDebtorUsername(username));
         }
     }
 }
