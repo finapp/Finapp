@@ -17,7 +17,6 @@ namespace Finapp.Controllers
             _creator = creator;
         }
 
-        // GET: CreateDB
         public ActionResult Index()
         {
             return View();

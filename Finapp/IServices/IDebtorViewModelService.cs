@@ -9,8 +9,7 @@ namespace Finapp.IServices
 {
     public interface IDebtorViewModelService
     {
-        DebtorListViewModel GetAllDebtorsViewModel();
-
-        DebtorListViewModel GetWithDebetDebtorsViewModel();
+        IEnumerable<DebtorViewModel> GetAllDebtorsViewModel();
+        IEnumerable<DebtorViewModel> GetWithDebetDebtorsViewModel();
     }
 }

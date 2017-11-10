@@ -1,4 +1,4 @@
-﻿@model  Finapp.ViewModels.DebtorListViewModel
+﻿@model  IEnumerable<Finapp.ViewModels.DebtorViewModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.List)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>@user.Username</td>

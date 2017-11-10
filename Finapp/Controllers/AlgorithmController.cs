@@ -17,7 +17,6 @@ namespace Finapp.Controllers
             _algorithm = algorithm;
         }
 
-        // GET: Algorithm
         public async Task<ActionResult> Index()
         {
             await Task.Run(() => _algorithm.Associating());

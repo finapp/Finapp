@@ -17,29 +17,29 @@ namespace Finapp.Services
             _creditorService = creditorService;
         }
 
-        public CreditorListViewModel GetAllCreditorsViewModel()
+        public IEnumerable<CreditorViewModel> GetAllCreditorsViewModel()
         {
             IEnumerable<Creditor> creditors = _creditorService.GetAllCreditors();
 
             return CreateCreditorsViewModel(creditors);
         }
 
-        public CreditorListViewModel GetWithBalanceCreditorsViewModel()
+        public IEnumerable<CreditorViewModel> GetWithBalanceCreditorsViewModel()
         {
             IEnumerable<Creditor> creditors = _creditorService.GetCreditorsWithBalance();
 
             return CreateCreditorsViewModel(creditors);
         }
 
-        private CreditorListViewModel CreateCreditorsViewModel(IEnumerable<Creditor> creditors)
+        private IEnumerable<CreditorViewModel> CreateCreditorsViewModel(IEnumerable<Creditor> creditors)
         {
-            var creditorViewModel = new CreditorListViewModel();
+            var creditorViewModel = new List<CreditorViewModel>();
 
             foreach (var creditor in creditors)
             {
                 var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                 var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)accessDays / 365);
-                creditorViewModel.List.Add(new CreditorViewModel
+                creditorViewModel.Add(new CreditorViewModel
                 {
                     Username = creditor.username,
                     ROI = (float)creditor.ROI,

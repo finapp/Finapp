@@ -3,6 +3,13 @@
     ViewBag.Title = "AddNewCustomers";
 }
 
+<div class="text-center">
+    <h2>Set attributes</h2>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="alert-danger">@ViewBag.ErrorMessage</p>
+    }
+</div>
 
 <div class="text-center">
     @using (Html.BeginForm("AddNewCustomers", "CreateDB", FormMethod.Post, new { enctype = "multipart/form-data" }))

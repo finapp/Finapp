@@ -12,12 +12,10 @@ namespace Finapp.Controllers
     public class DebtorController : Controller
     {
         private readonly IDebtorViewModelService _debtorViewModelService;
-        private readonly ITransactionOutService _transactionOutService;
 
-        public DebtorController(IDebtorViewModelService debtorViewModelService, ITransactionOutService transactionOutService)
+        public DebtorController(IDebtorViewModelService debtorViewModelService)
         {
             _debtorViewModelService = debtorViewModelService;
-            _transactionOutService = transactionOutService;
         }
 
         public ActionResult Index()
@@ -28,7 +26,6 @@ namespace Finapp.Controllers
         public ActionResult DebtorsQueue()
         {
             return View("Index", _debtorViewModelService.GetWithDebetDebtorsViewModel());
-
         }
     }
 }

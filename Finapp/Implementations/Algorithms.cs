@@ -16,21 +16,17 @@ namespace Finapp.Implementations
         private readonly ITransactionOutService _transactionOutService;
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
-        private readonly IReturnTransactionService _returnTransactionService;
         private readonly IAssociateService _associateService;
-
 
         public Algorithms(ICreditorService creditorService, IDebtorService debtorService, 
             ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService, 
-            IDebtorAccountService debtorAccountService, IReturnTransactionService returnTransactionService, 
-            IAssociateService associateService)
+            IDebtorAccountService debtorAccountService, IAssociateService associateService)
         {
             _creditorService = creditorService;
             _debtorService = debtorService;
             _transactionOutService = transactionOutService;
             _creditorAccountService = creditorAccountService;
             _debtorAccountService = debtorAccountService;
-            _returnTransactionService = returnTransactionService;
             _associateService = associateService;
         }
 
@@ -64,7 +60,7 @@ namespace Finapp.Implementations
             {
                 if (creditor.Finapp_Balance > debtor.Finapp_Debet)
                 {
-                    var t_out = new Transaction_Out
+                    var transactionOut = new Transaction_Out
                     {
                         Ammount = debtor.Finapp_Debet,
                         Date_Of_Transaction = DateTime.Now,
@@ -79,8 +75,7 @@ namespace Finapp.Implementations
                         Associate_Id = associate.Associate_Id
                     };
 
-                    _transactionOutService.AddTransaction(t_out);
-                    // _returnTransactionService.AddReturnTransaction(t_out);
+                    _transactionOutService.AddTransaction(transactionOut);
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
                     _creditorService.ModifyCreditor(creditor);
@@ -93,7 +88,7 @@ namespace Finapp.Implementations
                 }
                 else
                 {
-                    var t_out = new Transaction_Out
+                    var transactionOut = new Transaction_Out
                     {
                         Ammount = creditor.Finapp_Balance,
                         Date_Of_Transaction = DateTime.Now,
@@ -108,8 +103,7 @@ namespace Finapp.Implementations
                         Associate_Id = associate.Associate_Id
                     };
 
-                    _transactionOutService.AddTransaction(t_out);
-                    //_returnTransactionService.AddReturnTransaction(t_out);
+                    _transactionOutService.AddTransaction(transactionOut);
 
                     debtor.Finapp_Debet -= creditor.Finapp_Balance;
                     _debtorService.ModifyDebtor(debtor);
@@ -144,6 +138,5 @@ namespace Finapp.Implementations
 
             return creditorsList;
         }
-
     }
 }

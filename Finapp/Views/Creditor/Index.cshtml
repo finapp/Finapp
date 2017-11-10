@@ -1,4 +1,4 @@
-﻿@model  Finapp.ViewModels.CreditorListViewModel
+﻿@model  IEnumerable<Finapp.ViewModels.CreditorViewModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.List)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>@user.Username</td>

@@ -162,8 +162,6 @@ namespace Finapp.Services
                 var partOfYear = (float)((float)days / 365);
                 var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
                 var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
-                //var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI / 100));
-                // var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.APR - debtor.EAPR) / 100));
 
                 listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
@@ -184,7 +182,6 @@ namespace Finapp.Services
             }
 
             return listOfDebtorTransactions;
-
         }
 
         public IEnumerable<TransactionWithUserViewModel> GetTransactions()
