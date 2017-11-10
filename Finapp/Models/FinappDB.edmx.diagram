@@ -18,6 +18,8 @@
         <AssociationConnector Association="FinapModel.fk3" />
         <AssociationConnector Association="FinapModel.fk2" />
         <AssociationConnector Association="FinapModel.fk1" />
+        <EntityTypeShape EntityType="FinapModel.Associate" Width="1.5" PointX="5.375" PointY="7.875" />
+        <AssociationConnector Association="FinapModel.aaa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

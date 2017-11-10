@@ -32,5 +32,6 @@ namespace Finapp.Models
         public virtual DbSet<Debtor_Account> Debtor_Account { get; set; }
         public virtual DbSet<Transaction_Out> Transaction_Out { get; set; }
         public virtual DbSet<Return_Transaction> Return_Transaction { get; set; }
+        public virtual DbSet<Associate> Associate { get; set; }
     }
 }

@@ -192,6 +192,7 @@
     <Compile Include="ICreateDatabase\ICreator.cs" />
     <Compile Include="Implementations\Algorithms.cs" />
     <Compile Include="Interfaces\IAlgorithms.cs" />
+    <Compile Include="IServices\IAssociateService.cs" />
     <Compile Include="IServices\ICreditorViewModelService.cs" />
     <Compile Include="IServices\IDebtorViewModelService.cs" />
     <Compile Include="IServices\ICreditorAccountService.cs" />
@@ -201,6 +202,9 @@
     <Compile Include="IServices\IReturnTransactionService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="IServices\ITransactionViewModelService.cs" />
+    <Compile Include="Models\Associate.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Creditor.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
@@ -236,6 +240,7 @@
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AssociateService.cs" />
     <Compile Include="Services\CreditorAccountService.cs" />
     <Compile Include="Services\CreditorService.cs" />
     <Compile Include="Services\CreditorViewModelService.cs" />

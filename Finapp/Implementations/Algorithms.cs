@@ -11,25 +11,27 @@ namespace Finapp.Implementations
 {
     public class Algorithms : IAlgorithms
     {
-        private readonly FinapEntities1 _context;
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
         private readonly ITransactionOutService _transactionOutService;
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
         private readonly IReturnTransactionService _returnTransactionService;
+        private readonly IAssociateService _associateService;
 
-        public Algorithms(FinapEntities1 context, ICreditorService creditorService, IDebtorService debtorService,
-            ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService,
-            IDebtorAccountService debtorAccountService, IReturnTransactionService returnTransactionService)
+
+        public Algorithms(ICreditorService creditorService, IDebtorService debtorService, 
+            ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService, 
+            IDebtorAccountService debtorAccountService, IReturnTransactionService returnTransactionService, 
+            IAssociateService associateService)
         {
-            _context = context;
             _creditorService = creditorService;
             _debtorService = debtorService;
             _transactionOutService = transactionOutService;
             _creditorAccountService = creditorAccountService;
             _debtorAccountService = debtorAccountService;
             _returnTransactionService = returnTransactionService;
+            _associateService = associateService;
         }
 
         public bool Associating()
@@ -52,6 +54,13 @@ namespace Finapp.Implementations
         {
             var EROI = creditors.Max(e=>e.EROI);
 
+            var associate = new Associate
+            {
+                Date_Of_Associating = DateTime.Now
+            };
+
+            _associateService.AddNewAssociate(associate);
+
             foreach (var creditor in creditors)
             {
                 if (creditor.Finapp_Balance > debtor.Finapp_Debet)
@@ -68,7 +77,7 @@ namespace Finapp.Implementations
                         Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
                         Creditor_Benefits_Per_Annum = (int)((float)((EROI/100)*debtor.Finapp_Debet)),
                         Debtor_Benefits_Per_Annum = (int)((float)(((debtor.APR - debtor.EAPR) / 100)*debtor.Finapp_Debet)),
-
+                        Associate_Id = associate.Associate_Id
                     };
 
                     _transactionOutService.AddTransaction(t_out);
@@ -96,7 +105,8 @@ namespace Finapp.Implementations
                         Finapp_Creditor = 0,
                         Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
                         Creditor_Benefits_Per_Annum = (int)((float)((EROI / 100) * creditor.Finapp_Balance)),
-                        Debtor_Benefits_Per_Annum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance))
+                        Debtor_Benefits_Per_Annum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance)),
+                        Associate_Id = associate.Associate_Id
                     };
 
                     _transactionOutService.AddTransaction(t_out);

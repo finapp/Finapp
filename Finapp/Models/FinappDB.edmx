@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FinapModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Associate">
+          <Key>
+            <PropertyRef Name="Associate_Id" />
+          </Key>
+          <Property Name="Associate_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_Of_Associating" Type="date" />
+        </EntityType>
         <EntityType Name="Creditor">
           <Key>
             <PropertyRef Name="Creditor_Id" />
@@ -80,7 +87,20 @@
           <Property Name="Day_Access_To_Funds" Type="int" Nullable="false" />
           <Property Name="Creditor_Benefits_Per_Annum" Type="int" />
           <Property Name="Debtor_Benefits_Per_Annum" Type="int" />
+          <Property Name="Associate_Id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="aaa">
+          <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Associate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="aasassasa">
           <End Role="Creditor_Account" Type="Self.Creditor_Account" Multiplicity="1" />
           <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
@@ -166,12 +186,17 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FinapModelStoreContainer">
+          <EntitySet Name="Associate" EntityType="Self.Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditor" EntityType="Self.Creditor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditor_Account" EntityType="Self.Creditor_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Return_Transaction" EntityType="Self.Return_Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="aaa" Association="Self.aaa">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
           <AssociationSet Name="aasassasa" Association="Self.aasassasa">
             <End Role="Creditor_Account" EntitySet="Creditor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
@@ -279,6 +304,8 @@
           <Property Name="Day_Access_To_Funds" Type="Int32" Nullable="false" />
           <Property Name="Creditor_Benefits_Per_Annum" Type="Int32" />
           <Property Name="Debtor_Benefits_Per_Annum" Type="Int32" />
+          <Property Name="Associate_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Associate" Relationship="FinapModel.aaa" FromRole="Transaction_Out" ToRole="Associate" />
         </EntityType>
         <Association Name="fkfkfsasdd">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
@@ -363,6 +390,11 @@
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
             <End Role="Return_Transaction" EntitySet="Return_Transaction" />
           </AssociationSet>
+          <EntitySet Name="Associate" EntityType="FinapModel.Associate" />
+          <AssociationSet Name="aaa" Association="FinapModel.aaa">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Return_Transaction">
           <Key>
@@ -412,6 +444,26 @@
             </Principal>
             <Dependent Role="Return_Transaction">
               <PropertyRef Name="Transaction_Out_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Associate">
+          <Key>
+            <PropertyRef Name="Associate_Id" />
+          </Key>
+          <Property Name="Associate_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Transaction_Out" Relationship="FinapModel.aaa" FromRole="Associate" ToRole="Transaction_Out" />
+          <Property Name="Date_Of_Associating" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="aaa">
+          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
+          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -476,6 +528,7 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
                 <ScalarProperty Name="Debtor_Benefits_Per_Annum" ColumnName="Debtor_Benefits_Per_Annum" />
                 <ScalarProperty Name="Creditor_Benefits_Per_Annum" ColumnName="Creditor_Benefits_Per_Annum" />
                 <ScalarProperty Name="Day_Access_To_Funds" ColumnName="Day_Access_To_Funds" />
@@ -500,6 +553,14 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Associate">
+            <EntityTypeMapping TypeName="FinapModel.Associate">
+              <MappingFragment StoreEntitySet="Associate">
+                <ScalarProperty Name="Date_Of_Associating" ColumnName="Date_Of_Associating" />
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
