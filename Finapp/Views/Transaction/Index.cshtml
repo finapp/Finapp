@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-@foreach (var model in Model)
+@foreach (var list in Model)
 {
-    <h2>Associate</h2>
+    <h2>Associate @list.Date.ToString("dd/MM/yyyy")</h2>
         <table class="table table-responsive table-striped">
             <thead>
                 <tr>
@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var transaction in model.List)
+                @foreach (var transaction in list.List)
                 {
                     <tr>
                         <td>
