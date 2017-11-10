@@ -86,36 +86,7 @@ namespace Finapp.Services
 
             foreach (var transaction in transactions)
             {
-                var creditorAccount = _context.Transaction_Out.Where(t => t.Transaction_Out_Id == transaction.Transaction_Out.Transaction_Out_Id)
-                    .Join(_context.Creditor_Account,
-                    t => t.Creditor_Account_Id,
-                    ca => ca.Creditor_Account_Id,
-                    (t, ca) => new { Transaction_Out = t, Creditor_Account = ca }).FirstOrDefault();
-
-                var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
-                var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
-                var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
-                var days = transaction.Transaction_Out.Day_Access_To_Funds;
-                var partOfYear = (float)((float)days / 365);
-                var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
-                var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
-
-                listOfDebtorTransactions.Add(new TransactionWithUserViewModel
-                {
-                    Amount = transaction.Transaction_Out.Ammount,
-                    DebtorAccountFinappAmount = transaction.Transaction_Out.Finapp_Debetor ?? 0,
-                    DebtorUsername = debtor.Debtor.username,
-                    Date = transaction.Transaction_Out.Date_Of_Transaction ?? DateTime.Now,
-                    ROI = (float)transaction.Transaction_Out.ROI,
-                    APR = debtor.Debtor.Delta_APR,
-                    CreditorUsername = creditor.username,
-                    CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
-                    CreditorBenefits = creditorBenefits ?? 0,
-                    DebtorBenefits = debtorBenefits ?? 0,
-                    RealCreditorBenefits = realCreditorBenefits,
-                    RealDebtorBenefits = realDebtorBenefits,
-                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
-                });
+                listOfDebtorTransactions.Add(CreateTransactionWithUserViewModel(transaction.Transaction_Out));
             }
 
             return listOfDebtorTransactions;
@@ -145,43 +116,14 @@ namespace Finapp.Services
             if (transactions == null)
                 return null;
 
-            List<TransactionWithUserViewModel> listOfDebtorTransactions = new List<TransactionWithUserViewModel>();
+            List<TransactionWithUserViewModel> listOfCreditorTransactions = new List<TransactionWithUserViewModel>();
 
             foreach (var transaction in transactions)
             {
-                var debtorAccount = _context.Transaction_Out.Where(t => t.Transaction_Out_Id == transaction.Transaction_Out.Transaction_Out_Id)
-                    .Join(_context.Debtor_Account,
-                    t => t.Debtor_Account_Id,
-                    da => da.Debtor_Account_Id,
-                    (t, da) => new { Transaction_Out = t, Debtor_Account = da }).FirstOrDefault();
-
-                var debtor = _debtorService.GetDebtorById(debtorAccount.Debtor_Account.Debtor_Id);
-                var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
-                var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
-                var days = transaction.Transaction_Out.Day_Access_To_Funds;
-                var partOfYear = (float)((float)days / 365);
-                var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
-                var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
-
-                listOfDebtorTransactions.Add(new TransactionWithUserViewModel
-                {
-                    Amount = transaction.Transaction_Out.Ammount,
-                    DebtorAccountFinappAmount = transaction.Transaction_Out.Finapp_Debetor ?? 0,
-                    DebtorUsername = debtor.username,
-                    Date = transaction.Transaction_Out.Date_Of_Transaction ?? DateTime.Now,
-                    ROI = (float)transaction.Transaction_Out.ROI,
-                    APR = debtor.Delta_APR,
-                    CreditorUsername = creditor.Creditor.username,
-                    CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
-                    CreditorBenefits = creditorBenefits ?? 0,
-                    DebtorBenefits = debtorBenefits ?? 0,
-                    RealCreditorBenefits = realCreditorBenefits,
-                    RealDebtorBenefits = realDebtorBenefits,
-                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
-                });
+                listOfCreditorTransactions.Add(CreateTransactionWithUserViewModel(transaction.Transaction_Out));
             }
 
-            return listOfDebtorTransactions;
+            return listOfCreditorTransactions;
         }
 
         public IEnumerable<TransactionWithUserViewModel> GetTransactions()
