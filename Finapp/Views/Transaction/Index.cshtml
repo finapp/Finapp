@@ -4,30 +4,26 @@
     ViewBag.Title = "Index";
 }
 
-@foreach (var transaction in Model)
-{
-    <table class="table table-responsive table-striped">
-        <thead>
-            <tr>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Creditor</th>
-                <th>Debtor</th>
-                <th>ROI</th>
-                <th>Deb Finapp</th>
-                <th>Deb Benefits</th>
-                <th>Cred Finapp</th>
-                <th>Cred Benefits</th>
-                <th>Days</th>
-            </tr>
-        </thead>
-        <tbody>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Creditor</th>
+            <th>Debtor</th>
+            <th>Exp Profits</th>
+            <th>Deb Finapp</th>
+            <th>Savings</th>
+            <th>Cred Finapp</th>
+            <th>Profits</th>
+            <th>Days</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
             <tr>
                 <td>
                     @transaction.Amount
-                </td>
-                <td>
-                    @transaction.Date.ToString("dd/MM/yyyy")
                 </td>
                 <td>
                     @transaction.CreditorUsername
@@ -54,21 +50,6 @@
                     @transaction.DayAccessToFunds
                 </td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Per Annum</td>
-                <td>
-                    @transaction.DebtorBenefits
-                </td>
-                <td>Per Annum</td>
-                <td>
-                    @transaction.CreditorBenefits
-                </td>
-            </tr>
+        }
         </tbody>
-    </table>
-}
+</table>

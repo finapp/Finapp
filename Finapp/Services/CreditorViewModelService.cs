@@ -37,6 +37,7 @@ namespace Finapp.Services
 
             foreach (var creditor in creditors)
             {
+                var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                 creditorViewModel.List.Add(new CreditorViewModel
                 {
                     Username = creditor.username,
@@ -45,7 +46,8 @@ namespace Finapp.Services
                     Balance = creditor.Balance,
                     FinappBalance = creditor.Finapp_Balance,
                     Expiration_Date = creditor.Expiration_Date ?? DateTime.Now,
-                    Queue_Date = creditor.Queue_Date ?? DateTime.Now
+                    Queue_Date = creditor.Queue_Date ?? DateTime.Now,
+                    AccessDays = accessDays
                 });
             }
 

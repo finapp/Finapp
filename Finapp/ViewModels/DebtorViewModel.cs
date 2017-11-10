@@ -15,6 +15,7 @@ namespace Finapp.ViewModels
         public int FinappDebet { get; set; }
         public DateTime Expiration_Date { get; set; }
         public DateTime Queue_Date { get; set; }
+        public int AccessDays { get; set; }
 
     }
 }
