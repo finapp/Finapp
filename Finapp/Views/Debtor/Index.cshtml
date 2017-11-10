@@ -26,11 +26,11 @@
         {
             <tr>
                 <td>@user.Username</td>
-                <td>@user.APR</td>
-                <td>@user.EAPR</td>
-                <td>@user.Debet</td>
-                <td>@user.FinappDebet</td>
-                <td>@user.ExpectedSavings</td>
+                <td>@user.APR %</td>
+                <td>@user.EAPR %</td>
+                <td>@user.Debet PLN</td>
+                <td>@user.FinappDebet PLN</td>
+                <td>@user.ExpectedSavings PLN</td>
                 <td>@user.AccessDays</td>
                 <td>@user.Queue_Date.ToString("dd/MM/yyyy")</td>
                 <td>@Html.ActionLink("Show transactions", "DebtorTransactions", "Transaction", new { username = user.Username }, null)</td>
