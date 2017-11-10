@@ -20,17 +20,17 @@ namespace Finapp.Controllers
 
         public ActionResult Index(string username)
         {
-            return View(_transactionService.GetTransactions());
+            return View("Index", _transactionService.GetTransactions());
         }
 
         public ActionResult CreditorTransactions(string username)
         {
-            return View(_transactionService.GetTransactionWithCreditorByCreditorUsername(username));
+            return View("Index", _transactionService.GetTransactionWithCreditorByCreditorUsername(username));
         }
 
         public ActionResult DebtorTransactions(string username)
         {
-            return View(_transactionService.GetTransactionsWithDebtorByDebtorUsername(username));
+            return View("Index", _transactionService.GetTransactionsWithDebtorByDebtorUsername(username));
         }
     }
 }

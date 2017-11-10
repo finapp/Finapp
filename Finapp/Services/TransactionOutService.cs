@@ -95,6 +95,10 @@ namespace Finapp.Services
                 var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
                 var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
                 var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
+                var days = transaction.Transaction_Out.Day_Access_To_Funds;
+                var partOfYear = (float)((float)days / 365);
+                var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
+                var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
 
                 listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
@@ -107,9 +111,9 @@ namespace Finapp.Services
                     CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
                     CreditorBenefits = creditorBenefits ?? 0,
                     DebtorBenefits = debtorBenefits ?? 0,
-                    RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                    RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds??0
+                    RealCreditorBenefits = realCreditorBenefits,
+                    RealDebtorBenefits = realDebtorBenefits,
+                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
                 });
             }
 
@@ -153,8 +157,12 @@ namespace Finapp.Services
                 var debtor = _debtorService.GetDebtorById(debtorAccount.Debtor_Account.Debtor_Id);
                 var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
                 var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
+                var days = transaction.Transaction_Out.Day_Access_To_Funds;
+                var partOfYear = (float)((float)days / 365);
+                var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
+                var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
                 //var creditorBenefits = (transaction.Transaction_Out.Ammount * (float)(transaction.Transaction_Out.ROI / 100));
-               // var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.APR - debtor.EAPR) / 100));
+                // var debtorBenefits = (transaction.Transaction_Out.Ammount * (float)((debtor.APR - debtor.EAPR) / 100));
 
                 listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                 {
@@ -167,9 +175,9 @@ namespace Finapp.Services
                     CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
                     CreditorBenefits = creditorBenefits ?? 0,
                     DebtorBenefits = debtorBenefits ?? 0,
-                    RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                    RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds ?? 0
+                    RealCreditorBenefits = realCreditorBenefits,
+                    RealDebtorBenefits = realDebtorBenefits,
+                    DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
                 });
             }
 
@@ -216,6 +224,10 @@ namespace Finapp.Services
                     var creditor = _creditorService.GetCreditorById(creditorAccount.Creditor_Account.Creditor_Id);
                     var creditorBenefits = transaction.Transaction_Out.Creditor_Benefits_Per_Annum;
                     var debtorBenefits = transaction.Transaction_Out.Debtor_Benefits_Per_Annum;
+                    var days = transaction.Transaction_Out.Day_Access_To_Funds;
+                    var partOfYear = (float)((float)days / 365);
+                    var realCreditorBenefits = ((int)((float)partOfYear * creditorBenefits));
+                    var realDebtorBenefits = ((int)((float)partOfYear * debtorBenefits));
 
                     listOfDebtorTransactions.Add(new TransactionWithUserViewModel
                     {
@@ -228,10 +240,11 @@ namespace Finapp.Services
                         CreditorAccountFinappAmount = transaction.Transaction_Out.Finapp_Creditor ?? 100,
                         CreditorBenefits = creditorBenefits??0,
                         DebtorBenefits = debtorBenefits??0,
-                        RealCreditorBenefits = (int)((float)((creditorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                        RealDebtorBenefits = (int)((float)((debtorBenefits / 365) * transaction.Transaction_Out.Day_Access_To_Funds ?? 0)),
-                        DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds ?? 0
+                        RealCreditorBenefits = realCreditorBenefits,
+                        RealDebtorBenefits = realDebtorBenefits,
+                        DayAccessToFunds = transaction.Transaction_Out.Day_Access_To_Funds
                     });
+                    int a = 6;
                 }
             }
            

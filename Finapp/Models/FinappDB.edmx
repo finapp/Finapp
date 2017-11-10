@@ -75,7 +75,7 @@
           <Property Name="ROI" Type="real" />
           <Property Name="Finapp_Debetor" Type="int" />
           <Property Name="Finapp_Creditor" Type="int" />
-          <Property Name="Day_Access_To_Funds" Type="int" />
+          <Property Name="Day_Access_To_Funds" Type="int" Nullable="false" />
           <Property Name="Creditor_Benefits_Per_Annum" Type="int" />
           <Property Name="Debtor_Benefits_Per_Annum" Type="int" />
         </EntityType>
@@ -272,7 +272,7 @@
           <NavigationProperty Name="Return_Transaction" Relationship="FinapModel.fk1" FromRole="Transaction_Out" ToRole="Return_Transaction" />
           <Property Name="Finapp_Debetor" Type="Int32" />
           <Property Name="Finapp_Creditor" Type="Int32" />
-          <Property Name="Day_Access_To_Funds" Type="Int32" />
+          <Property Name="Day_Access_To_Funds" Type="Int32" Nullable="false" />
           <Property Name="Creditor_Benefits_Per_Annum" Type="Int32" />
           <Property Name="Debtor_Benefits_Per_Annum" Type="Int32" />
         </EntityType>

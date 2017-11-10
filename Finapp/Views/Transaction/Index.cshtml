@@ -4,24 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<table class="table table-responsive table-striped">
-    <thead>
-        <tr>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Creditor</th>
-            <th>Debtor</th>
-            <th>ROI</th>
-            <th>Deb Finapp</th>
-            <th>Deb Benefits</th>
-            <th>Cred Finapp</th>
-            <th>Cred Benefits</th>
-            <th>Days</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var transaction in Model)
-        {
+@foreach (var transaction in Model)
+{
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Creditor</th>
+                <th>Debtor</th>
+                <th>ROI</th>
+                <th>Deb Finapp</th>
+                <th>Deb Benefits</th>
+                <th>Cred Finapp</th>
+                <th>Cred Benefits</th>
+                <th>Days</th>
+            </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>
                     @transaction.Amount
@@ -55,7 +55,12 @@
                 </td>
             </tr>
             <tr>
-                <td></td><td></td><td></td><td></td><td></td><td>Per Annum</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Per Annum</td>
                 <td>
                     @transaction.DebtorBenefits
                 </td>
@@ -64,6 +69,6 @@
                     @transaction.CreditorBenefits
                 </td>
             </tr>
-        }
         </tbody>
-</table>
+    </table>
+}

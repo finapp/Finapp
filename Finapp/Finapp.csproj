@@ -315,8 +315,6 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Debtor\Index.cshtml" />
     <Content Include="Views\Creditor\Index.cshtml" />
-    <Content Include="Views\Transaction\DebtorTransactions.cshtml" />
-    <Content Include="Views\Transaction\CreditorTransactions.cshtml" />
     <Content Include="Views\CreateDB\Index.cshtml" />
     <Content Include="Views\CreateDB\NewCustomers.cshtml" />
   </ItemGroup>

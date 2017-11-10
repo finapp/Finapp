@@ -28,7 +28,7 @@ namespace Finapp.Models
         public Nullable<float> ROI { get; set; }
         public Nullable<int> Finapp_Debetor { get; set; }
         public Nullable<int> Finapp_Creditor { get; set; }
-        public Nullable<int> Day_Access_To_Funds { get; set; }
+        public int Day_Access_To_Funds { get; set; }
         public Nullable<int> Creditor_Benefits_Per_Annum { get; set; }
         public Nullable<int> Debtor_Benefits_Per_Annum { get; set; }
     
