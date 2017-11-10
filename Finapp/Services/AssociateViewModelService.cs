@@ -19,7 +19,7 @@ namespace Finapp.Services
             _transactionService = transactionService;
         }
 
-        public IEnumerable<AssociateViewModel> GetTransactions()
+        public IEnumerable<AssociateViewModel> GetAllTransactions()
         {
             var assotiations = _context.Associate.ToList();
 

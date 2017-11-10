@@ -9,6 +9,6 @@ namespace Finapp.IServices
 {
     public interface IAssociateViewModelService
     {
-        IEnumerable<AssociateViewModel> GetTransactions();
+        IEnumerable<AssociateViewModel> GetAllTransactions();
     }
 }
