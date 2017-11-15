@@ -17,5 +17,6 @@ namespace Finapp.IServices
         bool ModifyDebtor(Debtor debtor);
         string GetDebtorUsernameById(int id);
         bool AddNewDebtor(Debtor debtor);
+        IEnumerable<Debtor> GetDebtorsWithoutTransactions();
     }
 }

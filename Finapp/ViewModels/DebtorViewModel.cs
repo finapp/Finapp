@@ -17,6 +17,5 @@ namespace Finapp.ViewModels
         public DateTime Queue_Date { get; set; }
         public int AccessDays { get; set; }
         public int ExpectedSavings { get; set; }
-
     }
 }

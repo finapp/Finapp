@@ -200,6 +200,8 @@
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
+    <Compile Include="IServices\IPeopleWithoutAssociateViewModelService.cs" />
+    <Compile Include="IServices\ISummaryService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="Models\Associate.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
@@ -235,6 +237,9 @@
     <Compile Include="Models\Return_Transaction.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Summary.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transaction_Out.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
@@ -247,10 +252,16 @@
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
+    <Compile Include="Services\PeopleWithoutAssociateViewModelService.cs" />
+    <Compile Include="Services\SummaryService.cs" />
+    <Compile Include="Services\SummaryViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="ViewModels\AssociateViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
     <Compile Include="ViewModels\DebtorViewModel.cs" />
+    <Compile Include="ViewModels\PeopleWithoutAssociateViewModel.cs" />
+    <Compile Include="ViewModels\Summary.cs" />
+    <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\TransactionWithUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

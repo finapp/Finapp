@@ -76,6 +76,8 @@ namespace Finapp.App_Start
             kernel.Bind<ICreator>().To<Creator>().InRequestScope();
             kernel.Bind<IAssociateService>().To<AssociateService>().InRequestScope();
             kernel.Bind<IAssociateViewModelService>().To<AssociateViewModelService>().InRequestScope();
+            kernel.Bind<IPeopleWithoutAssociateViewModelService>().To<PeopleWithoutAssociateViewModelService>().InRequestScope();
+            kernel.Bind<ISummaryService>().To<SummaryService>().InRequestScope();
         }
     }
 }

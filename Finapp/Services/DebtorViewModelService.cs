@@ -38,7 +38,7 @@ namespace Finapp.Services
             return CreateListViewModel(debtors);
         }
 
-        private IEnumerable<DebtorViewModel> CreateListViewModel(IEnumerable<Debtor> debtors)
+        public IEnumerable<DebtorViewModel> CreateListViewModel(IEnumerable<Debtor> debtors)
         {
             var debtorsViewModel = new List<DebtorViewModel>();
 

@@ -113,5 +113,27 @@ namespace Finapp.Services
                 return false;
             }
         }
+
+        public IEnumerable<Creditor> GetCreditorsWithoutTransactions()
+        {
+            var creditorAccounts = _context.Creditor_Account.ToList();
+            var listOfCreditorWithoutTransactions = new List<Creditor>();
+
+            foreach (var account in creditorAccounts)
+            {
+                var accountWithTransaction = _context.Transaction_Out.Any(t => t.Creditor_Account_Id == account.Creditor_Account_Id);
+
+                if (!accountWithTransaction)
+                {
+                    var creditor = _context.Creditor
+                        .Where(c => c.Creditor_Id == account.Creditor_Id)
+                        .FirstOrDefault();
+
+                    listOfCreditorWithoutTransactions.Add(creditor);
+                }
+            }
+
+            return listOfCreditorWithoutTransactions;
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Finapp.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -38,7 +38,7 @@ namespace Finapp.Services
                 return _context.Debtor_Account.Where(a => a.Debtor_Id == id)
                     .FirstOrDefault();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
@@ -75,6 +75,38 @@ namespace Finapp.Services
             try
             {
                 return _context.Debtor_Account.Where(t => t.Debtor_Account_Id == id).FirstOrDefault().Debtor_Id;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public IEnumerable<Debtor_Account> GetAllAccounts()
+        {
+            try
+            {
+                return _context.Debtor_Account.ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Debtor GetDebtorByAccountId(int id)
+        {
+            try
+            {
+                var debtorId = _context.Debtor_Account
+                    .Where(a => a.Debtor_Account_Id == id)
+                    .FirstOrDefault();
+
+                var debtor = _context.Debtor
+                    .Where(d => d.Debtor_Id == debtorId.Debtor_Id)
+                    .FirstOrDefault();
+
+                return debtor;
             }
             catch(Exception e)
             {

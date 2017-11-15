@@ -72,6 +72,25 @@
           <Property Name="Creditor_Account_Id" Type="int" Nullable="false" />
           <Property Name="Return_Transaction_Status" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="Summary">
+          <Key>
+            <PropertyRef Name="Summary_Id" />
+          </Key>
+          <Property Name="Summary_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Associate_Id" Type="int" Nullable="false" />
+          <Property Name="Debet_Average" Type="int" />
+          <Property Name="Balance_Average" Type="int" />
+          <Property Name="Savings_Average" Type="int" />
+          <Property Name="Profits_Average" Type="int" />
+          <Property Name="Savings_Average_Percentage" Type="int" />
+          <Property Name="Profits_Average_Percentage" Type="int" />
+          <Property Name="Profits_Sum" Type="int" />
+          <Property Name="Savings_Sum" Type="int" />
+          <Property Name="Balance_Sum" Type="int" />
+          <Property Name="Debet_Sum" Type="int" />
+          <Property Name="Debtors" Type="int" />
+          <Property Name="Creditors" Type="int" />
+        </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
             <PropertyRef Name="Transaction_Out_Id" />
@@ -122,6 +141,18 @@
             </Principal>
             <Dependent Role="Transaction_Out">
               <PropertyRef Name="Debtor_Account_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk01">
+          <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
+          <End Role="Summary" Type="Self.Summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Summary">
+              <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -192,6 +223,7 @@
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Return_Transaction" EntityType="Self.Return_Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Summary" EntityType="Self.Summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="aaa" Association="Self.aaa">
             <End Role="Associate" EntitySet="Associate" />
@@ -204,6 +236,10 @@
           <AssociationSet Name="asasa" Association="Self.asasa">
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="fk01" Association="Self.fk01">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Summary" EntitySet="Summary" />
           </AssociationSet>
           <AssociationSet Name="fk1" Association="Self.fk1">
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
@@ -395,6 +431,11 @@
             <End Role="Associate" EntitySet="Associate" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
+          <EntitySet Name="Summary" EntityType="FinapModel.Summary" />
+          <AssociationSet Name="fk01" Association="FinapModel.fk01">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Summary" EntitySet="Summary" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Return_Transaction">
           <Key>
@@ -454,6 +495,7 @@
           <Property Name="Associate_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Transaction_Out" Relationship="FinapModel.aaa" FromRole="Associate" ToRole="Transaction_Out" />
           <Property Name="Date_Of_Associating" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Summary" Relationship="FinapModel.fk01" FromRole="Associate" ToRole="Summary" />
         </EntityType>
         <Association Name="aaa">
           <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
@@ -463,6 +505,38 @@
               <PropertyRef Name="Associate_Id" />
             </Principal>
             <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Associate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Summary">
+          <Key>
+            <PropertyRef Name="Summary_Id" />
+          </Key>
+          <Property Name="Summary_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Associate_Id" Type="Int32" Nullable="false" />
+          <Property Name="Debet_Average" Type="Int32" />
+          <Property Name="Balance_Average" Type="Int32" />
+          <Property Name="Savings_Average" Type="Int32" />
+          <Property Name="Profits_Average" Type="Int32" />
+          <Property Name="Savings_Average_Percentage" Type="Int32" />
+          <Property Name="Profits_Average_Percentage" Type="Int32" />
+          <Property Name="Profits_Sum" Type="Int32" />
+          <Property Name="Savings_Sum" Type="Int32" />
+          <Property Name="Balance_Sum" Type="Int32" />
+          <Property Name="Debet_Sum" Type="Int32" />
+          <NavigationProperty Name="Associate" Relationship="FinapModel.fk01" FromRole="Summary" ToRole="Associate" />
+          <Property Name="Debtors" Type="Int32" />
+          <Property Name="Creditors" Type="Int32" />
+        </EntityType>
+        <Association Name="fk01">
+          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
+          <End Type="FinapModel.Summary" Role="Summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Summary">
               <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -561,6 +635,26 @@
               <MappingFragment StoreEntitySet="Associate">
                 <ScalarProperty Name="Date_Of_Associating" ColumnName="Date_Of_Associating" />
                 <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Summary">
+            <EntityTypeMapping TypeName="FinapModel.Summary">
+              <MappingFragment StoreEntitySet="Summary">
+                <ScalarProperty Name="Creditors" ColumnName="Creditors" />
+                <ScalarProperty Name="Debtors" ColumnName="Debtors" />
+                <ScalarProperty Name="Debet_Sum" ColumnName="Debet_Sum" />
+                <ScalarProperty Name="Balance_Sum" ColumnName="Balance_Sum" />
+                <ScalarProperty Name="Savings_Sum" ColumnName="Savings_Sum" />
+                <ScalarProperty Name="Profits_Sum" ColumnName="Profits_Sum" />
+                <ScalarProperty Name="Profits_Average_Percentage" ColumnName="Profits_Average_Percentage" />
+                <ScalarProperty Name="Savings_Average_Percentage" ColumnName="Savings_Average_Percentage" />
+                <ScalarProperty Name="Profits_Average" ColumnName="Profits_Average" />
+                <ScalarProperty Name="Savings_Average" ColumnName="Savings_Average" />
+                <ScalarProperty Name="Balance_Average" ColumnName="Balance_Average" />
+                <ScalarProperty Name="Debet_Average" ColumnName="Debet_Average" />
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+                <ScalarProperty Name="Summary_Id" ColumnName="Summary_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,5 @@
-﻿using Finapp.ViewModels;
+﻿using Finapp.Models;
+using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Finapp.IServices
     {
         IEnumerable<DebtorViewModel> GetAllDebtorsViewModel();
         IEnumerable<DebtorViewModel> GetWithDebetDebtorsViewModel();
+        IEnumerable<DebtorViewModel> CreateListViewModel(IEnumerable<Debtor> debtors);
     }
 }

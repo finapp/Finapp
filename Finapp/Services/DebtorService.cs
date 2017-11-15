@@ -122,5 +122,27 @@ namespace Finapp.Services
                 throw ;
             }
         }
+
+        public IEnumerable<Debtor> GetDebtorsWithoutTransactions()
+        {
+            var debtorAccounts = _context.Debtor_Account.ToList();
+            var listOfDebtorWithoutTransactions = new List<Debtor>();
+
+            foreach (var account in debtorAccounts)
+            {
+                var accountWithTransaction = _context.Transaction_Out.Any(t => t.Debtor_Account_Id == account.Debtor_Account_Id);
+
+                if (!accountWithTransaction)
+                {
+                    var debtor = _context.Debtor
+                        .Where(d => d.Debtor_Id == account.Debtor_Id)
+                        .FirstOrDefault();
+
+                    listOfDebtorWithoutTransactions.Add(debtor);
+                }
+            }
+
+            return listOfDebtorWithoutTransactions;
+        }
     }
 }
