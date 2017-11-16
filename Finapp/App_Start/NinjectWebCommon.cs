@@ -79,6 +79,8 @@ namespace Finapp.App_Start
             kernel.Bind<IStatisticsViewModelService>().To<StatisticsViewModelService>().InRequestScope();
             kernel.Bind<ISummaryService>().To<SummaryService>().InRequestScope();
             kernel.Bind<ISummaryViewModelService>().To<SummaryViewModelService>().InRequestScope();
+            kernel.Bind<ICreditorToSummaryViewModelService>().To<CreditorToSummaryViewModelService>().InRequestScope();
+            kernel.Bind<IDebtorToSummaryViewModelService>().To<DebtorToSummaryViewModelService>().InRequestScope();
         }
     }
 }

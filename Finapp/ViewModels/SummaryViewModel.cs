@@ -9,7 +9,7 @@ namespace Finapp.ViewModels
     {
         public IEnumerable<AssociateViewModel> ListOfTransactions { get; set; }
         public IEnumerable<StatisticsViewModel> Summary { get; set; }
-        public IEnumerable<IEnumerable<CreditorViewModel>> Creditors { get; set; }
-        public IEnumerable<IEnumerable<DebtorViewModel>> Debtors { get; set; }
+        public IEnumerable<IEnumerable<CreditorToSummaryViewModel>> Creditors { get; set; }
+        public IEnumerable<IEnumerable<DebtorToSummaryViewModel>> Debtors { get; set; }
     }
 }

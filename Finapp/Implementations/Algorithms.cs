@@ -134,9 +134,6 @@ namespace Finapp.Implementations
                         Associate_Id = associate.Associate_Id,
                     };
 
-                    _creditorService.AddTransaction(transactionOut, creditor);
-                    _debtorService.AddTransaction(transactionOut, debtor);
-
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
                     _summary.ProfitsSum += CountAllBalance(creditor, creditorBenefitsPerAnnum);
                     _summary.ProfitsAveragePercentage += (int)EROI;
@@ -145,6 +142,9 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     _transactionOutService.AddTransaction(transactionOut);
+
+                    _creditorService.AddTransaction(transactionOut, creditor);
+                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
                     _creditorService.ModifyCreditor(creditor);
@@ -173,9 +173,6 @@ namespace Finapp.Implementations
                         Associate_Id = associate.Associate_Id
                     };
 
-                    _creditorService.AddTransaction(transactionOut, creditor);
-                    _debtorService.AddTransaction(transactionOut, debtor);
-
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
                     _summary.ProfitsSum += CountAllBalance(creditor, creditorBenefitsPerAnnum);
                     _summary.ProfitsAveragePercentage += (int)EROI;
@@ -184,6 +181,9 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     _transactionOutService.AddTransaction(transactionOut);
+
+                    _creditorService.AddTransaction(transactionOut, creditor);
+                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     debtor.Finapp_Debet -= creditor.Finapp_Balance;
                     _debtorService.ModifyDebtor(debtor);

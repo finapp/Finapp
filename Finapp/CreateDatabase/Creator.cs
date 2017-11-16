@@ -31,6 +31,8 @@ namespace Finapp.CreateDatabase
             context.Database.ExecuteSqlCommand("Delete from [Summary]");
             context.Database.ExecuteSqlCommand("Delete from [Creditor_Associate]");
             context.Database.ExecuteSqlCommand("Delete from [Debtor_Associate]");
+            context.Database.ExecuteSqlCommand("Delete from [Creditor_Transaction_Out]");
+            context.Database.ExecuteSqlCommand("Delete from [Debtor_Transaction_Out]");
             context.Database.ExecuteSqlCommand("Delete from [Return_Transaction]");
             context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
             context.Database.ExecuteSqlCommand("Delete from [Associate]");
