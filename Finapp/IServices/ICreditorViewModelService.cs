@@ -1,4 +1,5 @@
-﻿using Finapp.ViewModels;
+﻿using Finapp.Models;
+using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Finapp.IServices
     {
         IEnumerable<CreditorViewModel> GetAllCreditorsViewModel();
         IEnumerable<CreditorViewModel> GetWithBalanceCreditorsViewModel();
+        IEnumerable<IEnumerable<CreditorViewModel>> GetTheWorstCreditors();
+        IEnumerable<CreditorViewModel> GetCreditorsWithoutTransactions(Associate associate);
     }
 }

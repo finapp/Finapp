@@ -50,5 +50,17 @@ namespace Finapp.Services
 
             return true;
         }
+
+        public IEnumerable<Associate> GetAllAssociations()
+        {
+            try
+            {
+                return _context.Associate.ToList();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

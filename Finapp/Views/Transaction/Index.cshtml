@@ -45,7 +45,6 @@
                     <td>
                         @transaction.RealDebtorBenefits PLN
                     </td>
-
                     <td>
                         @transaction.CreditorUsername
                     </td>
@@ -66,7 +65,7 @@
     foreach (var summaries in Model.Summary)
     {
         if (summaries.Summary.AssociateId == transactions.AssociateId)
-        { 
+        {
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
@@ -118,12 +117,13 @@
                         <td>
                             @summaries.Summary.Days
                         </td>
-
                     </tr>
                 </tbody>
             </table>
         }
     }
+
+
 }
 
 

@@ -16,10 +16,11 @@ namespace Finapp.Services
         private readonly IDebtorService _debtorService;
         private readonly IAssociateViewModelService _associateService;
         private readonly IStatisticsViewModelService _statisticsService;
+        private readonly ICreditorViewModelService _creditorViewModelService;
 
         public SummaryViewModelService(FinapEntities1 context, ITransactionOutService transactionService, 
             ICreditorService creditorService, IDebtorService debtorService, IAssociateViewModelService associateService, 
-            IStatisticsViewModelService statisticsService)
+            IStatisticsViewModelService statisticsService, ICreditorViewModelService creditorViewModelService)
         {
             _context = context;
             _transactionService = transactionService;
@@ -27,6 +28,7 @@ namespace Finapp.Services
             _debtorService = debtorService;
             _associateService = associateService;
             _statisticsService = statisticsService;
+            _creditorViewModelService = creditorViewModelService;
         }
 
         public IEnumerable<AssociateViewModel> GetTransactions()
@@ -44,8 +46,14 @@ namespace Finapp.Services
             return new SummaryViewModel
             {
                 ListOfTransactions = GetTransactions(),
-                Summary = GetSummary()
+                Summary = GetSummary(),
+                Creditors = GetTheWorstCreditors()
             };
+        }
+
+        public IEnumerable<IEnumerable<CreditorViewModel>> GetTheWorstCreditors()
+        {
+            return _creditorViewModelService.GetTheWorstCreditors();
         }
     }
 }

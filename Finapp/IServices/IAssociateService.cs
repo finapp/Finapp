@@ -12,5 +12,6 @@ namespace Finapp.IServices
         bool AddNewAssociate(Associate associate);
         bool AddCreditor(Associate associate, Creditor creditor);
         bool AddDebtor(Associate associate, Debtor debtor);
+        IEnumerable<Associate> GetAllAssociations();
     }
 }

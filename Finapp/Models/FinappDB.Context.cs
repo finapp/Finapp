@@ -18,7 +18,6 @@ namespace Finapp.Models
         public FinapEntities1()
             : base("name=FinapEntities1")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

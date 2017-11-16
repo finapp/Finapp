@@ -18,5 +18,6 @@ namespace Finapp.IServices
         bool AddNewCreditor(Creditor creditor);
         IEnumerable<Creditor> GetCreditorsWithoutTransactions();
         bool AddAssociate(Associate associate, Creditor creditor);
+        bool AddTransaction(Transaction_Out transaction, Creditor creditor);
     }
 }

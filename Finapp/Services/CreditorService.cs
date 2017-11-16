@@ -144,5 +144,14 @@ namespace Finapp.Services
 
             return true;
         }
+
+        public bool AddTransaction(Transaction_Out transaction, Creditor creditor)
+        {
+            creditor.Transaction_Out.Add(transaction);
+            _context.Entry(creditor).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }

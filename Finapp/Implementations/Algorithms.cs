@@ -131,8 +131,11 @@ namespace Finapp.Implementations
                         Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
                         Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-                        Associate_Id = associate.Associate_Id
+                        Associate_Id = associate.Associate_Id,
                     };
+
+                    _creditorService.AddTransaction(transactionOut, creditor);
+                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
                     _summary.ProfitsSum += CountAllBalance(creditor, creditorBenefitsPerAnnum);
@@ -169,6 +172,9 @@ namespace Finapp.Implementations
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                         Associate_Id = associate.Associate_Id
                     };
+
+                    _creditorService.AddTransaction(transactionOut, creditor);
+                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
                     _summary.ProfitsSum += CountAllBalance(creditor, creditorBenefitsPerAnnum);

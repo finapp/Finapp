@@ -154,5 +154,15 @@ namespace Finapp.Services
 
             return true;
         }
+
+        public bool AddTransaction(Transaction_Out transaction, Debtor debtor)
+        {
+            debtor.Transaction_Out.Add(transaction);
+            _context.Debtor.Attach(debtor);
+            _context.Entry(debtor);
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }
