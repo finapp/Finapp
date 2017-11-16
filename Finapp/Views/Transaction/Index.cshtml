@@ -1,66 +1,132 @@
-﻿@model  IEnumerable<Finapp.ViewModels.AssociateViewModel>
+﻿@model  Finapp.ViewModels.SummaryViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-@foreach (var list in Model)
+
+@foreach (var transactions in Model.ListOfTransactions)
 {
-    <h2>Associate @list.Date.ToString("dd/MM/yyyy")</h2>
-        <table class="table table-responsive table-striped">
-            <thead>
+    <h2>Associate @transactions.Date.ToString("dd/MM/yyyy")</h2>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Days</th>
+                <th>Debtor</th>
+                <th>Deb Finapp</th>
+                <th>Exp Savings</th>
+                <th>Savings</th>
+                <th>Creditor</th>
+                <th>Cred Finapp</th>
+                <th>Exp Profits</th>
+                <th>Profits</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in transactions.List)
+            {
                 <tr>
-                    <th>Amount</th>
-                    <th>Days</th>
-                    <th>Debtor</th>
-                    <th>Deb Finapp</th>
-                    <th>Exp Savings</th>
-                    <th>Savings</th>
-                    <th>Creditor</th>
-                    <th>Cred Finapp</th>
-                    <th>Exp Profits</th>
-                    <th>Profits</th>
+                    <td>
+                        @transaction.Amount PLN
+                    </td>
+                    <td>
+                        @transaction.DayAccessToFunds
+                    </td>
+                    <td>
+                        @transaction.DebtorUsername
+                    </td>
+                    <td>
+                        @transaction.DebtorAccountFinappAmount PLN
+                    </td>
+                    <td>
+                        @transaction.APR %
+                    </td>
+                    <td>
+                        @transaction.RealDebtorBenefits PLN
+                    </td>
+
+                    <td>
+                        @transaction.CreditorUsername
+                    </td>
+                    <td>
+                        @transaction.CreditorAccountFinappAmount PLN
+                    </td>
+                    <td>
+                        @transaction.ROI %
+                    </td>
+                    <td>
+                        @transaction.RealCreditorBenefits PLN
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var transaction in list.List)
-                {
+            }
+        </tbody>
+    </table>
+
+    foreach (var summaries in Model.Summary)
+    {
+        if (summaries.Summary.AssociateId == transactions.AssociateId)
+        { 
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Debet</th>
+                        <th>Debet Avg</th>
+                        <th>Balance</th>
+                        <th>Balance Avg</th>
+                        <th>Savings</th>
+                        <th>Savings Avg</th>
+                        <th>Savings %</th>
+                        <th>Profits</th>
+                        <th>Profits Avg</th>
+                        <th>Profits %</th>
+                        <th>Days</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td>
-                            @transaction.Amount PLN
+                            @summaries.Summary.DebetSum PLN
                         </td>
                         <td>
-                            @transaction.DayAccessToFunds
+                            @summaries.Summary.DebetAverage PLN
                         </td>
                         <td>
-                            @transaction.DebtorUsername
+                            @summaries.Summary.BalanceSum PLN
                         </td>
                         <td>
-                            @transaction.DebtorAccountFinappAmount PLN
+                            @summaries.Summary.BalanceAverage PLN
                         </td>
                         <td>
-                            @transaction.APR %
+                            @summaries.Summary.SavingsSum PLN
                         </td>
                         <td>
-                            @transaction.RealDebtorBenefits PLN
+                            @summaries.Summary.SavingsAverage PLN
+                        </td>
+                        <td>
+                            @summaries.Summary.SavingsAveragePercentage %
+                        </td>
+                        <td>
+                            @summaries.Summary.ProfitsSum PLN
+                        </td>
+                        <td>
+                            @summaries.Summary.ProfitsAverage PLN
+                        </td>
+                        <td>
+                            @summaries.Summary.ProfitsAveragePercentage %
+                        </td>
+                        <td>
+                            @summaries.Summary.Days
                         </td>
 
-                        <td>
-                            @transaction.CreditorUsername
-                        </td>
-                        <td>
-                            @transaction.CreditorAccountFinappAmount PLN
-                        </td>
-                        <td>
-                            @transaction.ROI %
-                        </td>
-                        <td>
-                            @transaction.RealCreditorBenefits PLN
-                        </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        }
+    }
 }
+
+
+
 
 

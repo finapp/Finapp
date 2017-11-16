@@ -28,6 +28,8 @@ namespace Finapp.Models
         public Nullable<int> Debet_Sum { get; set; }
         public Nullable<int> Debtors { get; set; }
         public Nullable<int> Creditors { get; set; }
+        public Nullable<int> Days { get; set; }
+        public Nullable<System.DateTime> DateOfSummary { get; set; }
     
         public virtual Associate Associate { get; set; }
     }

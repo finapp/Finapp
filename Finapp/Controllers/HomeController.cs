@@ -15,9 +15,9 @@ namespace Finapp.Controllers
     {
         private readonly FinapEntities1 _context;
         private readonly IDebtorService _service;
-        private readonly IPeopleWithoutAssociateViewModelService _aservice;
+        private readonly IStatisticsViewModelService _aservice;
 
-        public HomeController(FinapEntities1 context, IDebtorService service, IPeopleWithoutAssociateViewModelService aservice)
+        public HomeController(FinapEntities1 context, IDebtorService service, IStatisticsViewModelService aservice)
         {
             _context = context;
             _service = service;

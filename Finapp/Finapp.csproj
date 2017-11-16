@@ -200,8 +200,9 @@
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
-    <Compile Include="IServices\IPeopleWithoutAssociateViewModelService.cs" />
+    <Compile Include="IServices\IStatisticsViewModelService.cs" />
     <Compile Include="IServices\ISummaryService.cs" />
+    <Compile Include="IServices\ISummaryViewModelService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="Models\Associate.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
@@ -240,6 +241,9 @@
     <Compile Include="Models\Summary.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transaction_Out.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
@@ -252,15 +256,15 @@
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
-    <Compile Include="Services\PeopleWithoutAssociateViewModelService.cs" />
+    <Compile Include="Services\StatisticsViewModelService.cs" />
     <Compile Include="Services\SummaryService.cs" />
     <Compile Include="Services\SummaryViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="ViewModels\AssociateViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
     <Compile Include="ViewModels\DebtorViewModel.cs" />
-    <Compile Include="ViewModels\PeopleWithoutAssociateViewModel.cs" />
-    <Compile Include="ViewModels\Summary.cs" />
+    <Compile Include="ViewModels\StatisticsViewModel.cs" />
+    <Compile Include="ViewModels\SummaryModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\TransactionWithUserViewModel.cs" />
   </ItemGroup>
@@ -321,11 +325,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Transaction\DebtorOrCreditorTransactions.cshtml" />
     <Content Include="Views\Debtor\Index.cshtml" />
     <Content Include="Views\Creditor\Index.cshtml" />
     <Content Include="Views\CreateDB\Index.cshtml" />
     <Content Include="Views\CreateDB\NewCustomers.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,6 +18,7 @@ namespace Finapp.Models
         public Creditor()
         {
             this.Creditor_Account = new HashSet<Creditor_Account>();
+            this.Associate = new HashSet<Associate>();
         }
     
         public int Creditor_Id { get; set; }
@@ -33,5 +34,7 @@ namespace Finapp.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Creditor_Account> Creditor_Account { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Associate> Associate { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Finapp.ViewModels
         }
 
         public DateTime Date { get; set; }
+        public int AssociateId { get; set; }
         public List<TransactionWithUserViewModel> List { get; set; }
     }
 }

@@ -5,13 +5,10 @@ using System.Web;
 
 namespace Finapp.ViewModels
 {
-    public class PeopleWithoutAssociateViewModel
+    public class StatisticsViewModel
     {
         public IEnumerable<DebtorViewModel> DebtorListWithoutAssociate { get; set; }
         public IEnumerable<CreditorViewModel> CreditorListWithoutAssociate { get; set; }
-        public int DebetAverage { get; set; }
-        public int BalanceAverage { get; set; }
-        public int SavingsAverage { get; set; }
-        public int ProfitsAverage { get; set; }
+        public SummaryModel Summary { get; set; }
     }
 }

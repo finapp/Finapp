@@ -19,6 +19,7 @@ namespace Finapp.Models
         {
             this.Transaction_Out = new HashSet<Transaction_Out>();
             this.Summary = new HashSet<Summary>();
+            this.Creditor = new HashSet<Creditor>();
         }
     
         public int Associate_Id { get; set; }
@@ -28,5 +29,7 @@ namespace Finapp.Models
         public virtual ICollection<Transaction_Out> Transaction_Out { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Summary> Summary { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Creditor> Creditor { get; set; }
     }
 }

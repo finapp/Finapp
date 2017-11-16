@@ -1,0 +1,66 @@
+﻿@model  IEnumerable<Finapp.ViewModels.AssociateViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@foreach (var list in Model)
+{
+    <h2>Associate @list.Date.ToString("dd/MM/yyyy")</h2>
+        <table class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Days</th>
+                    <th>Debtor</th>
+                    <th>Deb Finapp</th>
+                    <th>Exp Savings</th>
+                    <th>Savings</th>
+                    <th>Creditor</th>
+                    <th>Cred Finapp</th>
+                    <th>Exp Profits</th>
+                    <th>Profits</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in list.List)
+                {
+                    <tr>
+                        <td>
+                            @transaction.Amount PLN
+                        </td>
+                        <td>
+                            @transaction.DayAccessToFunds
+                        </td>
+                        <td>
+                            @transaction.DebtorUsername
+                        </td>
+                        <td>
+                            @transaction.DebtorAccountFinappAmount PLN
+                        </td>
+                        <td>
+                            @transaction.APR %
+                        </td>
+                        <td>
+                            @transaction.RealDebtorBenefits PLN
+                        </td>
+
+                        <td>
+                            @transaction.CreditorUsername
+                        </td>
+                        <td>
+                            @transaction.CreditorAccountFinappAmount PLN
+                        </td>
+                        <td>
+                            @transaction.ROI %
+                        </td>
+                        <td>
+                            @transaction.RealCreditorBenefits PLN
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
+
+

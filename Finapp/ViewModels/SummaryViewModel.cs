@@ -8,6 +8,6 @@ namespace Finapp.ViewModels
     public class SummaryViewModel
     {
         public IEnumerable<AssociateViewModel> ListOfTransactions { get; set; }
-        public IEnumerable<PeopleWithoutAssociateViewModel> Summary { get; set; }
+        public IEnumerable<StatisticsViewModel> Summary { get; set; }
     }
 }

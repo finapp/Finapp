@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Finapp.ViewModels
 {
-    public class Summary
+    public class SummaryModel
     {
         public int DebetAverage { get; set; }
         public int BalanceAverage { get; set; }
@@ -17,5 +17,10 @@ namespace Finapp.ViewModels
         public int SavingsSum { get; set; }
         public int BalanceSum { get; set; }
         public int DebetSum { get; set; }
+        public int CounterOdCreditors { get; set; }
+        public int CounterOfDebtors { get; set; }
+        public int Days { get; set; }
+        public DateTime DateOfSummary { get; set; }
+        public int AssociateId { get; set; }
     }
 }

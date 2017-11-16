@@ -28,6 +28,7 @@ namespace Finapp.CreateDatabase
         {
             FinapEntities1 context = new FinapEntities1();
 
+            context.Database.ExecuteSqlCommand("Delete from [Summary]");
             context.Database.ExecuteSqlCommand("Delete from [Return_Transaction]");
             context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
             context.Database.ExecuteSqlCommand("Delete from [Associate]");
