@@ -144,5 +144,15 @@ namespace Finapp.Services
 
             return listOfDebtorWithoutTransactions;
         }
+
+        public bool AddAssociate(Associate associate, Debtor debtor)
+        {
+            debtor.Associate.Add(associate);
+            _context.Debtor.Attach(debtor);
+            _context.Entry(debtor).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }

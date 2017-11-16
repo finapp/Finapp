@@ -2,6 +2,7 @@
 using Finapp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -29,6 +30,25 @@ namespace Finapp.Services
             {
                 throw e;
             }
+        }
+
+        public bool AddCreditor(Associate associate, Creditor creditor)
+        {
+            associate.Creditor.Add(creditor);
+            _context.Associate.Attach(associate);
+            _context.Entry(associate).State = EntityState.Modified;
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool AddDebtor(Associate associate, Debtor debtor)
+        {
+            associate.Debtor.Add(debtor);
+            _context.Associate.Attach(associate);
+            _context.Entry(associate).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return true;
         }
     }
 }

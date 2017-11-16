@@ -10,5 +10,7 @@ namespace Finapp.IServices
     public interface IAssociateService
     {
         bool AddNewAssociate(Associate associate);
+        bool AddCreditor(Associate associate, Creditor creditor);
+        bool AddDebtor(Associate associate, Debtor debtor);
     }
 }

@@ -68,6 +68,14 @@
           <Property Name="Debet" Type="int" Nullable="false" />
           <Property Name="Credit_Line_Date" Type="date" />
         </EntityType>
+        <EntityType Name="Debtor_Associate">
+          <Key>
+            <PropertyRef Name="Associate_Id" />
+            <PropertyRef Name="Debtor_Id" />
+          </Key>
+          <Property Name="Associate_Id" Type="int" Nullable="false" />
+          <Property Name="Debtor_Id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Return_Transaction">
           <Key>
             <PropertyRef Name="Id" />
@@ -260,6 +268,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ggg">
+          <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
+          <End Role="Debtor_Associate" Type="Self.Debtor_Associate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Debtor_Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sddsd">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="Debtor_Associate" Type="Self.Debtor_Associate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="Debtor_Associate">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FinapModelStoreContainer">
           <EntitySet Name="Associate" EntityType="Self.Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditor" EntityType="Self.Creditor" Schema="dbo" store:Type="Tables" />
@@ -267,6 +299,7 @@
           <EntitySet Name="Creditor_Associate" EntityType="Self.Creditor_Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor_Account" EntityType="Self.Debtor_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debtor_Associate" EntityType="Self.Debtor_Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Return_Transaction" EntityType="Self.Return_Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Summary" EntityType="Self.Summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -314,6 +347,14 @@
           <AssociationSet Name="fkfkfsd" Association="Self.fkfkfsd">
             <End Role="Debtor" EntitySet="Debtor" />
             <End Role="Debtor_Account" EntitySet="Debtor_Account" />
+          </AssociationSet>
+          <AssociationSet Name="ggg" Association="Self.ggg">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Debtor_Associate" EntitySet="Debtor_Associate" />
+          </AssociationSet>
+          <AssociationSet Name="sddsd" Association="Self.sddsd">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="Debtor_Associate" EntitySet="Debtor_Associate" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -364,6 +405,7 @@
           <NavigationProperty Name="Debtor_Account" Relationship="Self.fkfkfsd" FromRole="Debtor" ToRole="Debtor_Account" />
           <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
           <Property Name="Delta_APR" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Associate" Relationship="FinapModel.Debtor_Associate" FromRole="Debtor" ToRole="Associate" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -496,6 +538,10 @@
             <End Role="Associate" EntitySet="Associate" />
             <End Role="Creditor" EntitySet="Creditor" />
           </AssociationSet>
+          <AssociationSet Name="Debtor_Associate" Association="FinapModel.Debtor_Associate">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Debtor" EntitySet="Debtor" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Return_Transaction">
           <Key>
@@ -557,6 +603,7 @@
           <Property Name="Date_Of_Associating" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Summary" Relationship="FinapModel.fk01" FromRole="Associate" ToRole="Summary" />
           <NavigationProperty Name="Creditor" Relationship="FinapModel.Creditor_Associate" FromRole="Associate" ToRole="Creditor" />
+          <NavigationProperty Name="Debtor" Relationship="FinapModel.Debtor_Associate" FromRole="Associate" ToRole="Debtor" />
         </EntityType>
         <Association Name="aaa">
           <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
@@ -617,6 +664,10 @@
         <Association Name="Creditor_Associate">
           <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
           <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="*" />
+        </Association>
+        <Association Name="Debtor_Associate">
+          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
+          <End Type="FinapModel.Debtor" Role="Debtor" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -751,6 +802,14 @@
           <AssociationSetMapping Name="Creditor_Associate" TypeName="FinapModel.Creditor_Associate" StoreEntitySet="Creditor_Associate">
             <EndProperty Name="Creditor">
               <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
+            </EndProperty>
+            <EndProperty Name="Associate">
+              <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Debtor_Associate" TypeName="FinapModel.Debtor_Associate" StoreEntitySet="Debtor_Associate">
+            <EndProperty Name="Debtor">
+              <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
             </EndProperty>
             <EndProperty Name="Associate">
               <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />

@@ -53,6 +53,18 @@ namespace Finapp.Implementations
             };
             _associateService.AddNewAssociate(associate);
 
+            foreach (var cred in creditor)
+            {
+                _creditorService.AddAssociate(associate, cred);
+                _associateService.AddCreditor(associate, cred);
+            }
+
+            foreach (var deb in debtors)
+            {
+                _debtorService.AddAssociate(associate, deb);
+                _associateService.AddDebtor(associate, deb);
+            }
+
             var sumOfDebets = debtors.Sum(d => d.Finapp_Debet);
             var sumOfBalance = creditor.Sum(d => d.Finapp_Balance);
             var avgOfDebet = sumOfDebets / debtors.Count();
@@ -133,7 +145,6 @@ namespace Finapp.Implementations
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
                     _creditorService.ModifyCreditor(creditor);
-
                     debtor.Finapp_Debet = 0;
                     debtor.Available = false;
                     _debtorService.ModifyDebtor(debtor);

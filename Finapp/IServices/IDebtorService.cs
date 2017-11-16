@@ -18,5 +18,6 @@ namespace Finapp.IServices
         string GetDebtorUsernameById(int id);
         bool AddNewDebtor(Debtor debtor);
         IEnumerable<Debtor> GetDebtorsWithoutTransactions();
+        bool AddAssociate(Associate associate, Debtor debtor);
     }
 }

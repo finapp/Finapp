@@ -135,5 +135,14 @@ namespace Finapp.Services
 
             return listOfCreditorWithoutTransactions;
         }
+
+        public bool AddAssociate(Associate associate, Creditor creditor)
+        {
+            creditor.Associate.Add(associate);
+            _context.Entry(creditor).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }
