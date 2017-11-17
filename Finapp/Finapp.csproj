@@ -184,6 +184,7 @@
     <Compile Include="Controllers\CreditorController.cs" />
     <Compile Include="Controllers\DebtorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RankController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="CreateDatabase\Creator.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,10 +216,16 @@
     <Compile Include="Models\Creditor_Account.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Creditor_Rank.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Debtor.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Debtor_Account.cs">
+      <DependentUpon>FinappDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Debtor_Rank.cs">
       <DependentUpon>FinappDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDB.Context.cs">
@@ -337,6 +344,8 @@
     <Content Include="Views\CreateDB\Index.cshtml" />
     <Content Include="Views\CreateDB\NewCustomers.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Rank\CreditorRank.cshtml" />
+    <Content Include="Views\Rank\DebtorRank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

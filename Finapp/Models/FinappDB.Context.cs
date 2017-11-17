@@ -34,5 +34,7 @@ namespace Finapp.Models
         public virtual DbSet<Associate> Associate { get; set; }
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Creditor_Rank> Creditor_Rank { get; set; }
+        public virtual DbSet<Debtor_Rank> Debtor_Rank { get; set; }
     }
 }

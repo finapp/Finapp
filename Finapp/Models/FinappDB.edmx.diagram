@@ -27,6 +27,11 @@
         <AssociationConnector Association="FinapModel.Debtor_Associate" />
         <AssociationConnector Association="FinapModel.lklk" />
         <AssociationConnector Association="FinapModel.lkldk" />
+        <EntityTypeShape EntityType="FinapModel.Creditor_Rank" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FinapModel.Debtor_Rank" Width="1.5" PointX="3" PointY="8.875" />
+        <AssociationConnector Association="FinapModel.fkqqq" />
+        <AssociationConnector Association="FinapModel.fkqqq2" />
+        <AssociationConnector Association="FinapModel.fkqqq3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
