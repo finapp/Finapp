@@ -24,11 +24,12 @@ namespace Finapp.Services
             {
                 _context.Entry(creditor_Account).State = EntityState.Added;
                 _context.SaveChanges();
+
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                throw e;
             }
         }
 
@@ -36,7 +37,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor_Account.Where(a => a.Creditor_Id == id)
+                return _context.Creditor_Account
+                    .Where(a => a.Creditor_Id == id)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -49,7 +51,10 @@ namespace Finapp.Services
         {
             try
             {
-                var account = _context.Creditor_Account.Where(a => a.Creditor_Id == id).FirstOrDefault();
+                var account = _context.Creditor_Account
+                    .Where(a => a.Creditor_Id == id)
+                    .FirstOrDefault();
+
                 return account.Creditor_Account_Id;
             }
             catch (Exception e)
@@ -62,8 +67,14 @@ namespace Finapp.Services
         {
             try
             {
-                var creditor = _context.Creditor.Where(c => c.username == username).FirstOrDefault();
-                var account = _context.Creditor_Account.Where(a => a.Creditor_Id == creditor.Creditor_Id).FirstOrDefault();
+                var creditor = _context.Creditor
+                    .Where(c => c.username == username)
+                    .FirstOrDefault();
+
+                var account = _context.Creditor_Account
+                    .Where(a => a.Creditor_Id == creditor.Creditor_Id)
+                    .FirstOrDefault();
+
                 return account.Creditor_Account_Id;
             }
             catch (Exception e)
@@ -76,7 +87,10 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor_Account.Where(t => t.Creditor_Account_Id == id).FirstOrDefault().Creditor_Id;
+                return _context.Creditor_Account
+                    .Where(t => t.Creditor_Account_Id == id)
+                    .FirstOrDefault()
+                    .Creditor_Id;
             }
             catch (Exception e)
             {

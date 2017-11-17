@@ -207,5 +207,12 @@ namespace Finapp.Services
                 DayAccessToFunds = transaction.Day_Access_To_Funds
             };
         }
+
+        public IEnumerable<Transaction_Out> GetTransactionsFromAssociate(Associate associate)
+        {
+            return _context.Transaction_Out
+                .Where(t => t.Associate_Id == associate.Associate_Id)
+                .ToList();
+        }
     }
 }

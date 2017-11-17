@@ -17,11 +17,13 @@ namespace Finapp.Services
         private readonly IDebtorService _debtorService;
         private readonly IDebtorAccountService _debtorAccountService;
         private readonly IDebtorViewModelService _debtorViewModelService;
-        private readonly IAssociateViewModelService _associateService;
+        private readonly IAssociateViewModelService _associateViewModelService;
+        private readonly IAssociateService _associateService;
 
         public StatisticsViewModelService(FinapEntities1 context, ITransactionOutService transactionService,
             ICreditorService creditorService, IDebtorService debtorService, IDebtorAccountService debtorAccountService,
-            IDebtorViewModelService debtorViewModelService, IAssociateViewModelService associateService)
+            IDebtorViewModelService debtorViewModelService, IAssociateViewModelService associateViewModelService,
+            IAssociateService associateService)
         {
             _context = context;
             _transactionService = transactionService;
@@ -29,12 +31,13 @@ namespace Finapp.Services
             _debtorService = debtorService;
             _debtorAccountService = debtorAccountService;
             _debtorViewModelService = debtorViewModelService;
+            _associateViewModelService = associateViewModelService;
             _associateService = associateService;
         }
 
         public IEnumerable<StatisticsViewModel> GetSummary()
         {
-            var associations = _associateService.GetAllTransactions();
+            var associations = _associateViewModelService.GetAllTransactions();
             var debtors = new List<Debtor>();
             var listOfDebtorAccounts = _debtorAccountService.GetAllAccounts();
 

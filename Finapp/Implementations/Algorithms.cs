@@ -82,7 +82,7 @@ namespace Finapp.Implementations
             }
             var avgOfSavings = _summary.SavingsSum / debtors.Count();
             var avgOfProfits = _summary.ProfitsSum / creditor.Count();
-            var avgOfSavingsPercentage = _summary.SavingsAveragePercentage / _summary.CounterOfDebtors;
+            var avgOfSavingsPercentage = _summary.SavingsAveragePercentage / _summary.CounterOdCreditors;
             var avgOfProfitsPercentage = _summary.ProfitsAveragePercentage / _summary.CounterOdCreditors;
             var days = _summary.Days;
 
@@ -132,6 +132,8 @@ namespace Finapp.Implementations
                         Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                         Associate_Id = associate.Associate_Id,
+                        Creditor_Id = creditor.Creditor_Id,
+                        Debtor_Id = debtor.Debtor_Id
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
@@ -142,9 +144,6 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     _transactionOutService.AddTransaction(transactionOut);
-
-                    _creditorService.AddTransaction(transactionOut, creditor);
-                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
                     _creditorService.ModifyCreditor(creditor);
@@ -170,7 +169,9 @@ namespace Finapp.Implementations
                         Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
                         Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-                        Associate_Id = associate.Associate_Id
+                        Associate_Id = associate.Associate_Id,
+                        Creditor_Id = creditor.Creditor_Id,
+                        Debtor_Id=debtor.Debtor_Id
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
@@ -181,9 +182,6 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     _transactionOutService.AddTransaction(transactionOut);
-
-                    _creditorService.AddTransaction(transactionOut, creditor);
-                    _debtorService.AddTransaction(transactionOut, debtor);
 
                     debtor.Finapp_Debet -= creditor.Finapp_Balance;
                     _debtorService.ModifyDebtor(debtor);

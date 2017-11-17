@@ -44,6 +44,7 @@ namespace Finapp.Services
 
                 oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 oneAssociate.AssociateId = associate.Associate_Id;
+
                 foreach (var transaction in listOfTransactions)
                 {
                     oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction.Transaction_Out));

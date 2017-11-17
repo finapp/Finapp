@@ -11,5 +11,6 @@ namespace Finapp.ViewModels
         public int EAPR { get; set; }
         public int DayAccessToFunds { get; set; }
         public int TransactionCounter { get; set; }
+        public int AssociateId { get; set; }
     }
 }

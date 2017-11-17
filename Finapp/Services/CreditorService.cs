@@ -35,7 +35,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Creditor_Id == id)
+                return _context.Creditor
+                    .Where(c => c.Creditor_Id == id)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -48,7 +49,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Finapp_Balance > 0)
+                return _context.Creditor
+                    .Where(c => c.Finapp_Balance > 0)
                     .ToList();
             }
             catch (Exception e)
@@ -61,7 +63,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Available == true && eapr > c.Delta_ROI)
+                return _context.Creditor
+                    .Where(c => c.Available == true && eapr > c.Delta_ROI)
                     .OrderBy(c => c.Queue_Date)
                     .ToList();
             }
@@ -90,7 +93,8 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor.Where(c => c.Creditor_Id == id)
+                return _context.Creditor
+                    .Where(c => c.Creditor_Id == id)
                     .FirstOrDefault().username;
             }
             catch (Exception e)
@@ -121,7 +125,8 @@ namespace Finapp.Services
 
             foreach (var account in creditorAccounts)
             {
-                var accountWithTransaction = _context.Transaction_Out.Any(t => t.Creditor_Account_Id == account.Creditor_Account_Id);
+                var accountWithTransaction = _context.Transaction_Out
+                    .Any(t => t.Creditor_Account_Id == account.Creditor_Account_Id);
 
                 if (!accountWithTransaction)
                 {
@@ -145,13 +150,10 @@ namespace Finapp.Services
             return true;
         }
 
-        public bool AddTransaction(Transaction_Out transaction, Creditor creditor)
+        public IEnumerable<Creditor> GetCreditorsFromAssociate(Associate associate)
         {
-            creditor.Transaction_Out.Add(transaction);
-            _context.Entry(creditor).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return true;
+            return associate.Creditor;
         }
+
     }
 }

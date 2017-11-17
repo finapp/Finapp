@@ -25,8 +25,8 @@
         <EntityTypeShape EntityType="FinapModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="9.75" />
         <AssociationConnector Association="FinapModel.Creditor_Associate" />
         <AssociationConnector Association="FinapModel.Debtor_Associate" />
-        <AssociationConnector Association="FinapModel.Creditor_Transaction_Out" />
-        <AssociationConnector Association="FinapModel.Debtor_Transaction_Out" />
+        <AssociationConnector Association="FinapModel.lklk" />
+        <AssociationConnector Association="FinapModel.lkldk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

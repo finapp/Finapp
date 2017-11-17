@@ -17,13 +17,6 @@ namespace Finapp.Services
             _debtorService = debtorService;
         }
 
-        //public DebtorListViewModel GetAllDebtorsViewModel()
-        //{
-        //    IEnumerable<Debtor> debtors = _debtorService.GetAllDebtors();
-
-        //    return CreateListViewModel(debtors);
-        //}
-
         public IEnumerable<DebtorViewModel> GetAllDebtorsViewModel()
         {
             IEnumerable<Debtor> debtors = _debtorService.GetAllDebtors();
@@ -59,6 +52,7 @@ namespace Finapp.Services
                     ExpectedSavings = expectedSavings
                 });
             }
+
             return debtorsViewModel;
         }
     }

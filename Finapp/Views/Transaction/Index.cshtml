@@ -7,7 +7,11 @@
 
 @foreach (var transactions in Model.ListOfTransactions)
 {
-    <h2>Associate @transactions.Date.ToString("dd/MM/yyyy")</h2>
+    <div class="text-center">
+        <br/>
+        <h2>Associate @transactions.Date.ToString("dd/MM/yyyy")</h2>
+    </div>
+
     <table class="table table-responsive table-striped">
         <thead>
             <tr>
@@ -66,9 +70,14 @@
     {
         if (summaries.Summary.AssociateId == transactions.AssociateId)
         {
+            <div class="text-center">
+                <br/>
+                <h3>Summary</h3>
+            </div>
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
+                        <th>Days</th>
                         <th>Debet</th>
                         <th>Debet Avg</th>
                         <th>Balance</th>
@@ -79,11 +88,13 @@
                         <th>Profits</th>
                         <th>Profits Avg</th>
                         <th>Profits %</th>
-                        <th>Days</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            @summaries.Summary.Days
+                        </td>
                         <td>
                             @summaries.Summary.DebetSum PLN
                         </td>
@@ -114,16 +125,75 @@
                         <td>
                             @summaries.Summary.ProfitsAveragePercentage %
                         </td>
-                        <td>
-                            @summaries.Summary.Days
-                        </td>
+
                     </tr>
                 </tbody>
             </table>
         }
     }
+    <div class="text-center">
+        <br/>
+        <h3>Creditors rank</h3>
+    </div>
 
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Creditor</th>
+                <th>Exp Profits</th>
+                <th>Days</th>
+                <th>Transactions</th>
+            </tr>
+        </thead>
 
+        @foreach (var list in Model.Creditors)
+        {
+            foreach (var creditor in list)
+            {
+                if (creditor.AssociateId == transactions.AssociateId)
+                {
+                    <tr>
+                        <td>@creditor.Username</td>
+                        <td>@creditor.EAPR</td>
+                        <td>@creditor.DayAccessToFunds</td>
+                        <td>@creditor.TransactionCounter</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+
+    <div class="text-center">
+        <br/>
+        <h3>Debtors rank</h3>
+    </div>
+
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Debtor</th>
+                <th>Exp Savings</th>
+                <th>Days</th>
+                <th>Transactions</th>
+            </tr>
+        </thead>
+
+        @foreach (var list in Model.Debtors)
+        {
+            foreach (var debtor in list)
+            {
+                if (debtor.AssociateId == transactions.AssociateId)
+                {
+                    <tr>
+                        <td>@debtor.Username</td>
+                        <td>@debtor.ExpSavings</td>
+                        <td>@debtor.DayAccessToFunds</td>
+                        <td>@debtor.TransactionCounter</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
 }
 
 

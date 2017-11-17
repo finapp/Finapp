@@ -43,6 +43,7 @@ namespace Finapp.Services
             {
                 var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                 var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)accessDays / 365);
+
                 creditorViewModel.Add(new CreditorViewModel
                 {
                     Username = creditor.username,

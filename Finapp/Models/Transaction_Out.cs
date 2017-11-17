@@ -18,8 +18,6 @@ namespace Finapp.Models
         public Transaction_Out()
         {
             this.Return_Transaction = new HashSet<Return_Transaction>();
-            this.Creditor = new HashSet<Creditor>();
-            this.Debtor = new HashSet<Debtor>();
         }
     
         public int Transaction_Out_Id { get; set; }
@@ -34,15 +32,15 @@ namespace Finapp.Models
         public Nullable<int> Creditor_Benefits_Per_Annum { get; set; }
         public Nullable<int> Debtor_Benefits_Per_Annum { get; set; }
         public int Associate_Id { get; set; }
+        public Nullable<int> Creditor_Id { get; set; }
+        public Nullable<int> Debtor_Id { get; set; }
     
         public virtual Creditor_Account Creditor_Account { get; set; }
         public virtual Debtor_Account Debtor_Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Return_Transaction> Return_Transaction { get; set; }
         public virtual Associate Associate { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Creditor> Creditor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Debtor> Debtor { get; set; }
+        public virtual Creditor Creditor1 { get; set; }
+        public virtual Debtor Debtor1 { get; set; }
     }
 }

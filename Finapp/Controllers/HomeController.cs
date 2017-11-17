@@ -14,11 +14,12 @@ namespace Finapp.Controllers
     public class HomeController : Controller
     {
         private readonly FinapEntities1 _context;
-        private readonly IDebtorService _service;
+        private readonly ISummaryViewModelService _service;
         private readonly IStatisticsViewModelService _aservice;
         private readonly ICreditorViewModelService _cservice;
+        
 
-        public HomeController(FinapEntities1 context, IDebtorService service, IStatisticsViewModelService aservice, ICreditorViewModelService cservice)
+        public HomeController(FinapEntities1 context, ISummaryViewModelService service, IStatisticsViewModelService aservice, ICreditorViewModelService cservice)
         {
             _context = context;
             _service = service;
@@ -28,7 +29,7 @@ namespace Finapp.Controllers
 
         public ActionResult Index()
         {
-            var a = _cservice.GetTheWorstCreditors();
+            var a = _service.GetCreditors();
             return View();
         }
     }
