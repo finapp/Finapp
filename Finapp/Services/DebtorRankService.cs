@@ -29,5 +29,10 @@ namespace Finapp.Services
 
             return true;
         }
+
+        public IEnumerable<Debtor_Rank> GetAllRanks()
+        {
+            return _context.Debtor_Rank.ToList();
+        }
     }
 }

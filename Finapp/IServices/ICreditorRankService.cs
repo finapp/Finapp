@@ -10,5 +10,6 @@ namespace Finapp.IServices
     public interface ICreditorRankService
     {
         bool AddAssociateToCreditor(Creditor_Rank creditorRank);
+        IEnumerable<Creditor_Rank> GetAllRanks();
     }
 }

@@ -10,5 +10,6 @@ namespace Finapp.IServices
     public interface IDebtorRankService
     {
         bool AddAssociateToDebtor(Debtor_Rank debtorRank);
+        IEnumerable<Debtor_Rank> GetAllRanks();
     }
 }

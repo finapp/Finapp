@@ -29,5 +29,10 @@ namespace Finapp.Services
 
             return true;
         }
+
+        public IEnumerable<Creditor_Rank> GetAllRanks()
+        {
+            return _context.Creditor_Rank.ToList();
+        }
     }
 }
