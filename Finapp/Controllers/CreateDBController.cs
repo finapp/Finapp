@@ -70,6 +70,10 @@ namespace Finapp.Controllers
             catch (Exception)
             {
                 ViewBag.ErrorMessage = "Please enter valid data";
+
+                if (updateDB == null)
+                    return View("NewCustomers");
+
                 return View("Index");
             }
         }
