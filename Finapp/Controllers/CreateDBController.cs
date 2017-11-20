@@ -54,24 +54,27 @@ namespace Finapp.Controllers
         {
             var amountOfCreditors = Request["amountOfCreditors"];
             var amountOfDebtors = Request["amountOfDebtors"];
-            var updateDB = Request["update"];
+            var updateCreditors = Request["updateCreditors"];
+            var updateDebtors = Request["updateDebtors"];
 
             try
             {
                 var creditors = int.Parse(amountOfCreditors);
                 var debtors = int.Parse(amountOfDebtors);
-                if (updateDB == "on")
-                    _creator.UpdateDB();
+                if (updateCreditors == "on")
+                    _creator.UpdateCreditors();
+
+                if (updateDebtors == "on")
+                    _creator.UpdateDebtors();
 
                 _creator.CreateDB(debtors, creditors);
-                _creator.UpdateDB();
                 return RedirectToAction("Index", "Debtor");
             }
             catch (Exception)
             {
                 ViewBag.ErrorMessage = "Please enter valid data";
 
-                if (updateDB == null)
+                if (updateCreditors == null)
                     return View("NewCustomers");
 
                 return View("Index");

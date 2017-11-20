@@ -20,5 +20,6 @@ namespace Finapp.IServices
         IEnumerable<Debtor> GetDebtorsWithoutTransactions();
         bool AddAssociate(Associate associate, Debtor debtor);
         IEnumerable<Debtor> GetDebtorsFromAssociate(Associate associate);
+        DateTime GetTheOldestQueueDate();
     }
 }

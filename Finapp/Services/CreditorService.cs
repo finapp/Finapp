@@ -155,5 +155,13 @@ namespace Finapp.Services
             return associate.Creditor;
         }
 
+        public DateTime GetTheOldestQueueDate()
+        {
+            var creditors = _context.Creditor.ToList();
+            var date = creditors.Max(c => c.Queue_Date);
+
+            return date??DateTime.Now;
+        }
+
     }
 }

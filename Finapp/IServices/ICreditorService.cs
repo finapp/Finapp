@@ -19,5 +19,6 @@ namespace Finapp.IServices
         IEnumerable<Creditor> GetCreditorsWithoutTransactions();
         bool AddAssociate(Associate associate, Creditor creditor);
         IEnumerable<Creditor> GetCreditorsFromAssociate(Associate associate);
+        DateTime GetTheOldestQueueDate();
     }
 }

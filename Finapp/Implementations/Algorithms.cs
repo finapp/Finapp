@@ -143,6 +143,14 @@ namespace Finapp.Implementations
                     _summary.CounterOdCreditors++;
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
+                    var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+                    creditor.Queue_Date = date;
+                    _creditorService.ModifyCreditor(creditor);
+
+                    date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+                    debtor.Queue_Date = date;
+                    _debtorService.ModifyDebtor(debtor);
+
                     _transactionOutService.AddTransaction(transactionOut);
 
                     creditor.Finapp_Balance -= debtor.Finapp_Debet;
@@ -180,6 +188,14 @@ namespace Finapp.Implementations
                     _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
                     _summary.CounterOdCreditors++;
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+
+                    var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+                    creditor.Queue_Date = date;
+                    _creditorService.ModifyCreditor(creditor);
+
+                    date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+                    debtor.Queue_Date = date;
+                    _debtorService.ModifyDebtor(debtor);
 
                     _transactionOutService.AddTransaction(transactionOut);
 

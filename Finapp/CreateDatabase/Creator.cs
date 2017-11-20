@@ -17,7 +17,7 @@ namespace Finapp.CreateDatabase
         private readonly ICreditorAccountService _creditorAccountService;
         private readonly IDebtorAccountService _debtorAccountService;
 
-        public Creator(FinapEntities1 context, IDebtorService debtorService, ICreditorService creditorService, 
+        public Creator(FinapEntities1 context, IDebtorService debtorService, ICreditorService creditorService,
             ICreditorAccountService creditorAccountService, IDebtorAccountService debtorAccountService)
         {
             _context = context;
@@ -41,7 +41,7 @@ namespace Finapp.CreateDatabase
             _context.Database.ExecuteSqlCommand("Delete from [Debtor]");
         }
 
-        public void UpdateDB()
+        public void UpdateCreditors()
         {
             var creditors = _context.Creditor.ToList();
 
@@ -54,7 +54,10 @@ namespace Finapp.CreateDatabase
                 _context.Entry(creditor).State = EntityState.Modified;
                 _context.SaveChanges();
             }
+        }
 
+        public void UpdateDebtors()
+        {
             var debtors = _context.Debtor.ToList();
 
             foreach (var debtor in debtors)
@@ -68,9 +71,35 @@ namespace Finapp.CreateDatabase
             }
         }
 
+
         public void CreateDB(int amountOfDebtors, int amountOfCreditors)
         {
             Random rand = new Random();
+
+            var creditors = _context.Creditor.ToList();
+            var creditorsCounter = creditors.Count();
+            DateTime creditorQueueDate;
+
+            if (creditorsCounter == 0)
+                creditorQueueDate = DateTime.Now;
+            else
+            {
+                var date = creditors.Max(c => c.Queue_Date);
+                creditorQueueDate = date ?? DateTime.Now;
+            }
+
+            var debtors = _context.Debtor.ToList();
+            var debtorsCounter = debtors.Count();
+            DateTime debtorQueueDate;
+
+            if (debtorsCounter == 0)
+                debtorQueueDate = DateTime.Now;
+            else
+            {
+                var date = debtors.Max(c => c.Queue_Date);
+                debtorQueueDate = date ?? DateTime.Now;
+            }
+
 
             for (int i = 1; i <= amountOfCreditors; i++)
             {
@@ -94,14 +123,14 @@ namespace Finapp.CreateDatabase
                 var number = _creditorService.GetAllCreditors().Count();
                 var c = new Creditor
                 {
-                    username = "Jan" + number ,
+                    username = "Jan" + number,
                     ROI = roi,
                     EROI = eroi,
                     Delta_ROI = droi,
                     Balance = balance,
                     Available = true,
                     Finapp_Balance = balance,
-                    Queue_Date = DateTime.Now.AddDays(-rand.Next(1, 30)),
+                    Queue_Date = creditorQueueDate.AddDays(rand.Next(1, 30)),
                     Expiration_Date = d,
                 };
 
@@ -146,14 +175,14 @@ namespace Finapp.CreateDatabase
 
                 var deb = new Debtor
                 {
-                    username = "Ewa" + number ,
+                    username = "Ewa" + number,
                     APR = apr,
                     EAPR = eapr,
                     Delta_APR = dapr,
                     Debet = debet,
                     Available = true,
                     Finapp_Debet = debet,
-                    Queue_Date = DateTime.Now.AddDays(-rand.Next(1, 30)),
+                    Queue_Date = debtorQueueDate.AddDays(rand.Next(1, 30)),
                     Expiration_Date = d
                 };
                 _debtorService.AddNewDebtor(deb);

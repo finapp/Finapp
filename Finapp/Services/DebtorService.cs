@@ -169,6 +169,13 @@ namespace Finapp.Services
         {
             return associate.Debtor;
         }
+        public DateTime GetTheOldestQueueDate()
+        {
+            var debtors = _context.Debtor.ToList();
+            var date = debtors.Max(c => c.Queue_Date);
+
+            return date ?? DateTime.Now;
+        }
 
     }
 }
