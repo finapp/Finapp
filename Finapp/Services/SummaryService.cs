@@ -30,5 +30,19 @@ namespace Finapp.Services
                 throw e;
             }
         }
+
+        public Summary GetSummaryByAssociate(Associate associate)
+        {
+            try
+            {
+                return _context.Summary
+                    .Where(s => s.Associate_Id == associate.Associate_Id)
+                    .FirstOrDefault();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

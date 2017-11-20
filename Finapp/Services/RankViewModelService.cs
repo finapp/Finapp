@@ -11,19 +11,24 @@ namespace Finapp.Services
     public class RankViewModelService : IRankViewModelService
     {
         private readonly FinapEntities1 _context;
+        private readonly IDebtorService _debtorService;
+        private readonly ICreditorService _creditorService;
+        private readonly IAssociateService _associateService;
 
-        public RankViewModelService(FinapEntities1 context)
+        public RankViewModelService(FinapEntities1 context, IDebtorService debtorService, ICreditorService creditorService, 
+            IAssociateService associateService)
         {
             _context = context;
+            _debtorService = debtorService;
+            _creditorService = creditorService;
+            _associateService = associateService;
         }
 
         public IEnumerable<RankViewModel> GetCreditorsRank()
         {
-            var creditors = _context.Creditor
-                .ToList();
+            var creditors = _creditorService.GetAllCreditors();
 
-            var associations = _context.Associate
-                .ToList();
+            var associations = _associateService.GetAllAssociations();
 
             var counter = 0;
             List<RankViewModel> listOfCreditors = new List<RankViewModel>();
@@ -56,11 +61,9 @@ namespace Finapp.Services
 
         public IEnumerable<RankViewModel> GetDebtorsRank()
         {
-            var debtors = _context.Debtor
-                .ToList();
+            var debtors = _debtorService.GetAllDebtors();
 
-            var associations = _context.Associate
-                .ToList();
+            var associations = _associateService.GetAllAssociations();
 
             var counter = 0;
             List<RankViewModel> listOfDebtors = new List<RankViewModel>();

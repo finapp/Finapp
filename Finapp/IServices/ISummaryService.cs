@@ -10,5 +10,6 @@ namespace Finapp.IServices
     public interface ISummaryService
     {
         bool CreateSummary(Summary summary);
+        Summary GetSummaryByAssociate(Associate associate);
     }
 }

@@ -11,7 +11,5 @@ namespace Finapp.IServices
         IEnumerable<AssociateViewModel> GetTransactions();
         IEnumerable<StatisticsViewModel> GetSummary();
         SummaryViewModel GetAllInformations();
-        IEnumerable<IEnumerable<CreditorToSummaryViewModel>> GetCreditors();
-        IEnumerable<IEnumerable<DebtorToSummaryViewModel>> GetDebtors();
     }
 }

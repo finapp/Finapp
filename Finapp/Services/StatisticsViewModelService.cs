@@ -19,11 +19,11 @@ namespace Finapp.Services
         private readonly IDebtorViewModelService _debtorViewModelService;
         private readonly IAssociateViewModelService _associateViewModelService;
         private readonly IAssociateService _associateService;
+        private readonly ISummaryService _summaryService;
 
-        public StatisticsViewModelService(FinapEntities1 context, ITransactionOutService transactionService,
-            ICreditorService creditorService, IDebtorService debtorService, IDebtorAccountService debtorAccountService,
-            IDebtorViewModelService debtorViewModelService, IAssociateViewModelService associateViewModelService,
-            IAssociateService associateService)
+        public StatisticsViewModelService(FinapEntities1 context, ITransactionOutService transactionService, ICreditorService creditorService, 
+            IDebtorService debtorService, IDebtorAccountService debtorAccountService, IDebtorViewModelService debtorViewModelService, 
+            IAssociateViewModelService associateViewModelService, IAssociateService associateService, ISummaryService summaryService)
         {
             _context = context;
             _transactionService = transactionService;
@@ -33,6 +33,7 @@ namespace Finapp.Services
             _debtorViewModelService = debtorViewModelService;
             _associateViewModelService = associateViewModelService;
             _associateService = associateService;
+            _summaryService = summaryService;
         }
 
         public IEnumerable<StatisticsViewModel> GetSummary()
@@ -98,21 +99,18 @@ namespace Finapp.Services
 
         public IEnumerable<StatisticsViewModel> GetAllStatistics()
         {
-            var associations = _context.Associate.ToList();
+            var associations = _associateService.GetAllAssociations();
             List<StatisticsViewModel> statistics = new List<StatisticsViewModel>();
 
             foreach (var associate in associations)
             {
-                var statistic = _context.Summary
-                    .Where(s => s.Associate_Id == associate.Associate_Id)
-                    .FirstOrDefault();
+                var statistic = _summaryService.GetSummaryByAssociate(associate);
 
                 var summary = CreateStatisticViewModel(statistic);
                 statistics.Add(new StatisticsViewModel
                 {
                     Summary = summary
                 });
-
             }
 
             return statistics;

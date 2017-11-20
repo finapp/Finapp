@@ -14,18 +14,21 @@ namespace Finapp.Services
         private readonly ITransactionOutService _transactionService;
         private readonly IDebtorAccountService _debtorAccountService;
         private readonly ICreditorAccountService _creditorAccountService;
+        private readonly IAssociateService _associateService;
 
-        public AssociateViewModelService(FinapEntities1 context, ITransactionOutService transactionService, IDebtorAccountService debtorAccountService, ICreditorAccountService creditorAccountService)
+        public AssociateViewModelService(FinapEntities1 context, ITransactionOutService transactionService, IDebtorAccountService debtorAccountService, 
+            ICreditorAccountService creditorAccountService, IAssociateService associateService)
         {
             _context = context;
             _transactionService = transactionService;
             _debtorAccountService = debtorAccountService;
             _creditorAccountService = creditorAccountService;
+            _associateService = associateService;
         }
 
         public IEnumerable<AssociateViewModel> GetAllTransactions()
         {
-            var assotiations = _context.Associate.ToList();
+            var assotiations = _associateService.GetAllAssociations();
             var number = 1;
             AssociateViewModel oneAssociate;
             List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
