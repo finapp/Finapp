@@ -54,12 +54,17 @@ namespace Finapp.Controllers
         {
             var amountOfCreditors = Request["amountOfCreditors"];
             var amountOfDebtors = Request["amountOfDebtors"];
+            var updateDB = Request["update"];
 
             try
             {
                 var creditors = int.Parse(amountOfCreditors);
                 var debtors = int.Parse(amountOfDebtors);
+                if (updateDB == "on")
+                    _creator.UpdateDB();
+
                 _creator.CreateDB(debtors, creditors);
+                _creator.UpdateDB();
                 return RedirectToAction("Index", "Debtor");
             }
             catch (Exception)

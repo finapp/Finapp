@@ -132,69 +132,6 @@
             </table>
         }
     }
-    <div class="text-center">
-        <br/>
-        <h3>Creditors rank</h3>
-    </div>
-
-    <table class="table table-responsive table-striped">
-        <thead>
-            <tr>
-                <th>Creditor</th>
-                <th>EAPR</th>
-                <th>Days</th>
-                <th>Transactions</th>
-            </tr>
-        </thead>
-
-        @foreach (var list in Model.Creditors)
-        {
-            foreach (var creditor in list)
-            {
-                if (creditor.AssociateId == transactions.AssociateId)
-                {
-                    <tr>
-                        <td>@creditor.Username</td>
-                        <td>@creditor.EAPR</td>
-                        <td>@creditor.DayAccessToFunds</td>
-                        <td>@creditor.TransactionCounter</td>
-                    </tr>
-                }
-            }
-        }
-    </table>
-
-    <div class="text-center">
-        <br/>
-        <h3>Debtors rank</h3>
-    </div>
-
-    <table class="table table-responsive table-striped">
-        <thead>
-            <tr>
-                <th>Debtor</th>
-                <th>Exp Savings</th>
-                <th>Days</th>
-                <th>Transactions</th>
-            </tr>
-        </thead>
-
-        @foreach (var list in Model.Debtors)
-        {
-            foreach (var debtor in list)
-            {
-                if (debtor.AssociateId == transactions.AssociateId)
-                {
-                    <tr>
-                        <td>@debtor.Username</td>
-                        <td>@debtor.ExpSavings</td>
-                        <td>@debtor.DayAccessToFunds</td>
-                        <td>@debtor.TransactionCounter</td>
-                    </tr>
-                }
-            }
-        }
-    </table>
 }
 
 

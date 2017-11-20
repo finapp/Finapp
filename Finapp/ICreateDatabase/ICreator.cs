@@ -10,5 +10,6 @@ namespace Finapp.ICreateDatabase
     {
         void CreateDB(int amountOfDebtors, int amountOfCreditors);
         void ClearDB();
+        void UpdateDB();
     }
 }
