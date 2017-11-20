@@ -26,7 +26,7 @@ namespace Finapp.Services
         public IEnumerable<AssociateViewModel> GetAllTransactions()
         {
             var assotiations = _context.Associate.ToList();
-
+            var number = 1;
             AssociateViewModel oneAssociate;
             List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
 
@@ -44,6 +44,9 @@ namespace Finapp.Services
 
                 oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 oneAssociate.AssociateId = associate.Associate_Id;
+                oneAssociate.Number = number;
+
+                number++;
 
                 foreach (var transaction in listOfTransactions)
                 {
