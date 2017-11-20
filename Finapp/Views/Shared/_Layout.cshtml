@@ -18,17 +18,18 @@
                 </button>
                 @Html.ActionLink("Run the algorithm", "Index", "Algorithm", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <br/>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("All Debtors", "Index", "Debtor")</li>
-                    <li>@Html.ActionLink("All Creditors", "Index", "Creditor")</li>
-                    <li>@Html.ActionLink("All Transactions", "Index", "Transaction")</li>
+                    <li>@Html.ActionLink("Debtors", "Index", "Debtor")</li>
+                    <li>@Html.ActionLink("Creditors", "Index", "Creditor")</li>
+                    <li>@Html.ActionLink("Transactions", "Index", "Transaction")</li>
                     <li>@Html.ActionLink("Creditors in Queue", "CreditorsQueue", "Creditor")</li>
                     <li>@Html.ActionLink("Debtors in Queue", "DebtorsQueue", "Debtor")</li>
-
-                    <li>@Html.ActionLink("Add new customers", "NewCustomers", "CreateDB")</li>
+                    <li>@Html.ActionLink("Debtors rank", "DebtorRank", "Rank")</li>
+                    <li>@Html.ActionLink("Creditors rank", "CreditorRank", "Rank")</li>
+                    <li>@Html.ActionLink("Add customers", "NewCustomers", "CreateDB")</li>
                     <li>@Html.ActionLink("Reset Database", "Index", "CreateDB")</li>
-
                 </ul>
             </div>
         </div>

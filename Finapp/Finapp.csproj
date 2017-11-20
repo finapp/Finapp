@@ -205,6 +205,7 @@
     <Compile Include="IServices\IDebtorAccountService.cs" />
     <Compile Include="IServices\ICreditorService.cs" />
     <Compile Include="IServices\IDebtorService.cs" />
+    <Compile Include="IServices\IRankViewModelService.cs" />
     <Compile Include="IServices\IStatisticsViewModelService.cs" />
     <Compile Include="IServices\ISummaryService.cs" />
     <Compile Include="IServices\ISummaryViewModelService.cs" />
@@ -271,11 +272,13 @@
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorToSummaryViewModelService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
+    <Compile Include="Services\RankViewModelService.cs" />
     <Compile Include="Services\StatisticsViewModelService.cs" />
     <Compile Include="Services\SummaryService.cs" />
     <Compile Include="Services\SummaryViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="ViewModels\AssociateViewModel.cs" />
+    <Compile Include="ViewModels\RankViewModel.cs" />
     <Compile Include="ViewModels\CreditorToSummaryViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
     <Compile Include="ViewModels\DebtorToSummaryViewModel.cs" />

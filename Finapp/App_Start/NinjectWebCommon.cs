@@ -83,6 +83,7 @@ namespace Finapp.App_Start
             kernel.Bind<IDebtorToSummaryViewModelService>().To<DebtorToSummaryViewModelService>().InRequestScope();
             kernel.Bind<ICreditorRankService>().To<CreditorRankService>().InRequestScope();
             kernel.Bind<IDebtorRankService>().To<DebtorRankService>().InRequestScope();
+            kernel.Bind<IRankViewModelService>().To<RankViewModelService>().InRequestScope();
         }
     }
 }

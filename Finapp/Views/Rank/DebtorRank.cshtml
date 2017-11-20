@@ -1,7 +1,35 @@
-﻿
+﻿@model IEnumerable<Finapp.ViewModels.RankViewModel>
+
 @{
     ViewBag.Title = "DebtorRank";
 }
 
-<h2>DebtorRank</h2>
+<br /><br />
+<div class="text-center">
+    <h2>Debtor Rank</h2>
+</div>
 
+
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Delta APR</th>
+            <th>Count of associations</th>
+        </tr>
+        @foreach (var debtor in Model)
+        {
+            <tr>
+                <td>
+                    @debtor.Username
+                </td>
+                <td>
+                    @debtor.Delta
+                </td>
+                <td>
+                    @debtor.AssociateCounter
+                </td>
+            </tr>
+        }
+    </thead>
+</table> 
