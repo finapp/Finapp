@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<br/><br/><br/>
 @foreach (var list in Model)
 {
-    <h2>Associate @list.Date.ToString("dd/MM/yyyy")</h2>
+    <div class="text-center">
+        <h4>Associate @list.Date.ToString("dd/MM/yyyy")</h4>
+    </div>
         <table class="table table-responsive table-striped">
             <thead>
                 <tr>
