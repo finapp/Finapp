@@ -114,6 +114,10 @@ namespace Finapp.Implementations
                 {
                     var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
                     var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
+                    var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                    var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.EROI / 100))));
+                    var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.ROI / 100))));
+
                     var transactionOut = new Transaction_Out
                     {
                         Ammount = debtor.Finapp_Debet,
@@ -126,7 +130,9 @@ namespace Finapp.Implementations
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                         Associate_Id = associate.Associate_Id,
                         Creditor_Id = creditor.Creditor_Id,
-                        Debtor_Id = debtor.Debtor_Id
+                        Debtor_Id = debtor.Debtor_Id,
+                        ActualCreditorBenefits = actualCreditorBenefits,
+                        CreditorBenefits = realCreditorBenefits
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
@@ -172,6 +178,10 @@ namespace Finapp.Implementations
                 {
                     var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance));
                     var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * creditor.Finapp_Balance));
+                    var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                    var realCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.EROI / 100))));
+                    var actualCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.ROI / 100))));
+
                     var transactionOut = new Transaction_Out
                     {
                         Ammount = creditor.Finapp_Balance,
@@ -184,7 +194,9 @@ namespace Finapp.Implementations
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                         Associate_Id = associate.Associate_Id,
                         Creditor_Id = creditor.Creditor_Id,
-                        Debtor_Id = debtor.Debtor_Id
+                        Debtor_Id = debtor.Debtor_Id,
+                        ActualCreditorBenefits = actualCreditorBenefits,
+                        CreditorBenefits = realCreditorBenefits
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);

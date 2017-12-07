@@ -115,6 +115,7 @@
           <Property Name="Creditor_Id" Type="int" />
           <Property Name="Debtor_Id" Type="int" />
           <Property Name="ActualCreditorBenefits" Type="int" />
+          <Property Name="CreditorBenefits" Type="int" />
         </EntityType>
         <Association Name="aaa">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
@@ -339,6 +340,7 @@
           <NavigationProperty Name="Creditor1" Relationship="FinapModel.lklk" FromRole="Transaction_Out" ToRole="Creditor" />
           <NavigationProperty Name="Debtor1" Relationship="FinapModel.lkldk" FromRole="Transaction_Out" ToRole="Debtor" />
           <Property Name="ActualCreditorBenefits" Type="Int32" />
+          <Property Name="CreditorBenefits" Type="Int32" />
         </EntityType>
         <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Creditor" EntityType="Self.Creditor" />
@@ -535,6 +537,7 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="CreditorBenefits" ColumnName="CreditorBenefits" />
                 <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />

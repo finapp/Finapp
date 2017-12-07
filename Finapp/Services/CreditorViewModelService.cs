@@ -65,7 +65,8 @@ namespace Finapp.Services
                     Queue_Date = creditor.Queue_Date ?? DateTime.Now,
                     AccessDays = accessDays,
                     ExpectedProfits = expectedProfits,
-                    HaveTransactions = haveTransactions
+                    HaveTransactions = haveTransactions,
+                    ActualProfits = creditor.ActualCreditorBenefits??0
                 });
             }
 

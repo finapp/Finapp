@@ -82,9 +82,10 @@ namespace Finapp.Services
                 CreditorAccountFinappAmount = transaction.Finapp_Creditor ?? 100,
                 CreditorBenefits = transaction.Creditor_Benefits_Per_Annum ?? 0,
                 DebtorBenefits = transaction.Debtor_Benefits_Per_Annum ?? 0,
-                RealCreditorBenefits = realCreditorBenefits,
+                RealCreditorBenefits = transaction.CreditorBenefits??0,
                 RealDebtorBenefits = realDebtorBenefits,
-                DayAccessToFunds = transaction.Day_Access_To_Funds
+                DayAccessToFunds = transaction.Day_Access_To_Funds,
+                ActualCreditorProfits = transaction.CreditorBenefits??0
             };
         }
 

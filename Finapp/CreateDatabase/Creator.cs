@@ -110,9 +110,11 @@ namespace Finapp.CreateDatabase
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(4, 8);
                 var droi = eroi - roi;
-
                 DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
+                var days = d.Subtract(DateTime.Now).Days; 
+                var actualBenefits = (int)(balance * ((float)roi / 100)*(float)days/365);
                 var number = _creditorService.GetAllCreditors().Count();
+
                 var c = new Creditor
                 {
                     username = "Jan" + number,
@@ -126,7 +128,8 @@ namespace Finapp.CreateDatabase
                     Expiration_Date = d,
                     Trials = 0,
                     AssociateCounter = 0,
-                    LastAssociate = 0
+                    LastAssociate = 0,
+                    ActualCreditorBenefits = actualBenefits,
                 };
 
                 _creditorService.AddNewCreditor(c);

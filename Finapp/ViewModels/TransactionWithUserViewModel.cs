@@ -20,5 +20,6 @@ namespace Finapp.ViewModels
         public float RealDebtorBenefits { get; set; }
         public int DayAccessToFunds { get; set; }
         public float APR { get; set; }
+        public int ActualCreditorProfits { get; set; }
     }
 }

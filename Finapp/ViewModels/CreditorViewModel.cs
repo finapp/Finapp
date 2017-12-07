@@ -18,5 +18,6 @@ namespace Finapp.ViewModels
         public int AccessDays { get; set; }
         public int ExpectedProfits { get; set; }
         public string HaveTransactions { get; set; }
+        public int ActualProfits { get; set; }
     }
 }
