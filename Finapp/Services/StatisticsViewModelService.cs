@@ -74,6 +74,63 @@ namespace Finapp.Services
             return returnedList;
         }
 
+        public SummaryModel CreateLastSummary()
+        {
+            var summaries = _summaryService.GetAllSummaries();
+
+            var debetAverage = 0;
+            var balanceAverage = 0;
+            var savingsAverage = 0;
+            var profitsAverage = 0;
+            var savingsAveragePercentage = 0;
+            var profitsAveragePercentage = 0;
+            var profitsSum = 0;
+            var savingsSum = 0;
+            var balanceSum = 0;
+            var debetSum = 0;
+            var days = 0;
+
+            int counter = summaries.Count();
+
+            foreach (var summary in summaries)
+            {
+                debetAverage += summary.Debet_Average??0;
+                balanceAverage += summary.Balance_Average??0;
+                savingsAverage += summary.Savings_Average??0;
+                profitsAverage += summary.Profits_Average??0;
+                savingsAveragePercentage += summary.Savings_Average_Percentage??0;
+                profitsAveragePercentage += summary.Profits_Average_Percentage??0;
+                profitsSum += summary.Profits_Sum??0;
+                savingsSum += summary.Savings_Sum??0;
+                balanceSum += summary.Balance_Sum??0;
+                debetSum += summary.Debet_Sum??0;
+                days += summary.Days??0;
+            }
+
+            debetAverage /= counter;
+            balanceAverage /= counter;
+            savingsAverage /= counter;
+            profitsAverage /= counter;
+            savingsAveragePercentage /= counter;
+            profitsAveragePercentage /= counter;
+            days /= counter;
+
+            return new SummaryModel
+            {
+                DebetAverage = debetAverage,
+                BalanceAverage = balanceAverage,
+                SavingsAverage = savingsAverage,
+                ProfitsAverage = profitsAverage,
+                SavingsAveragePercentage = savingsAveragePercentage,
+                ProfitsAveragePercentage =  profitsAveragePercentage,
+                ProfitsSum = profitsSum,
+                SavingsSum = savingsSum,
+                BalanceSum = balanceSum,
+                DebetSum = debetSum,
+                Days = days,
+            };
+        }
+
         public SummaryModel CreateStatisticViewModel(Summary summary)
         {
             if (summary == null)

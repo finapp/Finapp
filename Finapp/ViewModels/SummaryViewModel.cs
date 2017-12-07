@@ -9,5 +9,6 @@ namespace Finapp.ViewModels
     {
         public IEnumerable<AssociateViewModel> ListOfTransactions { get; set; }
         public IEnumerable<StatisticsViewModel> Summary { get; set; }
+        public SummaryModel LastSummary { get; set; }
     }
 }

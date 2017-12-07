@@ -144,10 +144,24 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+
+                    if(creditor.LastAssociate < associate.Associate_Id)
+                    {
+                        creditor.AssociateCounter += 1;
+                        creditor.LastAssociate = associate.Associate_Id;
+                    }
+
                     creditor.Queue_Date = date;
                     _creditorService.ModifyCreditor(creditor);
 
                     date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+
+                    if (debtor.LastAssociate < associate.Associate_Id)
+                    {
+                        debtor.AssociateCounter += 1;
+                        debtor.LastAssociate = associate.Associate_Id;
+                    }
+
                     debtor.Queue_Date = date;
                     _debtorService.ModifyDebtor(debtor);
 
@@ -190,10 +204,24 @@ namespace Finapp.Implementations
                     _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
 
                     var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+
+                    if (creditor.LastAssociate < associate.Associate_Id)
+                    {
+                        creditor.AssociateCounter += 1;
+                        creditor.LastAssociate = associate.Associate_Id;
+                    }
+
                     creditor.Queue_Date = date;
                     _creditorService.ModifyCreditor(creditor);
 
                     date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+
+                    if (debtor.LastAssociate < associate.Associate_Id)
+                    {
+                        debtor.AssociateCounter += 1;
+                        debtor.LastAssociate = associate.Associate_Id;
+                    }
+
                     debtor.Queue_Date = date;
                     _debtorService.ModifyDebtor(debtor);
 

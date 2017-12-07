@@ -18,6 +18,7 @@ namespace Finapp.Models
         public int Debtor_Id { get; set; }
         public Nullable<int> Associate_Counter { get; set; }
         public Nullable<int> Delta_APR { get; set; }
+        public Nullable<int> Trials { get; set; }
     
         public virtual Debtor Debtor { get; set; }
     }

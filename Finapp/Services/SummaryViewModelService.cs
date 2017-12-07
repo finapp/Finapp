@@ -10,25 +10,14 @@ namespace Finapp.Services
 {
     public class SummaryViewModelService : ISummaryViewModelService
     {
-        private readonly ITransactionOutService _transactionService;
-        private readonly ICreditorService _creditorService;
-        private readonly IDebtorService _debtorService;
         private readonly IAssociateViewModelService _associateViewModelService;
         private readonly IStatisticsViewModelService _statisticsService;
-        private readonly ICreditorViewModelService _creditorViewModelService;
-        private readonly IAssociateService _associateService;
 
-        public SummaryViewModelService(ITransactionOutService transactionService, ICreditorService creditorService, IDebtorService debtorService, 
-            IAssociateViewModelService associateViewModelService, IStatisticsViewModelService statisticsService, ICreditorViewModelService creditorViewModelService, 
-            IAssociateService associateService)
+        public SummaryViewModelService(IAssociateViewModelService associateViewModelService, 
+            IStatisticsViewModelService statisticsService)
         {
-            _transactionService = transactionService;
-            _creditorService = creditorService;
-            _debtorService = debtorService;
             _associateViewModelService = associateViewModelService;
             _statisticsService = statisticsService;
-            _creditorViewModelService = creditorViewModelService;
-            _associateService = associateService;
         }
 
         public IEnumerable<AssociateViewModel> GetTransactions()
@@ -41,12 +30,18 @@ namespace Finapp.Services
             return _statisticsService.GetAllStatistics();
         }
 
+        public SummaryModel GetLastSummary()
+        {
+            return _statisticsService.CreateLastSummary();
+        }
+
         public SummaryViewModel GetAllInformations()
         {
             return new SummaryViewModel
             {
                 ListOfTransactions = GetTransactions(),
-                Summary = GetSummary()
+                Summary = GetSummary(),
+                LastSummary = GetLastSummary()
             };
         }
 

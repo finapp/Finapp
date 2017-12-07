@@ -10,6 +10,7 @@ namespace Finapp.IServices
     {
         IEnumerable<AssociateViewModel> GetTransactions();
         IEnumerable<StatisticsViewModel> GetSummary();
+        SummaryModel GetLastSummary();
         SummaryViewModel GetAllInformations();
     }
 }

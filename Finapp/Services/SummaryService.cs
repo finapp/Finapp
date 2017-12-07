@@ -44,5 +44,18 @@ namespace Finapp.Services
                 throw e;
             }
         }
+
+        public IEnumerable<Summary> GetAllSummaries()
+        {
+            try
+            {
+                return _context.Summary
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

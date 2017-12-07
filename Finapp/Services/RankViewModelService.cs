@@ -28,29 +28,17 @@ namespace Finapp.Services
         {
             var creditors = _creditorService.GetAllCreditors();
 
-            var associations = _associateService.GetAllAssociations();
-
-            var counter = 0;
             List<RankViewModel> listOfCreditors = new List<RankViewModel>();
 
             foreach (var creditor in creditors)
             {
-                counter = 0;
-                foreach (var associate in associations)
-                {
-                    var transactions = _context.Transaction_Out
-                        .Where(t => t.Associate_Id == associate.Associate_Id && t.Creditor_Id == creditor.Creditor_Id)
-                        .ToList()
-                        .Count();
-
-                    if (transactions > 0)
-                        counter++;
-                }
                 listOfCreditors.Add(new RankViewModel
                 {
                     Username = creditor.username,
-                    Delta = (int)creditor.Delta_ROI,
-                    AssociateCounter = counter
+                    AssociateCounter = creditor.AssociateCounter??0,
+                    ROI = creditor.ROI??0,
+                    EROI = creditor.EROI??0,
+                    Trials = creditor.Trials??0
                 });
             }
 
@@ -63,29 +51,17 @@ namespace Finapp.Services
         {
             var debtors = _debtorService.GetAllDebtors();
 
-            var associations = _associateService.GetAllAssociations();
-
-            var counter = 0;
             List<RankViewModel> listOfDebtors = new List<RankViewModel>();
 
             foreach (var debtor in debtors)
             {
-                counter = 0;
-                foreach (var associate in associations)
-                {
-                    var transactions = _context.Transaction_Out
-                        .Where(t => t.Associate_Id == associate.Associate_Id && t.Debtor_Id == debtor.Debtor_Id)
-                        .ToList()
-                        .Count();
-
-                    if (transactions > 0)
-                        counter++;
-                }
                 listOfDebtors.Add(new RankViewModel
                 {
                     Username = debtor.username,
-                    Delta = (int)debtor.Delta_APR,
-                    AssociateCounter = counter
+                    AssociateCounter = debtor.AssociateCounter??0,
+                    APR = debtor.APR??0,
+                    EAPR = debtor.EAPR??0,
+                    Trials = debtor.Trials??0
                 });
             }
 

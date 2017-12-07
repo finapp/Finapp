@@ -1,4 +1,4 @@
-﻿
+﻿@model Finapp.ViewModels.DBSummaryViewModel
 @{
     ViewBag.Title = "AddNewCustomers";
 }
@@ -21,16 +21,31 @@
             <label for="amountOfDebtors">Amount of debtors</label><br />
             <input type="text" name="amountOfDebtors" /><br />
 
-            <label for="amountOfCreditors">Amount of creditors</label><br />
+            <label for="amountOfCreditors">Amount of investors</label><br />
             <input type="text" name="amountOfCreditors" /><br /><br />
 
             <label for="updateDebtors">Refresh debtors?</label><br />
             <input type="checkbox" name="updateDebtors" /><br /><br />
 
-            <label for="updateCreditors">Refresh creditors?</label><br />
+            <label for="updateCreditors">Refresh investors?</label><br />
             <input type="checkbox" name="updateCreditors" /><br/><br/>
 
             <input type="submit" value="Submit" class="btn btn-success" />
         </fieldset>
     }
+</div>
+
+<div>
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Investors</th><th>Debtors</th><th>Transactions</th><th>Associations</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.AmountOfCreditors</td><td>@Model.AmountOfDebtors</td><td>@Model.AmoountOfTransactions</td><td>@Model.AmountOfAssociations</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

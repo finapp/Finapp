@@ -63,10 +63,12 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor
+                var creditors = _context.Creditor
                     .Where(c => c.Available == true && eapr > c.Delta_ROI)
                     .OrderBy(c => c.Queue_Date)
                     .ToList();
+
+                return creditors;
             }
             catch (Exception e)
             {

@@ -4,9 +4,9 @@
     ViewBag.Title = "CreditorRank";
 }
 
-<br/><br/>
+<br /><br />
 <div class="text-center">
-    <h2>Creditors Rank</h2>
+    <h2>Investors Rank</h2>
 </div>
 
 
@@ -14,8 +14,10 @@
     <thead>
         <tr>
             <th>Username</th>
-            <th>Delta ROI</th>
-            <th>Count of associations</th>
+            <th>ROI</th>
+            <th>EROI</th>
+            <th>Trials</th>
+            <th>Associations</th>
         </tr>
         @foreach (var creditor in Model)
         {
@@ -24,7 +26,13 @@
                     @creditor.Username
                 </td>
                 <td>
-                    @creditor.Delta
+                    @creditor.ROI
+                </td>
+                <td>
+                    @creditor.EROI
+                </td>
+                <td>
+                    @creditor.Trials
                 </td>
                 <td>
                     @creditor.AssociateCounter

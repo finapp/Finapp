@@ -16,6 +16,7 @@ namespace Finapp.Controllers
 
         public ActionResult Index()
         {
+            //return RedirectToAction("Index", "Transaction");
             return View();
         }
     }

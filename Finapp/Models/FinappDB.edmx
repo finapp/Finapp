@@ -26,6 +26,9 @@
           <Property Name="Queue_Date" Type="datetime" />
           <Property Name="Expiration_Date" Type="date" />
           <Property Name="Delta_ROI" Type="float" />
+          <Property Name="Trials" Type="int" />
+          <Property Name="AssociateCounter" Type="int" />
+          <Property Name="LastAssociate" Type="int" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -52,6 +55,7 @@
           <Property Name="Creditor_Id" Type="int" Nullable="false" />
           <Property Name="Associate_Counter" Type="int" />
           <Property Name="Delta_ROI" Type="float" />
+          <Property Name="Trials" Type="int" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -67,6 +71,9 @@
           <Property Name="Queue_Date" Type="date" />
           <Property Name="Expiration_Date" Type="date" />
           <Property Name="Delta_APR" Type="real" Nullable="false" />
+          <Property Name="Trials" Type="int" />
+          <Property Name="AssociateCounter" Type="int" />
+          <Property Name="LastAssociate" Type="int" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -93,6 +100,7 @@
           <Property Name="Debtor_Id" Type="int" Nullable="false" />
           <Property Name="Associate_Counter" Type="int" />
           <Property Name="Delta_APR" Type="int" />
+          <Property Name="Trials" Type="int" />
         </EntityType>
         <EntityType Name="Return_Transaction">
           <Key>
@@ -483,6 +491,9 @@
           <NavigationProperty Name="Creditor1" Relationship="FinapModel.fkqqq" FromRole="Creditor" ToRole="Creditor1" />
           <NavigationProperty Name="Creditor2" Relationship="FinapModel.fkqqq" FromRole="Creditor1" ToRole="Creditor" />
           <NavigationProperty Name="Creditor_Rank" Relationship="FinapModel.fkqqq3" FromRole="Creditor" ToRole="Creditor_Rank" />
+          <Property Name="Trials" Type="Int32" />
+          <Property Name="AssociateCounter" Type="Int32" />
+          <Property Name="LastAssociate" Type="Int32" />
         </EntityType>
         <EntityType Name="Creditor_Account">
           <Key>
@@ -514,6 +525,9 @@
           <NavigationProperty Name="Associate" Relationship="FinapModel.Debtor_Associate" FromRole="Debtor" ToRole="Associate" />
           <NavigationProperty Name="Transaction_Out1" Relationship="FinapModel.lkldk" FromRole="Debtor" ToRole="Transaction_Out" />
           <NavigationProperty Name="Debtor_Rank" Relationship="FinapModel.fkqqq2" FromRole="Debtor" ToRole="Debtor_Rank" />
+          <Property Name="Trials" Type="Int32" />
+          <Property Name="AssociateCounter" Type="Int32" />
+          <Property Name="LastAssociate" Type="Int32" />
         </EntityType>
         <EntityType Name="Debtor_Account">
           <Key>
@@ -836,6 +850,7 @@
           <Property Name="Associate_Counter" Type="Int32" />
           <Property Name="Delta_ROI" Type="Double" />
           <NavigationProperty Name="Creditor" Relationship="FinapModel.fkqqq3" FromRole="Creditor_Rank" ToRole="Creditor" />
+          <Property Name="Trials" Type="Int32" />
         </EntityType>
         <EntityType Name="Debtor_Rank">
           <Key>
@@ -846,6 +861,7 @@
           <Property Name="Associate_Counter" Type="Int32" />
           <Property Name="Delta_APR" Type="Int32" />
           <NavigationProperty Name="Debtor" Relationship="FinapModel.fkqqq2" FromRole="Debtor_Rank" ToRole="Debtor" />
+          <Property Name="Trials" Type="Int32" />
         </EntityType>
         <Association Name="fkqqq">
           <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="1" />
@@ -892,6 +908,9 @@
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
+                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
                 <ScalarProperty Name="Delta_ROI" ColumnName="Delta_ROI" />
                 <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
@@ -918,6 +937,9 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
+                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
                 <ScalarProperty Name="Delta_APR" ColumnName="Delta_APR" />
                 <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
@@ -1034,6 +1056,7 @@
           <EntitySetMapping Name="Creditor_Rank">
             <EntityTypeMapping TypeName="FinapModel.Creditor_Rank">
               <MappingFragment StoreEntitySet="Creditor_Rank">
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
                 <ScalarProperty Name="Delta_ROI" ColumnName="Delta_ROI" />
                 <ScalarProperty Name="Associate_Counter" ColumnName="Associate_Counter" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
@@ -1044,6 +1067,7 @@
           <EntitySetMapping Name="Debtor_Rank">
             <EntityTypeMapping TypeName="FinapModel.Debtor_Rank">
               <MappingFragment StoreEntitySet="Debtor_Rank">
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
                 <ScalarProperty Name="Delta_APR" ColumnName="Delta_APR" />
                 <ScalarProperty Name="Associate_Counter" ColumnName="Associate_Counter" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />

@@ -196,6 +196,7 @@
     <Compile Include="IServices\IAssociateService.cs" />
     <Compile Include="IServices\IAssociateViewModelService.cs" />
     <Compile Include="IServices\ICreditorViewModelService.cs" />
+    <Compile Include="IServices\IDBSummaryViewModelService.cs" />
     <Compile Include="IServices\IDebtorViewModelService.cs" />
     <Compile Include="IServices\ICreditorAccountService.cs" />
     <Compile Include="IServices\IDebtorAccountService.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Services\CreditorAccountService.cs" />
     <Compile Include="Services\CreditorService.cs" />
     <Compile Include="Services\CreditorViewModelService.cs" />
+    <Compile Include="Services\DBSummaryViewModelService.cs" />
     <Compile Include="Services\DebtorAccountService.cs" />
     <Compile Include="Services\DebtorService.cs" />
     <Compile Include="Services\DebtorViewModelService.cs" />
@@ -270,6 +272,7 @@
     <Compile Include="Services\SummaryViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="ViewModels\AssociateViewModel.cs" />
+    <Compile Include="ViewModels\DBSummaryViewModel.cs" />
     <Compile Include="ViewModels\RankViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
     <Compile Include="ViewModels\DebtorViewModel.cs" />

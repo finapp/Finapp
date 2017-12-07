@@ -1,5 +1,6 @@
 ﻿using Finapp.CreateDatabase;
 using Finapp.ICreateDatabase;
+using Finapp.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Finapp.Controllers
     public class CreateDBController : Controller
     {
         private readonly ICreator _creator;
+        private readonly IDBSummaryViewModelService _dbSummaryService;
 
-        public CreateDBController(ICreator creator)
+        public CreateDBController(ICreator creator, IDBSummaryViewModelService dbSummaryService)
         {
             _creator = creator;
+            _dbSummaryService = dbSummaryService;
         }
 
         public ActionResult Index()
@@ -46,7 +49,7 @@ namespace Finapp.Controllers
 
         public ActionResult NewCustomers()
         {
-            return View();
+            return View(_dbSummaryService.GetViewModel());
         }
 
         [HttpPost]

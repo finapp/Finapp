@@ -11,5 +11,6 @@ namespace Finapp.IServices
     {
         bool CreateSummary(Summary summary);
         Summary GetSummaryByAssociate(Associate associate);
+        IEnumerable<Summary> GetAllSummaries();
     }
 }

@@ -78,10 +78,12 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Debtor
+                var debtors = _context.Debtor
                     .Where(d => d.Available == true)
                     .OrderBy(d => d.Queue_Date)
                     .ToList();
+
+                return debtors; 
             }
             catch (Exception e)
             {

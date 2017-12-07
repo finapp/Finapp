@@ -13,5 +13,6 @@ namespace Finapp.IServices
         IEnumerable<StatisticsViewModel> GetSummary();
         SummaryModel CreateStatisticViewModel(Summary summary);
         IEnumerable<StatisticsViewModel> GetAllStatistics();
+        SummaryModel CreateLastSummary();
     }
 }

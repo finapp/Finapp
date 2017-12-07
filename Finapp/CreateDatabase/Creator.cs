@@ -132,6 +132,9 @@ namespace Finapp.CreateDatabase
                     Finapp_Balance = balance,
                     Queue_Date = creditorQueueDate.AddDays(rand.Next(1, 30)),
                     Expiration_Date = d,
+                    Trials = 0,
+                    AssociateCounter = 0,
+                    LastAssociate = 0
                 };
 
                 _creditorService.AddNewCreditor(c);
@@ -183,7 +186,10 @@ namespace Finapp.CreateDatabase
                     Available = true,
                     Finapp_Debet = debet,
                     Queue_Date = debtorQueueDate.AddDays(rand.Next(1, 30)),
-                    Expiration_Date = d
+                    Expiration_Date = d,
+                    Trials = 0,
+                    AssociateCounter = 0,
+                    LastAssociate = 0
                 };
                 _debtorService.AddNewDebtor(deb);
 

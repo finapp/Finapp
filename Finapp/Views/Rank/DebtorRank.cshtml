@@ -14,8 +14,10 @@
     <thead>
         <tr>
             <th>Username</th>
-            <th>Delta APR</th>
-            <th>Count of associations</th>
+            <th>APR</th>
+            <th>EAPR</th>
+            <th>Trials</th>
+            <th>Associations</th>
         </tr>
         @foreach (var debtor in Model)
         {
@@ -24,7 +26,13 @@
                     @debtor.Username
                 </td>
                 <td>
-                    @debtor.Delta
+                    @debtor.APR
+                </td>
+                <td>
+                    @debtor.EAPR
+                </td>
+                <td>
+                    @debtor.Trials
                 </td>
                 <td>
                     @debtor.AssociateCounter

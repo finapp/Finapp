@@ -43,6 +43,16 @@ namespace Finapp.Services
             {
                 var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                 var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)accessDays / 365);
+                string haveTransactions;
+
+                if (creditor.AssociateCounter > 0)
+                {
+                    haveTransactions = "Yes";
+                }
+                else
+                {
+                    haveTransactions = "No";
+                }
 
                 creditorViewModel.Add(new CreditorViewModel
                 {
@@ -54,7 +64,8 @@ namespace Finapp.Services
                     Expiration_Date = creditor.Expiration_Date ?? DateTime.Now,
                     Queue_Date = creditor.Queue_Date ?? DateTime.Now,
                     AccessDays = accessDays,
-                    ExpectedProfits = expectedProfits
+                    ExpectedProfits = expectedProfits,
+                    HaveTransactions = haveTransactions
                 });
             }
 

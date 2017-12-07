@@ -20,11 +20,11 @@
                 <th>Days</th>
                 <th>Debtor</th>
                 <th>Deb Finapp</th>
-                <th>Delta APR</th>
+                <th>Delta APR %</th>
                 <th>Savings</th>
-                <th>Creditor</th>
-                <th>Cred Finapp</th>
-                <th>Delta ROI</th>
+                <th>Investor</th>
+                <th>Inv Finapp</th>
+                <th>Delta ROI %</th>
                 <th>Profits</th>
             </tr>
         </thead>
@@ -79,10 +79,10 @@
                 <thead>
                     <tr>
                         <th>Days</th>
-                        <th>Debet</th>
-                        <th>Debet Avg</th>
-                        <th>Balance</th>
-                        <th>Balance Avg</th>
+                        <th>Debit</th>
+                        <th>Debit Avg</th>
+                        <th>Amount</th>
+                        <th>Amount Avg</th>
                         <th>Savings</th>
                         <th>Savings Avg</th>
                         <th>Delta APR %</th>
@@ -126,7 +126,6 @@
                         <td>
                             @summaries.Summary.ProfitsAveragePercentage %
                         </td>
-
                     </tr>
                 </tbody>
             </table>
@@ -134,7 +133,62 @@
     }
 }
 
-
-
-
-
+<div class="text-center">
+    <br />
+    <hr />
+    <h3>Last summary</h3>
+</div>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Days</th>
+            <th>Debit</th>
+            <th>Debit Avg</th>
+            <th>Amount</th>
+            <th>Amount Avg</th>
+            <th>Savings</th>
+            <th>Savings Avg</th>
+            <th>Delta APR %</th>
+            <th>Profits</th>
+            <th>Profits Avg</th>
+            <th>Delta ROI %</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.LastSummary.Days
+            </td>
+            <td>
+                @Model.LastSummary.DebetSum PLN
+            </td>
+            <td>
+                @Model.LastSummary.DebetAverage PLN
+            </td>
+            <td>
+                @Model.LastSummary.BalanceSum PLN
+            </td>
+            <td>
+                @Model.LastSummary.BalanceAverage PLN
+            </td>
+            <td>
+                @Model.LastSummary.SavingsSum PLN
+            </td>
+            <td>
+                @Model.LastSummary.SavingsAverage PLN
+            </td>
+            <td>
+                @Model.LastSummary.SavingsAveragePercentage %
+            </td>
+            <td>
+                @Model.LastSummary.ProfitsSum PLN
+            </td>
+            <td>
+                @Model.LastSummary.ProfitsAverage PLN
+            </td>
+            <td>
+                @Model.LastSummary.ProfitsAveragePercentage %
+            </td>
+        </tr>
+    </tbody>
+</table>
