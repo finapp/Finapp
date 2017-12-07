@@ -14,12 +14,6 @@ namespace Finapp.Models
     
     public partial class Transaction_Out
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Transaction_Out()
-        {
-            this.Return_Transaction = new HashSet<Return_Transaction>();
-        }
-    
         public int Transaction_Out_Id { get; set; }
         public int Ammount { get; set; }
         public Nullable<System.DateTime> Date_Of_Transaction { get; set; }
@@ -34,11 +28,8 @@ namespace Finapp.Models
         public int Associate_Id { get; set; }
         public Nullable<int> Creditor_Id { get; set; }
         public Nullable<int> Debtor_Id { get; set; }
+        public Nullable<int> ActualCreditorBenefits { get; set; }
     
-        public virtual Creditor_Account Creditor_Account { get; set; }
-        public virtual Debtor_Account Debtor_Account { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Return_Transaction> Return_Transaction { get; set; }
         public virtual Associate Associate { get; set; }
         public virtual Creditor Creditor1 { get; set; }
         public virtual Debtor Debtor1 { get; set; }

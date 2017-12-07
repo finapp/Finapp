@@ -15,65 +15,26 @@ namespace Finapp.Services
         private readonly ITransactionOutService _transactionService;
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
-        private readonly IDebtorAccountService _debtorAccountService;
         private readonly IDebtorViewModelService _debtorViewModelService;
         private readonly IAssociateViewModelService _associateViewModelService;
         private readonly IAssociateService _associateService;
         private readonly ISummaryService _summaryService;
 
         public StatisticsViewModelService(FinapEntities1 context, ITransactionOutService transactionService, ICreditorService creditorService, 
-            IDebtorService debtorService, IDebtorAccountService debtorAccountService, IDebtorViewModelService debtorViewModelService, 
+            IDebtorService debtorService, IDebtorViewModelService debtorViewModelService, 
             IAssociateViewModelService associateViewModelService, IAssociateService associateService, ISummaryService summaryService)
         {
             _context = context;
             _transactionService = transactionService;
             _creditorService = creditorService;
             _debtorService = debtorService;
-            _debtorAccountService = debtorAccountService;
             _debtorViewModelService = debtorViewModelService;
             _associateViewModelService = associateViewModelService;
             _associateService = associateService;
             _summaryService = summaryService;
         }
 
-        public IEnumerable<StatisticsViewModel> GetSummary()
-        {
-            var associations = _associateViewModelService.GetAllTransactions();
-            var debtors = new List<Debtor>();
-            var listOfDebtorAccounts = _debtorAccountService.GetAllAccounts();
-
-            List<StatisticsViewModel> returnedList = new List<StatisticsViewModel>();
-
-            foreach (var associate in associations)
-            {
-                debtors.Clear();
-
-                var listOfTransactions = associate.List;
-                foreach (var debtorAccount in listOfDebtorAccounts)
-                {
-                    var debtorHaveTransaction = _context.Transaction_Out
-                    .Where(t => t.Date_Of_Transaction == associate.Date)
-                    .Any(tr => tr.Debtor_Account_Id == debtorAccount.Debtor_Account_Id);
-
-                    if (!debtorHaveTransaction)
-                    {
-                        var debtor = _debtorAccountService.GetDebtorByAccountId(debtorAccount.Debtor_Account_Id);
-
-                        if (debtor.Finapp_Debet == debtor.Debet)
-                            debtors.Add(debtor);
-                    }
-                }
-
-                StatisticsViewModel model = new StatisticsViewModel();
-                var debtorsViewModel = _debtorViewModelService.CreateListViewModel(debtors);
-                model.DebtorListWithoutAssociate = debtorsViewModel;
-
-                returnedList.Add(model);
-            }
-
-            return returnedList;
-        }
-
+       
         public SummaryModel CreateLastSummary()
         {
             var summaries = _summaryService.GetAllSummaries();

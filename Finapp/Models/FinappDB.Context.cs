@@ -26,15 +26,10 @@ namespace Finapp.Models
         }
     
         public virtual DbSet<Creditor> Creditor { get; set; }
-        public virtual DbSet<Creditor_Account> Creditor_Account { get; set; }
         public virtual DbSet<Debtor> Debtor { get; set; }
-        public virtual DbSet<Debtor_Account> Debtor_Account { get; set; }
         public virtual DbSet<Transaction_Out> Transaction_Out { get; set; }
-        public virtual DbSet<Return_Transaction> Return_Transaction { get; set; }
         public virtual DbSet<Associate> Associate { get; set; }
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Creditor_Rank> Creditor_Rank { get; set; }
-        public virtual DbSet<Debtor_Rank> Debtor_Rank { get; set; }
     }
 }

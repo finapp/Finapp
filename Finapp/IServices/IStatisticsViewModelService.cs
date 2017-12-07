@@ -10,7 +10,6 @@ namespace Finapp.IServices
 {
     public interface IStatisticsViewModelService
     {
-        IEnumerable<StatisticsViewModel> GetSummary();
         SummaryModel CreateStatisticViewModel(Summary summary);
         IEnumerable<StatisticsViewModel> GetAllStatistics();
         SummaryModel CreateLastSummary();

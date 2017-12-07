@@ -65,8 +65,6 @@ namespace Finapp.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<FinapEntities1>().ToSelf().InRequestScope();
-            kernel.Bind<ICreditorAccountService>().To<CreditorAccountService>().InRequestScope();
-            kernel.Bind<IDebtorAccountService>().To<DebtorAccountService>().InRequestScope();
             kernel.Bind<IDebtorService>().To<DebtorService>().InRequestScope();
             kernel.Bind<ICreditorService>().To<CreditorService>().InRequestScope();
             kernel.Bind<IAlgorithms>().To<Algorithms>().InRequestScope();

@@ -15,22 +15,17 @@ namespace Finapp.Implementations
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
         private readonly ITransactionOutService _transactionOutService;
-        private readonly ICreditorAccountService _creditorAccountService;
-        private readonly IDebtorAccountService _debtorAccountService;
         private readonly IAssociateService _associateService;
         private readonly ISummaryService _summaryService;
         private SummaryModel _summary;
 
         public Algorithms(ICreditorService creditorService, IDebtorService debtorService,
-            ITransactionOutService transactionOutService, ICreditorAccountService creditorAccountService,
-            IDebtorAccountService debtorAccountService, IAssociateService associateService,
-            ISummaryService summaryService)
+            ITransactionOutService transactionOutService,
+            IAssociateService associateService, ISummaryService summaryService)
         {
             _creditorService = creditorService;
             _debtorService = debtorService;
             _transactionOutService = transactionOutService;
-            _creditorAccountService = creditorAccountService;
-            _debtorAccountService = debtorAccountService;
             _associateService = associateService;
             _summaryService = summaryService;
             _summary = new SummaryModel();
@@ -123,8 +118,6 @@ namespace Finapp.Implementations
                     {
                         Ammount = debtor.Finapp_Debet,
                         Date_Of_Transaction = DateTime.Now,
-                        Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
-                        Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
                         ROI = (float)EROI,
                         Finapp_Debetor = 0,
                         Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
@@ -145,7 +138,7 @@ namespace Finapp.Implementations
 
                     var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
 
-                    if(creditor.LastAssociate < associate.Associate_Id)
+                    if (creditor.LastAssociate < associate.Associate_Id)
                     {
                         creditor.AssociateCounter += 1;
                         creditor.LastAssociate = associate.Associate_Id;
@@ -183,8 +176,6 @@ namespace Finapp.Implementations
                     {
                         Ammount = creditor.Finapp_Balance,
                         Date_Of_Transaction = DateTime.Now,
-                        Creditor_Account_Id = _creditorAccountService.GetAccountIdByCreditorId(creditor.Creditor_Id),
-                        Debtor_Account_Id = _debtorAccountService.GetAccountIdByDebtorId(debtor.Debtor_Id),
                         ROI = (float)EROI,
                         Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
                         Finapp_Creditor = 0,
@@ -193,7 +184,7 @@ namespace Finapp.Implementations
                         Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                         Associate_Id = associate.Associate_Id,
                         Creditor_Id = creditor.Creditor_Id,
-                        Debtor_Id=debtor.Debtor_Id
+                        Debtor_Id = debtor.Debtor_Id
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);

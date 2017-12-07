@@ -12,17 +12,12 @@ namespace Finapp.Services
     {
         private readonly FinapEntities1 _context;
         private readonly ITransactionOutService _transactionService;
-        private readonly IDebtorAccountService _debtorAccountService;
-        private readonly ICreditorAccountService _creditorAccountService;
         private readonly IAssociateService _associateService;
 
-        public AssociateViewModelService(FinapEntities1 context, ITransactionOutService transactionService, IDebtorAccountService debtorAccountService, 
-            ICreditorAccountService creditorAccountService, IAssociateService associateService)
+        public AssociateViewModelService(FinapEntities1 context, ITransactionOutService transactionService, IAssociateService associateService)
         {
             _context = context;
             _transactionService = transactionService;
-            _debtorAccountService = debtorAccountService;
-            _creditorAccountService = creditorAccountService;
             _associateService = associateService;
         }
 
@@ -30,17 +25,14 @@ namespace Finapp.Services
         {
             var assotiations = _associateService.GetAllAssociations();
             var number = 1;
+
             AssociateViewModel oneAssociate;
             List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
 
             foreach (var associate in assotiations)
             {
-                var listOfTransactions = _context.Associate
+                var listOfTransactions = _context.Transaction_Out
                     .Where(a => a.Associate_Id == associate.Associate_Id)
-                    .Join(_context.Transaction_Out,
-                    a => a.Associate_Id,
-                    t => t.Associate_Id,
-                    (a, t) => new { Associate = a, Transaction_Out = t })
                     .ToList();
 
                 oneAssociate = new AssociateViewModel();
@@ -53,7 +45,7 @@ namespace Finapp.Services
 
                 foreach (var transaction in listOfTransactions)
                 {
-                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction.Transaction_Out));
+                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction));
                 }
 
                 if (oneAssociate.List.Count > 0)
@@ -65,19 +57,18 @@ namespace Finapp.Services
 
         public IEnumerable<AssociateViewModel> GetTransactionsByDebtorUsername(string username)
         {
-            var debtorAccountId = _debtorAccountService.GetAccountIdByDebtorUsername(username);
+            var debtorId = (from d in _context.Debtor
+                            where d.username == username
+                            select d.Debtor_Id).FirstOrDefault();
+
             var assotiations = _context.Associate.ToList();
             AssociateViewModel oneAssociate;
             List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
 
             foreach (var associate in assotiations)
             {
-                var listOfTransactions = _context.Transaction_Out
-                    .Where(t => t.Debtor_Account_Id == debtorAccountId && t.Associate_Id == associate.Associate_Id)
-                    .Join(_context.Debtor_Account,
-                    t => t.Debtor_Account_Id,
-                    da => da.Debtor_Account_Id,
-                    (t, da) => new { Transaction_Out = t, Debtor_Account = da })
+                var listOfTransactions = _context.Transaction_Out.
+                    Where(t => t.Debtor_Id == debtorId && t.Associate_Id == associate.Associate_Id)
                     .ToList();
 
                 oneAssociate = new AssociateViewModel();
@@ -85,7 +76,7 @@ namespace Finapp.Services
                 oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 foreach (var transaction in listOfTransactions)
                 {
-                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction.Transaction_Out));
+                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction));
                 }
 
                 if (oneAssociate.List.Count > 0)
@@ -97,7 +88,11 @@ namespace Finapp.Services
 
         public IEnumerable<AssociateViewModel> GetTransactionsByCreditorUsername(string username)
         {
-            var creditorAccountId = _creditorAccountService.GetAccountIdByCreditorUsername(username);
+            var creditorId = (from c in _context.Creditor
+                              where c.username == username
+                              select c.Creditor_Id)
+                              .FirstOrDefault();
+
             var assotiations = _context.Associate.ToList();
             AssociateViewModel oneAssociate;
             List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
@@ -105,11 +100,7 @@ namespace Finapp.Services
             foreach (var associate in assotiations)
             {
                 var listOfTransactions = _context.Transaction_Out
-                    .Where(t => t.Creditor_Account_Id == creditorAccountId && t.Associate_Id == associate.Associate_Id)
-                    .Join(_context.Creditor_Account,
-                    t => t.Creditor_Account_Id,
-                    ca => ca.Creditor_Account_Id,
-                    (t, ca) => new { Transaction_Out = t, Creditor_Account = ca })
+                    .Where(t => t.Creditor_Id == creditorId && t.Associate_Id == associate.Associate_Id)
                     .ToList();
 
                 oneAssociate = new AssociateViewModel();
@@ -117,7 +108,7 @@ namespace Finapp.Services
                 oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 foreach (var transaction in listOfTransactions)
                 {
-                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction.Transaction_Out));
+                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction));
                 }
 
                 if (oneAssociate.List.Count > 0)

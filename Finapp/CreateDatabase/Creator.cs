@@ -14,17 +14,12 @@ namespace Finapp.CreateDatabase
         private readonly FinapEntities1 _context;
         private readonly IDebtorService _debtorService;
         private readonly ICreditorService _creditorService;
-        private readonly ICreditorAccountService _creditorAccountService;
-        private readonly IDebtorAccountService _debtorAccountService;
 
-        public Creator(FinapEntities1 context, IDebtorService debtorService, ICreditorService creditorService,
-            ICreditorAccountService creditorAccountService, IDebtorAccountService debtorAccountService)
+        public Creator(FinapEntities1 context, IDebtorService debtorService, ICreditorService creditorService)
         {
             _context = context;
             _debtorService = debtorService;
             _creditorService = creditorService;
-            _creditorAccountService = creditorAccountService;
-            _debtorAccountService = debtorAccountService;
         }
 
         public void ClearDB()
@@ -32,11 +27,8 @@ namespace Finapp.CreateDatabase
             _context.Database.ExecuteSqlCommand("Delete from [Summary]");
             _context.Database.ExecuteSqlCommand("Delete from [Creditor_Associate]");
             _context.Database.ExecuteSqlCommand("Delete from [Debtor_Associate]");
-            _context.Database.ExecuteSqlCommand("Delete from [Return_Transaction]");
             _context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
             _context.Database.ExecuteSqlCommand("Delete from [Associate]");
-            _context.Database.ExecuteSqlCommand("Delete from [Creditor_Account]");
-            _context.Database.ExecuteSqlCommand("Delete from [Debtor_Account]");
             _context.Database.ExecuteSqlCommand("Delete from [Creditor]");
             _context.Database.ExecuteSqlCommand("Delete from [Debtor]");
         }
@@ -138,13 +130,6 @@ namespace Finapp.CreateDatabase
                 };
 
                 _creditorService.AddNewCreditor(c);
-                _creditorAccountService.AddCreditorAccount(new Creditor_Account
-                {
-                    Creditor_Id = c.Creditor_Id,
-                    Balance = c.Balance,
-                    Min_Balance = 0
-                });
-
             }
 
             for (int i = 1; i <= amountOfDebtors; i++)
@@ -192,13 +177,6 @@ namespace Finapp.CreateDatabase
                     LastAssociate = 0
                 };
                 _debtorService.AddNewDebtor(deb);
-
-                _debtorAccountService.AddDebtorAccount(new Debtor_Account
-                {
-                    Debtor_Id = deb.Debtor_Id,
-                    Debet = deb.Debet,
-                    Credit_Line_Date = d
-                });
             }
         }
     }
