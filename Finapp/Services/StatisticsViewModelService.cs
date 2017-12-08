@@ -50,6 +50,7 @@ namespace Finapp.Services
             var balanceSum = 0;
             var debetSum = 0;
             var days = 0;
+            var turnover = 0;
 
             int counter = summaries.Count();
 
@@ -66,15 +67,19 @@ namespace Finapp.Services
                 balanceSum += summary.Balance_Sum??0;
                 debetSum += summary.Debet_Sum??0;
                 days += summary.Days??0;
+                turnover += summary.Turnover??0;
             }
 
-            debetAverage /= counter;
-            balanceAverage /= counter;
-            savingsAverage /= counter;
-            profitsAverage /= counter;
-            savingsAveragePercentage /= counter;
-            profitsAveragePercentage /= counter;
-            days /= counter;
+            if (counter > 0)
+            {
+                debetAverage /= counter;
+                balanceAverage /= counter;
+                savingsAverage /= counter;
+                profitsAverage /= counter;
+                savingsAveragePercentage /= counter;
+                profitsAveragePercentage /= counter;
+                days /= counter;
+            }
 
             return new SummaryModel
             {
@@ -89,6 +94,7 @@ namespace Finapp.Services
                 BalanceSum = balanceSum,
                 DebetSum = debetSum,
                 Days = days,
+                Turnover = turnover
             };
         }
 
@@ -111,7 +117,8 @@ namespace Finapp.Services
                 DebetSum = summary.Debet_Sum ?? 0,
                 Days = summary.Days??0,
                 DateOfSummary = summary.DateOfSummary??DateTime.Now,
-                AssociateId = summary.Associate_Id
+                AssociateId = summary.Associate_Id,
+                Turnover = summary.Turnover??0
             };
         }
 

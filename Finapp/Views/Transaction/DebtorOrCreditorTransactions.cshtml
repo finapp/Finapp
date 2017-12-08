@@ -1,69 +1,41 @@
-﻿@model  IEnumerable<Finapp.ViewModels.AssociateViewModel>
+﻿@model  IEnumerable<Finapp.ViewModels.UserTransactionsViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <br/><br/><br/>
-@foreach (var list in Model)
-{
     <div class="text-center">
-        <h4>Associate @list.Date.ToString("dd/MM/yyyy")</h4>
+        <h4>User transactions</h4>
     </div>
         <table class="table table-responsive table-striped">
             <thead>
                 <tr>
-                    <th>Amount</th>
-                    <th>Days</th>
-                    <th>Debtor</th>
-                    <th>Deb Finapp</th>
-                    <th>Exp Savings</th>
-                    <th>Savings</th>
-                    <th>Creditor</th>
-                    <th>Cred Finapp</th>
-                    <th>Exp Profits</th>
-                    <th>Profits</th>
+                    <th>User</th>
+                    @foreach (var associate in Model)
+                    {
+                        <th>@associate.AssociateNr</th>
+                        <th>Profits/Savings</th>
+                    }
                 </tr>
             </thead>
             <tbody>
-                @foreach (var transaction in list.List)
-                {
-                    <tr>
-                        <td>
-                            @transaction.Amount PLN
-                        </td>
-                        <td>
-                            @transaction.DayAccessToFunds
-                        </td>
-                        <td>
-                            @transaction.DebtorUsername
-                        </td>
-                        <td>
-                            @transaction.DebtorAccountFinappAmount PLN
-                        </td>
-                        <td>
-                            @transaction.APR %
-                        </td>
-                        <td>
-                            @transaction.RealDebtorBenefits PLN
-                        </td>
-
-                        <td>
-                            @transaction.CreditorUsername
-                        </td>
-                        <td>
-                            @transaction.CreditorAccountFinappAmount PLN
-                        </td>
-                        <td>
-                            @transaction.ROI %
-                        </td>
-                        <td>
-                            @transaction.RealCreditorBenefits PLN
-                        </td>
-                    </tr>
-                }
+              <tr>
+                  @foreach (var associate in Model)
+                  {
+                      <td>@associate.Username</td>
+                      if (true)
+                      {
+                          break;
+                      }
+                  }
+                  @foreach (var associate in Model)
+                  {
+                      <td>@associate.Amount PLN</td>
+                      <td>@associate.Profits PLN</td>
+                  }
+              </tr>
             </tbody>
         </table>
-}
 
 

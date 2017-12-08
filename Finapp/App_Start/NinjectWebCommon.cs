@@ -79,6 +79,7 @@ namespace Finapp.App_Start
             kernel.Bind<ISummaryViewModelService>().To<SummaryViewModelService>().InRequestScope();
             kernel.Bind<IRankViewModelService>().To<RankViewModelService>().InRequestScope();
             kernel.Bind<IDBSummaryViewModelService>().To<DBSummaryViewModelService>().InRequestScope();
+            kernel.Bind<ITests>().To<Tests>().InRequestScope();
         }
     }
 }

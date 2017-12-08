@@ -109,10 +109,10 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Debtor
-                    .Where(d => d.Debtor_Id == id)
-                    .FirstOrDefault()
-                    .username;
+                return (from d in _context.Debtor
+                        where d.Debtor_Id == id
+                        select d.username)
+                        .FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -152,8 +152,11 @@ namespace Finapp.Services
         }
         public DateTime GetTheOldestQueueDate()
         {
-            var debtors = _context.Debtor.ToList();
-            var date = debtors.Max(c => c.Queue_Date);
+            var debtors = (from d in _context.Debtor
+                           select d.Queue_Date)
+                           .ToList();
+                
+            var date = debtors.Max();
 
             return date ?? DateTime.Now;
         }

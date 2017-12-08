@@ -1,0 +1,20 @@
+﻿@model Finapp.ViewModels.TestsViewModel
+@{
+    ViewBag.Title = "Test";
+}
+
+<br/><br/><br/>
+
+<table class="table table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>TEST</th><th>1000</th><th>10000</th><th>100000</th><th>1000000</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td><td>@Model.TimeFor1000</td><td>@Model.CreateDBTime1000</td>
+        </tr>
+    </tbody>
+</table>
+

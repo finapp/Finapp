@@ -85,6 +85,7 @@
           <Property Name="Creditors" Type="int" />
           <Property Name="Days" Type="int" />
           <Property Name="DateOfSummary" Type="date" />
+          <Property Name="Turnover" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -116,6 +117,7 @@
           <Property Name="Debtor_Id" Type="int" />
           <Property Name="ActualCreditorBenefits" Type="int" />
           <Property Name="CreditorBenefits" Type="int" />
+          <Property Name="DebtorSavings" Type="int" />
         </EntityType>
         <Association Name="aaa">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
@@ -341,6 +343,7 @@
           <NavigationProperty Name="Debtor1" Relationship="FinapModel.lkldk" FromRole="Transaction_Out" ToRole="Debtor" />
           <Property Name="ActualCreditorBenefits" Type="Int32" />
           <Property Name="CreditorBenefits" Type="Int32" />
+          <Property Name="DebtorSavings" Type="Int32" />
         </EntityType>
         <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Creditor" EntityType="Self.Creditor" />
@@ -422,6 +425,7 @@
           <Property Name="Creditors" Type="Int32" />
           <Property Name="Days" Type="Int32" />
           <Property Name="DateOfSummary" Type="DateTime" Precision="0" />
+          <Property Name="Turnover" Type="Int32" />
         </EntityType>
         <Association Name="fk01">
           <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
@@ -537,6 +541,7 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="DebtorSavings" ColumnName="DebtorSavings" />
                 <ScalarProperty Name="CreditorBenefits" ColumnName="CreditorBenefits" />
                 <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
@@ -567,6 +572,7 @@
           <EntitySetMapping Name="Summary">
             <EntityTypeMapping TypeName="FinapModel.Summary">
               <MappingFragment StoreEntitySet="Summary">
+                <ScalarProperty Name="Turnover" ColumnName="Turnover" />
                 <ScalarProperty Name="DateOfSummary" ColumnName="DateOfSummary" />
                 <ScalarProperty Name="Days" ColumnName="Days" />
                 <ScalarProperty Name="Creditors" ColumnName="Creditors" />

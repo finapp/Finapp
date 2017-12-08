@@ -9,10 +9,12 @@
     <h2>Debtors Rank</h2>
 </div>
 
+@{ int rowNo = 0; }
 
 <table class="table table-responsive table-striped">
     <thead>
         <tr>
+            <th>Nr</th>
             <th>Username</th>
             <th>APR</th>
             <th>EAPR</th>
@@ -22,6 +24,9 @@
         @foreach (var debtor in Model)
         {
             <tr>
+                <td>
+                    @(rowNo += 1)
+                </td>
                 <td>
                     @debtor.Username
                 </td>

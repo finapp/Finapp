@@ -22,7 +22,6 @@ namespace Finapp.ViewModels
         public int Days { get; set; }
         public DateTime DateOfSummary { get; set; }
         public int AssociateId { get; set; }
-
-
+        public int Turnover { get; set; }
     }
 }

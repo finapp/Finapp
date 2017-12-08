@@ -10,7 +10,7 @@ namespace Finapp.IServices
     public interface IAssociateViewModelService
     {
         IEnumerable<AssociateViewModel> GetAllTransactions();
-        IEnumerable<AssociateViewModel> GetTransactionsByDebtorUsername(string username);
-        IEnumerable<AssociateViewModel> GetTransactionsByCreditorUsername(string username);
+        IEnumerable<UserTransactionsViewModel> GetTransactionsByDebtorUsername(string username);
+        IEnumerable<UserTransactionsViewModel> GetTransactionsByCreditorUsername(string username);
     }
 }

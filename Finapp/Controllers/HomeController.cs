@@ -13,11 +13,21 @@ namespace Finapp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ITests _tests;
+
+        public HomeController(ITests tests)
+        {
+            _tests = tests;
+        }
 
         public ActionResult Index()
         {
-            //return RedirectToAction("Index", "Transaction");
-            return View();
+            return RedirectToAction("Index", "Transaction");
+        }
+
+        public ActionResult Test()
+        {
+            return View(_tests.TestFor1000());
         }
     }
 }

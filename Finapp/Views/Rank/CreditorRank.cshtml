@@ -9,10 +9,12 @@
     <h2>Investors Rank</h2>
 </div>
 
+@{ int rowNo = 0; }
 
 <table class="table table-responsive table-striped">
     <thead>
         <tr>
+            <th>Nr</th>
             <th>Username</th>
             <th>ROI</th>
             <th>EROI</th>
@@ -22,6 +24,9 @@
         @foreach (var creditor in Model)
         {
             <tr>
+                <td>
+                    @(rowNo += 1)
+                </td>
                 <td>
                     @creditor.Username
                 </td>

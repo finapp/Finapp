@@ -55,64 +55,84 @@ namespace Finapp.Services
             return returnedList;
         }
 
-        public IEnumerable<AssociateViewModel> GetTransactionsByDebtorUsername(string username)
+        public IEnumerable<UserTransactionsViewModel> GetTransactionsByDebtorUsername(string username)
         {
             var debtorId = (from d in _context.Debtor
                             where d.username == username
                             select d.Debtor_Id).FirstOrDefault();
 
             var assotiations = _context.Associate.ToList();
-            AssociateViewModel oneAssociate;
-            List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
+            UserTransactionsViewModel oneAssociate;
+            List<UserTransactionsViewModel> returnedList = new List<UserTransactionsViewModel>();
+            int amount = 0;
+            int profit = 0;
+
+            int number = 1;
 
             foreach (var associate in assotiations)
             {
-                var listOfTransactions = _context.Transaction_Out.
-                    Where(t => t.Debtor_Id == debtorId && t.Associate_Id == associate.Associate_Id)
-                    .ToList();
+                var listOfTransactions = (from t in _context.Transaction_Out
+                                          where t.Debtor_Id == debtorId && t.Associate_Id == associate.Associate_Id
+                                          select new { t.Ammount, t.DebtorSavings })
+                                          .ToList();
 
-                oneAssociate = new AssociateViewModel();
+                oneAssociate = new UserTransactionsViewModel();
 
-                oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 foreach (var transaction in listOfTransactions)
                 {
-                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction));
+                    amount += transaction.Ammount;
+                    profit += transaction.DebtorSavings??0;
+                    
                 }
 
-                if (oneAssociate.List.Count > 0)
+                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username);
+
+                if (oneAssociate.Amount > 0)
                     returnedList.Add(oneAssociate);
+
+                number++;
+                amount = 0;
+                profit = 0;
             }
 
             return returnedList;
         }
 
-        public IEnumerable<AssociateViewModel> GetTransactionsByCreditorUsername(string username)
+        public IEnumerable<UserTransactionsViewModel> GetTransactionsByCreditorUsername(string username)
         {
             var creditorId = (from c in _context.Creditor
                               where c.username == username
-                              select c.Creditor_Id)
-                              .FirstOrDefault();
+                              select c.Creditor_Id).FirstOrDefault();
 
             var assotiations = _context.Associate.ToList();
-            AssociateViewModel oneAssociate;
-            List<AssociateViewModel> returnedList = new List<AssociateViewModel>();
+            UserTransactionsViewModel oneAssociate;
+            List<UserTransactionsViewModel> returnedList = new List<UserTransactionsViewModel>();
+            int amount = 0;
+            int profit = 0;
+
+            int number = 1;
 
             foreach (var associate in assotiations)
             {
-                var listOfTransactions = _context.Transaction_Out
-                    .Where(t => t.Creditor_Id == creditorId && t.Associate_Id == associate.Associate_Id)
-                    .ToList();
+                var listOfTransactions = (from t in _context.Transaction_Out
+                                          where t.Creditor_Id == creditorId && t.Associate_Id == associate.Associate_Id
+                                          select new { t.Ammount, t.CreditorBenefits })
+                                          .ToList();
 
-                oneAssociate = new AssociateViewModel();
+                oneAssociate = new UserTransactionsViewModel();
 
-                oneAssociate.Date = associate.Date_Of_Associating ?? DateTime.Now;
                 foreach (var transaction in listOfTransactions)
                 {
-                    oneAssociate.List.Add(_transactionService.CreateTransactionWithUserViewModel(transaction));
+                    amount += transaction.Ammount;
+                    profit += transaction.CreditorBenefits ?? 0;
                 }
 
-                if (oneAssociate.List.Count > 0)
-                    returnedList.Add(oneAssociate);
+                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username);
+                returnedList.Add(oneAssociate);
+
+                number++;
+                amount = 0;
+                profit = 0;
             }
 
             return returnedList;

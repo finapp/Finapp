@@ -20,8 +20,8 @@ namespace Finapp.Implementations
         private SummaryModel _summary;
 
         public Algorithms(ICreditorService creditorService, IDebtorService debtorService,
-            ITransactionOutService transactionOutService,
-            IAssociateService associateService, ISummaryService summaryService)
+            ITransactionOutService transactionOutService,IAssociateService associateService, 
+            ISummaryService summaryService)
         {
             _creditorService = creditorService;
             _debtorService = debtorService;
@@ -96,8 +96,9 @@ namespace Finapp.Implementations
                 Profits_Average = avgOfProfits,
                 Savings_Average_Percentage = avgOfSavingsPercentage,
                 Profits_Average_Percentage = avgOfProfitsPercentage,
-                Days = days / _summary.CounterOdCreditors,
-                DateOfSummary = DateTime.Now
+                Days = days / _summary.Turnover,
+                DateOfSummary = DateTime.Now,
+                Turnover = _summary.Turnover
             };
             _summaryService.CreateSummary(summary);
 
@@ -117,6 +118,7 @@ namespace Finapp.Implementations
                     var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                     var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.EROI / 100))));
                     var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.ROI / 100))));
+                    var debtorSavings = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)(debtor.APR - debtor.EAPR) / 100))));
 
                     var transactionOut = new Transaction_Out
                     {
@@ -132,7 +134,8 @@ namespace Finapp.Implementations
                         Creditor_Id = creditor.Creditor_Id,
                         Debtor_Id = debtor.Debtor_Id,
                         ActualCreditorBenefits = actualCreditorBenefits,
-                        CreditorBenefits = realCreditorBenefits
+                        CreditorBenefits = realCreditorBenefits,
+                        DebtorSavings = debtorSavings
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
@@ -140,7 +143,8 @@ namespace Finapp.Implementations
                     _summary.ProfitsAveragePercentage += (int)EROI;
                     _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
                     _summary.CounterOdCreditors++;
-                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days*debtor.Finapp_Debet;
+                    _summary.Turnover += debtor.Finapp_Debet;
 
                     var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
 
@@ -181,6 +185,7 @@ namespace Finapp.Implementations
                     var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                     var realCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.EROI / 100))));
                     var actualCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.ROI / 100))));
+                    var debtorSavings = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)(debtor.APR - debtor.EAPR) / 100))));
 
                     var transactionOut = new Transaction_Out
                     {
@@ -196,7 +201,8 @@ namespace Finapp.Implementations
                         Creditor_Id = creditor.Creditor_Id,
                         Debtor_Id = debtor.Debtor_Id,
                         ActualCreditorBenefits = actualCreditorBenefits,
-                        CreditorBenefits = realCreditorBenefits
+                        CreditorBenefits = realCreditorBenefits,
+                        DebtorSavings = debtorSavings
                     };
 
                     _summary.SavingsSum += CountAllSavings(creditor, debtorBenefitsPerAnnum);
@@ -204,7 +210,8 @@ namespace Finapp.Implementations
                     _summary.ProfitsAveragePercentage += (int)EROI;
                     _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
                     _summary.CounterOdCreditors++;
-                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * creditor.Finapp_Balance;
+                    _summary.Turnover += creditor.Finapp_Balance;
 
                     var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
 

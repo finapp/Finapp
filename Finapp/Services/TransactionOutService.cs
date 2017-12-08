@@ -64,10 +64,18 @@ namespace Finapp.Services
             var days = transaction.Day_Access_To_Funds;
             var partOfYear = (float)((float)days / 365);
 
-            var debtor = _debtorService.GetDebtorById(transaction.Debtor_Id??0);
+            var debtor = (from d in _context.Debtor
+                          where d.Debtor_Id == transaction.Debtor_Id
+                          select new { d.username, d.Delta_APR })
+                          .FirstOrDefault();
+
             var realDebtorBenefits = ((int)((float)partOfYear * transaction.Debtor_Benefits_Per_Annum ?? 0));
 
-            var creditor = _creditorService.GetCreditorById(transaction.Creditor_Id??0);
+            var creditor = (from c in _context.Creditor
+                            where c.Creditor_Id == transaction.Creditor_Id
+                            select c.username)
+                            .FirstOrDefault();
+                
             var realCreditorBenefits = ((int)((float)partOfYear * transaction.Creditor_Benefits_Per_Annum ?? 0));
 
             return new TransactionWithUserViewModel
@@ -78,14 +86,14 @@ namespace Finapp.Services
                 Date = transaction.Date_Of_Transaction ?? DateTime.Now,
                 ROI = (float)transaction.ROI,
                 APR = debtor.Delta_APR,
-                CreditorUsername = creditor.username,
+                CreditorUsername = creditor,
                 CreditorAccountFinappAmount = transaction.Finapp_Creditor ?? 100,
-                CreditorBenefits = transaction.Creditor_Benefits_Per_Annum ?? 0,
+                CreditorBenefits = transaction.CreditorBenefits ?? 0,
                 DebtorBenefits = transaction.Debtor_Benefits_Per_Annum ?? 0,
-                RealCreditorBenefits = transaction.CreditorBenefits??0,
+                RealCreditorBenefits = transaction.CreditorBenefits ?? 0,
                 RealDebtorBenefits = realDebtorBenefits,
                 DayAccessToFunds = transaction.Day_Access_To_Funds,
-                ActualCreditorProfits = transaction.CreditorBenefits??0
+                ActualCreditorProfits = transaction.ActualCreditorBenefits ?? 0
             };
         }
 
@@ -94,6 +102,17 @@ namespace Finapp.Services
             return _context.Transaction_Out
                 .Where(t => t.Associate_Id == associate.Associate_Id)
                 .ToList();
+        }
+
+        public UserTransactionsViewModel GetUserTransactions(int amount, int associateNr, int profit, string username)
+        {
+            return new UserTransactionsViewModel
+            {
+                Amount = amount,
+                AssociateNr = associateNr,
+                Username = username,
+                Profits = profit
+            };
         }
     }
 }
