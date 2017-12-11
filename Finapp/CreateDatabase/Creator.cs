@@ -92,6 +92,7 @@ namespace Finapp.CreateDatabase
                 debtorQueueDate = date ?? DateTime.Now;
             }
 
+            var creditorsToCreate = new List<Creditor>(amountOfCreditors);
 
             for (int i = 1; i <= amountOfCreditors; i++)
             {
@@ -132,8 +133,10 @@ namespace Finapp.CreateDatabase
                     ActualCreditorBenefits = actualBenefits,
                 };
 
-                _creditorService.AddNewCreditor(c);
+                creditorsToCreate.Add(c);
             }
+
+            _creditorService.AddNewCreditors(creditorsToCreate);
 
             for (int i = 1; i <= amountOfDebtors; i++)
             {

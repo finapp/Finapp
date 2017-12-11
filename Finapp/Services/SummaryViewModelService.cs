@@ -37,6 +37,15 @@ namespace Finapp.Services
 
         public SummaryViewModel GetAllInformations()
         {
+
+            SummaryViewModel s = new SummaryViewModel
+            {
+                ListOfTransactions = GetTransactions(),
+                Summary = GetSummary(),
+                LastSummary = GetLastSummary()
+            };
+
+
             return new SummaryViewModel
             {
                 ListOfTransactions = GetTransactions(),

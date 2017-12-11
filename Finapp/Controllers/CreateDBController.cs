@@ -40,8 +40,9 @@ namespace Finapp.Controllers
 
                 return RedirectToAction("Index", "Debtor");
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                System.Diagnostics.Trace.TraceError(e.ToString());
                 ViewBag.ErrorMessage = "Please enter valid data";
                 return View("Index");
             }

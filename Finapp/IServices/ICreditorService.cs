@@ -16,6 +16,7 @@ namespace Finapp.IServices
         bool ModifyCreditor(Creditor creditor);
         string GetCreditorUsernameById(int id);
         bool AddNewCreditor(Creditor creditor);
+        bool AddNewCreditors(IEnumerable<Creditor> creditors);
         bool AddAssociate(Associate associate, Creditor creditor);
         IEnumerable<Creditor> GetCreditorsFromAssociate(Associate associate);
         DateTime GetTheOldestQueueDate();

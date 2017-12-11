@@ -64,7 +64,7 @@ namespace Finapp.Services
             try
             {
                 var creditors = _context.Creditor
-                    .Where(c => c.Available == true && eapr > c.Delta_ROI)
+                    .Where(c => c.Available == true && eapr > c.EROI)//change from eapr > c.Delta_ROI
                     .OrderBy(c => c.Queue_Date)
                     .ToList();
 
@@ -95,9 +95,10 @@ namespace Finapp.Services
         {
             try
             {
-                return _context.Creditor
-                    .Where(c => c.Creditor_Id == id)
-                    .FirstOrDefault().username;
+                return (from c in _context.Creditor
+                        where c.Creditor_Id == id
+                        select c.username)
+                        .FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -119,6 +120,24 @@ namespace Finapp.Services
                 return false;
             }
         }
+        public bool AddNewCreditors(IEnumerable<Creditor> creditors)
+        {
+            //try
+            //{
+            foreach (var item in creditors)
+            {
+                _context.Entry(item).State = EntityState.Added;
+
+            }
+                _context.SaveChanges();
+
+                return true;
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
+        }
 
         public bool AddAssociate(Associate associate, Creditor creditor)
         {
@@ -136,8 +155,10 @@ namespace Finapp.Services
 
         public DateTime GetTheOldestQueueDate()
         {
-            var creditors = _context.Creditor.ToList();
-            var date = creditors.Max(c => c.Queue_Date);
+            var dates = (from c in _context.Creditor
+                        select c.Queue_Date)
+                        .ToList();
+            var date = dates.Max();
 
             return date??DateTime.Now;
         }
