@@ -40,7 +40,5 @@ namespace Finapp.Models
         public virtual ICollection<Associate> Associate { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction_Out> Transaction_Out1 { get; set; }
-        public virtual Creditor Creditor1 { get; set; }
-        public virtual Creditor Creditor2 { get; set; }
     }
 }

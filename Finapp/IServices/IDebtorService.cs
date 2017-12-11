@@ -17,6 +17,7 @@ namespace Finapp.IServices
         bool ModifyDebtor(Debtor debtor);
         string GetDebtorUsernameById(int id);
         bool AddNewDebtor(Debtor debtor);
+        bool AddNewDebtors(IEnumerable<Debtor> debtors);
         bool AddAssociate(Associate associate, Debtor debtor);
         IEnumerable<Debtor> GetDebtorsFromAssociate(Associate associate);
         DateTime GetTheOldestQueueDate();

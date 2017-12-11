@@ -293,8 +293,6 @@
           <Property Name="Delta_ROI" Type="Single" />
           <NavigationProperty Name="Associate" Relationship="FinapModel.Creditor_Associate" FromRole="Creditor" ToRole="Associate" />
           <NavigationProperty Name="Transaction_Out1" Relationship="FinapModel.lklk" FromRole="Creditor" ToRole="Transaction_Out" />
-          <NavigationProperty Name="Creditor1" Relationship="FinapModel.fkqqq" FromRole="Creditor" ToRole="Creditor1" />
-          <NavigationProperty Name="Creditor2" Relationship="FinapModel.fkqqq" FromRole="Creditor1" ToRole="Creditor" />
           <Property Name="Trials" Type="Int32" />
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />

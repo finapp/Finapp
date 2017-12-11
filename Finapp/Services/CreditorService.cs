@@ -122,21 +122,14 @@ namespace Finapp.Services
         }
         public bool AddNewCreditors(IEnumerable<Creditor> creditors)
         {
-            //try
-            //{
+
             foreach (var item in creditors)
             {
                 _context.Entry(item).State = EntityState.Added;
-
             }
                 _context.SaveChanges();
 
                 return true;
-            //}
-            //catch (Exception)
-            //{
-            //    return false;
-            //}
         }
 
         public bool AddAssociate(Associate associate, Creditor creditor)

@@ -43,6 +43,8 @@ namespace Finapp.Implementations
 
             debtors = debtors.OrderBy(d => d.Queue_Date);
 
+            var transactionsList = new List<Transaction_Out>();
+
             foreach (var debtor in debtors)
             {
                 var creds = (from c in creditors
@@ -83,6 +85,8 @@ namespace Finapp.Implementations
                             DebtorSavings = debtorSavings
                         };
 
+                        transactionsList.Add(transactionOut);
+
                         _summary.SavingsSum += CountAllSavings(cred, debtorBenefitsPerAnnum);
                         _summary.ProfitsSum += CountAllBalance(cred, creditorBenefitsPerAnnum);
                         _summary.ProfitsAveragePercentage += (int)EROI;
@@ -113,7 +117,7 @@ namespace Finapp.Implementations
                         debtor.Queue_Date = dateDebtor;
                         //_debtorService.ModifyDebtor(debtor);
 
-                        _transactionOutService.AddTransaction(transactionOut);
+                        //_transactionOutService.AddTransaction(transactionOut);
 
                         cred.Finapp_Balance -= debtor.Finapp_Debet;
                         //_creditorService.ModifyCreditor(cred);
@@ -150,6 +154,8 @@ namespace Finapp.Implementations
                             DebtorSavings = debtorSavings
                         };
 
+                        transactionsList.Add(transactionOut);
+
                         _summary.SavingsSum += CountAllSavings(cred, debtorBenefitsPerAnnum);
                         _summary.ProfitsSum += CountAllBalance(cred, creditorBenefitsPerAnnum);
                         _summary.ProfitsAveragePercentage += (int)EROI;
@@ -180,7 +186,7 @@ namespace Finapp.Implementations
                         debtor.Queue_Date = dateDebtor;
                         //_debtorService.ModifyDebtor(debtor);
 
-                        _transactionOutService.AddTransaction(transactionOut);
+                       // _transactionOutService.AddTransaction(transactionOut);
 
                         debtor.Finapp_Debet -= cred.Finapp_Balance;
                         //_debtorService.ModifyDebtor(debtor);
@@ -194,6 +200,8 @@ namespace Finapp.Implementations
                     }
                 }
             }
+
+            _transactionOutService.AddTransactions(transactionsList);
 
             foreach (var debtor in debtors)
             {

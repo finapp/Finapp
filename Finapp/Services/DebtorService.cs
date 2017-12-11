@@ -134,7 +134,16 @@ namespace Finapp.Services
             }
         }
 
+        public bool AddNewDebtors(IEnumerable<Debtor> debtors)
+        {
+            foreach (var item in debtors)
+            {
+                _context.Entry(item).State = EntityState.Added;
+            }
+            _context.SaveChanges();
 
+            return true;
+        }
 
         public bool AddAssociate(Associate associate, Debtor debtor)
         {

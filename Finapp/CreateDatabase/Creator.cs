@@ -70,14 +70,20 @@ namespace Finapp.CreateDatabase
 
             var creditors = _context.Creditor.ToList();
             var creditorsCounter = creditors.Count();
+            var idCreditor = 0;
+            var idDebtor = 0;
+
             DateTime creditorQueueDate;
 
             if (creditorsCounter == 0)
+            {
                 creditorQueueDate = DateTime.Now;
+            }
             else
             {
                 var date = creditors.Max(c => c.Queue_Date);
                 creditorQueueDate = date ?? DateTime.Now;
+                idCreditor = creditorsCounter;
             }
 
             var debtors = _context.Debtor.ToList();
@@ -85,11 +91,14 @@ namespace Finapp.CreateDatabase
             DateTime debtorQueueDate;
 
             if (debtorsCounter == 0)
+            {
                 debtorQueueDate = DateTime.Now;
+            }
             else
             {
                 var date = debtors.Max(c => c.Queue_Date);
                 debtorQueueDate = date ?? DateTime.Now;
+                idDebtor = debtorsCounter;
             }
 
             var creditorsToCreate = new List<Creditor>(amountOfCreditors);
@@ -114,10 +123,11 @@ namespace Finapp.CreateDatabase
                 DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
                 var days = d.Subtract(DateTime.Now).Days; 
                 var actualBenefits = (int)(balance * ((float)roi / 100)*(float)days/365);
-                var number = _creditorService.GetAllCreditors().Count();
+                var number = i+idCreditor;
 
                 var c = new Creditor
                 {
+                    Creditor_Id = i + idCreditor,
                     username = "Jan" + number,
                     ROI = roi,
                     EROI = eroi,
@@ -131,12 +141,15 @@ namespace Finapp.CreateDatabase
                     AssociateCounter = 0,
                     LastAssociate = 0,
                     ActualCreditorBenefits = actualBenefits,
+                    
                 };
 
                 creditorsToCreate.Add(c);
             }
 
             _creditorService.AddNewCreditors(creditorsToCreate);
+
+            var debtorsToCreate = new List<Debtor>(amountOfDebtors);
 
             for (int i = 1; i <= amountOfDebtors; i++)
             {
@@ -165,10 +178,11 @@ namespace Finapp.CreateDatabase
                 var dapr = apr - eapr;
                 DateTime d = DateTime.Now.AddDays(rand.Next(15, 50) * 7);
 
-                var number = _debtorService.GetAllDebtors().Count();
+                var number = i + idDebtor;
 
                 var deb = new Debtor
                 {
+                    Debtor_Id = i+idDebtor,
                     username = "Ewa" + number,
                     APR = apr,
                     EAPR = eapr,
@@ -182,8 +196,10 @@ namespace Finapp.CreateDatabase
                     AssociateCounter = 0,
                     LastAssociate = 0
                 };
-                _debtorService.AddNewDebtor(deb);
+                debtorsToCreate.Add(deb);
             }
+
+            _debtorService.AddNewDebtors(debtorsToCreate);
         }
     }
 }

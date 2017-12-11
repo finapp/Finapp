@@ -3,6 +3,7 @@ using Finapp.Models;
 using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -34,6 +35,17 @@ namespace Finapp.Services
             {
                 throw e;
             }
+        }
+
+        public bool AddTransactions(IEnumerable<Transaction_Out> transactions)
+        {
+            foreach (var item in transactions)
+            {
+                _context.Entry(item).State = EntityState.Added;
+            }
+            _context.SaveChanges();
+
+            return true;
         }
 
         public bool AddTransaction(int amount, DateTime date, int creditorAccountId, int debtorAccountId)

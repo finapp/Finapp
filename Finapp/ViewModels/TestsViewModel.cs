@@ -7,11 +7,9 @@ namespace Finapp.ViewModels
 {
     public class TestsViewModel
     {
-        public string TimeFor1000 { get; set; }
-        public string TimeFor10000 { get; set; }
-        public string TimeFor100000 { get; set; }
-        public string TimeFor1000000 { get; set; }
-
-        public string CreateDBTime1000 { get; set; }
+        public string GetDebtorsTime { get; set; }
+        public string GetCreditorsTime { get; set; }
+        public string GetAssociationsTime { get; set; }
+        public string GetDbUpdateTime { get; set; }
     }
 }
