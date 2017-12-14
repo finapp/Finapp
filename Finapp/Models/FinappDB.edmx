@@ -142,6 +142,7 @@
           <Property Name="ActualCreditorBenefits" Type="int" />
           <Property Name="CreditorBenefits" Type="int" />
           <Property Name="DebtorSavings" Type="int" />
+          <Property Name="AssociateDay" Type="int" />
         </EntityType>
         <Association Name="aaa">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
@@ -369,6 +370,7 @@
           <Property Name="ActualCreditorBenefits" Type="Int32" />
           <Property Name="CreditorBenefits" Type="Int32" />
           <Property Name="DebtorSavings" Type="Int32" />
+          <Property Name="AssociateDay" Type="Int32" />
         </EntityType>
         <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Creditor" EntityType="Self.Creditor" />
@@ -589,6 +591,7 @@
           <EntitySetMapping Name="Transaction_Out">
             <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
               <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="AssociateDay" ColumnName="AssociateDay" />
                 <ScalarProperty Name="DebtorSavings" ColumnName="DebtorSavings" />
                 <ScalarProperty Name="CreditorBenefits" ColumnName="CreditorBenefits" />
                 <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />

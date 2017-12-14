@@ -31,6 +31,7 @@ namespace Finapp.Models
         public Nullable<int> ActualCreditorBenefits { get; set; }
         public Nullable<int> CreditorBenefits { get; set; }
         public Nullable<int> DebtorSavings { get; set; }
+        public Nullable<int> AssociateDay { get; set; }
     
         public virtual Associate Associate { get; set; }
         public virtual Creditor Creditor1 { get; set; }

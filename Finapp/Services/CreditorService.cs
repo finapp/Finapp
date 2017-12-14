@@ -91,6 +91,18 @@ namespace Finapp.Services
             }
         }
 
+        public bool ModifyCreditors(IEnumerable<Creditor> creditors)
+        {
+
+            foreach (var item in creditors)
+            {
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+
+            return true;
+        }
+
         public string GetCreditorUsernameById(int id)
         {
             try

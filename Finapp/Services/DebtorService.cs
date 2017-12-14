@@ -105,6 +105,18 @@ namespace Finapp.Services
             }
         }
 
+        public bool ModifyDebtors(IEnumerable<Debtor> debtors)
+        {
+
+            foreach (var item in debtors)
+            {
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+
+            return true;
+        }
+
         public string GetDebtorUsernameById(int id)
         {
             try
