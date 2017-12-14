@@ -32,5 +32,6 @@ namespace Finapp.Models
         public virtual DbSet<Associate> Associate { get; set; }
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Times> Times { get; set; }
     }
 }

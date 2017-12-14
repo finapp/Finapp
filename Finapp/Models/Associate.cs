@@ -25,6 +25,7 @@ namespace Finapp.Models
     
         public int Associate_Id { get; set; }
         public Nullable<System.DateTime> Date_Of_Associating { get; set; }
+        public Nullable<int> Nr { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction_Out> Transaction_Out { get; set; }

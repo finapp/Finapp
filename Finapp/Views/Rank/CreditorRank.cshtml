@@ -20,6 +20,7 @@
             <th>EROI</th>
             <th>Trials</th>
             <th>Associations</th>
+            <th>Profits</th>
         </tr>
         @foreach (var creditor in Model)
         {
@@ -41,6 +42,9 @@
                 </td>
                 <td>
                     @creditor.AssociateCounter
+                </td>
+                <td>
+                    @creditor.Money
                 </td>
             </tr>
         }

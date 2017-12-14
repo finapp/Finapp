@@ -5,6 +5,7 @@ using Finapp.Services;
 using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +21,18 @@ namespace Finapp.Implementations
         private SummaryModel _summary;
         private readonly FinapEntities1 _context;
 
+        private Stopwatch stopWatch;
+        private Stopwatch EROIstopWatch;
+
+        private string getDebtorsTime;
+        private string getCreditorsTime;
+        private string getROITime;
+        private string getAssociationsTime;
+        private string getTransactionTime;
+        private string getDbDebtorsTime;
+        private string getDbCreditorsTime;
+        private string getDbTransactionsTime;
+
         public Algorithms(ICreditorService creditorService, IDebtorService debtorService, ITransactionOutService transactionOutService, 
             IAssociateService associateService, ISummaryService summaryService, SummaryModel summary, FinapEntities1 context)
         {
@@ -30,29 +43,51 @@ namespace Finapp.Implementations
             _summaryService = summaryService;
             _summary = summary;
             _context = context;
+
+            stopWatch = new Stopwatch();
+            EROIstopWatch = new Stopwatch();
         }
 
         public bool DoAssociation(Associate associate)
         {
 
+
             var dateCreditor = _creditorService.GetTheOldestQueueDate();
             var dateDebtor = _debtorService.GetTheOldestQueueDate();
 
+            stopWatch.Start();
             IEnumerable<Creditor> creditors = _context.Creditor.Where(c=>c.Available==true).ToList();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            getDebtorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+            stopWatch.Reset();
+            stopWatch.Start();
+
             IEnumerable<Debtor> debtors = _context.Debtor.Where(d=>d.Available==true).ToList();
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getCreditorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
             debtors = debtors.OrderBy(d => d.Queue_Date);
+
+            stopWatch.Reset();
+            stopWatch.Start();
 
             var transactionsList = new List<Transaction_Out>();
 
             foreach (var debtor in debtors)
             {
+                EROIstopWatch.Start();
                 var creds = (from c in creditors
                              where c.EROI < debtor.EAPR
                              select c.EROI)
                              .ToList();
 
                 var EROI = creds.Max();
+                EROIstopWatch.Stop();
 
                 creditors = creditors.OrderBy(c => c.Queue_Date);
 
@@ -86,6 +121,9 @@ namespace Finapp.Implementations
                         };
 
                         transactionsList.Add(transactionOut);
+
+                        cred.Profits += realCreditorBenefits;
+                        debtor.Savings += debtorSavings;
 
                         _summary.SavingsSum += CountAllSavings(cred, debtorBenefitsPerAnnum);
                         _summary.ProfitsSum += CountAllBalance(cred, creditorBenefitsPerAnnum);
@@ -156,6 +194,9 @@ namespace Finapp.Implementations
 
                         transactionsList.Add(transactionOut);
 
+                        cred.Profits += realCreditorBenefits;
+                        debtor.Savings += debtorSavings;
+
                         _summary.SavingsSum += CountAllSavings(cred, debtorBenefitsPerAnnum);
                         _summary.ProfitsSum += CountAllBalance(cred, creditorBenefitsPerAnnum);
                         _summary.ProfitsAveragePercentage += (int)EROI;
@@ -200,18 +241,74 @@ namespace Finapp.Implementations
                     }
                 }
             }
+            stopWatch.Stop();
+
+            TimeSpan tsForTransaction = stopWatch.Elapsed;
+            TimeSpan t = new TimeSpan(tsForTransaction.Ticks / transactionsList.Count());
+            getTransactionTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           t.Hours, t.Minutes, t.Seconds, t.Milliseconds / 10);
+
+            TimeSpan tsForEROI = EROIstopWatch.Elapsed;
+            t = new TimeSpan(tsForEROI.Ticks / debtors.Count());
+            getROITime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           t.Hours, t.Minutes, t.Seconds, t.Milliseconds / 10);
+
+            ts = stopWatch.Elapsed;
+            getAssociationsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+            stopWatch.Reset();
+            stopWatch.Start();
 
             _transactionOutService.AddTransactions(transactionsList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getDbTransactionsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+            stopWatch.Reset();
+            stopWatch.Start();
+
 
             foreach (var debtor in debtors)
             {
                 _debtorService.ModifyDebtor(debtor);
             }
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getDbDebtorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+            stopWatch.Reset();
+            stopWatch.Start();
+
             foreach (var cred in creditors)
             {
                 _creditorService.ModifyCreditor(cred);
             }
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getDbCreditorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
+
+            _context.Times.Add(new Times
+            {
+                AssociateTime = getAssociationsTime,
+                CountOfCreditors = creditors.Count(),
+                CountOfDebtors = debtors.Count(),
+                CountOfTransactions = transactionsList.Count(),
+                GetCreditorsTime = getCreditorsTime,
+                GetDebtorsTime = getDebtorsTime,
+                TimeForOneTransaction = getTransactionTime,
+                UpdateCreditorsTime = getDbCreditorsTime,
+                UpdateDebtorsTime = getDbDebtorsTime,
+                UpdateTransactionsTime = getDbTransactionsTime,
+                AllCreditors = _context.Creditor.Count(),
+                AllDebtors = _context.Debtor.Count(),
+                SetROI = getROITime
+            });
+            _context.SaveChanges();
 
             return true;
 
@@ -229,9 +326,14 @@ namespace Finapp.Implementations
             if (creditor.Count() == 0)
                 return false;
 
+            var associationsCounter = (from a in _context.Associate
+                                select a.Nr)
+                                .Count();
+
             var associate = new Associate
             {
-                Date_Of_Associating = DateTime.Now
+                Date_Of_Associating = DateTime.Now,
+                Nr = associationsCounter+1
             };
             _associateService.AddNewAssociate(associate);
 

@@ -78,6 +78,9 @@
 
     foreach (var summaries in Model.Summary)
     {
+        if (summaries.Summary != null)
+        {
+
         if (summaries.Summary.AssociateId == transactions.AssociateId)
         {
             <div class="text-center">
@@ -142,6 +145,7 @@
                     </tr>
                 </tbody>
             </table>
+            }
         }
     }
 }

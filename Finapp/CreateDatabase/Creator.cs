@@ -31,6 +31,7 @@ namespace Finapp.CreateDatabase
             _context.Database.ExecuteSqlCommand("Delete from [Associate]");
             _context.Database.ExecuteSqlCommand("Delete from [Creditor]");
             _context.Database.ExecuteSqlCommand("Delete from [Debtor]");
+            _context.Database.ExecuteSqlCommand("Delete from [Times]");
         }
 
         public void UpdateCreditors()
@@ -141,7 +142,7 @@ namespace Finapp.CreateDatabase
                     AssociateCounter = 0,
                     LastAssociate = 0,
                     ActualCreditorBenefits = actualBenefits,
-                    
+                    Profits = 0
                 };
 
                 creditorsToCreate.Add(c);
@@ -194,7 +195,8 @@ namespace Finapp.CreateDatabase
                     Expiration_Date = d,
                     Trials = 0,
                     AssociateCounter = 0,
-                    LastAssociate = 0
+                    LastAssociate = 0,
+                    Savings = 0
                 };
                 debtorsToCreate.Add(deb);
             }

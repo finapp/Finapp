@@ -1,4 +1,5 @@
-﻿using Finapp.ViewModels;
+﻿using Finapp.Models;
+using Finapp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Finapp.Interfaces
 {
     public interface ITests
     {
-        TestsViewModel TestFor1000();
+        IEnumerable<Times> TestFor1000();
     }
 }

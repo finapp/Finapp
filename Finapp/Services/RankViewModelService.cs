@@ -38,7 +38,8 @@ namespace Finapp.Services
                     AssociateCounter = creditor.AssociateCounter??0,
                     ROI = creditor.ROI??0,
                     EROI = creditor.EROI??0,
-                    Trials = creditor.Trials??0
+                    Trials = creditor.Trials??0,
+                    Money = creditor.Profits??0
                 });
             }
 
@@ -61,7 +62,8 @@ namespace Finapp.Services
                     AssociateCounter = debtor.AssociateCounter??0,
                     APR = debtor.APR??0,
                     EAPR = debtor.EAPR??0,
-                    Trials = debtor.Trials??0
+                    Trials = debtor.Trials??0,
+                    Money = debtor.Savings??0
                 });
             }
 

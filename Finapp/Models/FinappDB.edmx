@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Associate_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date_Of_Associating" Type="date" />
+          <Property Name="Nr" Type="int" />
         </EntityType>
         <EntityType Name="Creditor">
           <Key>
@@ -30,6 +31,8 @@
           <Property Name="AssociateCounter" Type="int" />
           <Property Name="LastAssociate" Type="int" />
           <Property Name="ActualCreditorBenefits" Type="int" />
+          <Property Name="AllProfits" Type="int" />
+          <Property Name="Profits" Type="int" />
         </EntityType>
         <EntityType Name="Creditor_Associate">
           <Key>
@@ -56,6 +59,8 @@
           <Property Name="Trials" Type="int" />
           <Property Name="AssociateCounter" Type="int" />
           <Property Name="LastAssociate" Type="int" />
+          <Property Name="AllSavings" Type="int" />
+          <Property Name="Savings" Type="int" />
         </EntityType>
         <EntityType Name="Debtor_Associate">
           <Key>
@@ -96,6 +101,25 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Times">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GetCreditorsTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="GetDebtorsTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="AssociateTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDebtorsTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateCreditorsTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateTransactionsTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="CountOfCreditors" Type="int" />
+          <Property Name="CountOfDebtors" Type="int" />
+          <Property Name="CountOfTransactions" Type="int" />
+          <Property Name="TimeForOneTransaction" Type="nvarchar" MaxLength="20" />
+          <Property Name="AllDebtors" Type="int" />
+          <Property Name="AllCreditors" Type="int" />
+          <Property Name="SetROI" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -235,6 +259,7 @@
           <EntitySet Name="Debtor_Associate" EntityType="Self.Debtor_Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Summary" EntityType="Self.Summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Times" EntityType="Self.Times" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="aaa" Association="Self.aaa">
             <End Role="Associate" EntitySet="Associate" />
@@ -297,6 +322,7 @@
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />
           <Property Name="ActualCreditorBenefits" Type="Int32" />
+          <Property Name="Profits" Type="Int32" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -317,6 +343,7 @@
           <Property Name="Trials" Type="Int32" />
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />
+          <Property Name="Savings" Type="Int32" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -378,6 +405,7 @@
             <End Role="Creditor" EntitySet="Creditor" />
             <End Role="Creditor1" EntitySet="Creditor" />
           </AssociationSet>
+          <EntitySet Name="Times" EntityType="FinapModel.Times" />
         </EntityContainer>
         <EntityType Name="Associate">
           <Key>
@@ -389,6 +417,7 @@
           <NavigationProperty Name="Summary" Relationship="FinapModel.fk01" FromRole="Associate" ToRole="Summary" />
           <NavigationProperty Name="Creditor" Relationship="FinapModel.Creditor_Associate" FromRole="Associate" ToRole="Creditor" />
           <NavigationProperty Name="Debtor" Relationship="FinapModel.Debtor_Associate" FromRole="Associate" ToRole="Debtor" />
+          <Property Name="Nr" Type="Int32" />
         </EntityType>
         <Association Name="aaa">
           <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
@@ -491,6 +520,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Times">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GetCreditorsTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GetDebtorsTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AssociateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDebtorsTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCreditorsTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTransactionsTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CountOfCreditors" Type="Int32" />
+          <Property Name="CountOfDebtors" Type="Int32" />
+          <Property Name="CountOfTransactions" Type="Int32" />
+          <Property Name="TimeForOneTransaction" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AllDebtors" Type="Int32" />
+          <Property Name="AllCreditors" Type="Int32" />
+          <Property Name="SetROI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -500,6 +548,7 @@
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="Profits" ColumnName="Profits" />
                 <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
                 <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
                 <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
@@ -520,6 +569,7 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="Savings" ColumnName="Savings" />
                 <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
                 <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
                 <ScalarProperty Name="Trials" ColumnName="Trials" />
@@ -562,6 +612,7 @@
           <EntitySetMapping Name="Associate">
             <EntityTypeMapping TypeName="FinapModel.Associate">
               <MappingFragment StoreEntitySet="Associate">
+                <ScalarProperty Name="Nr" ColumnName="Nr" />
                 <ScalarProperty Name="Date_Of_Associating" ColumnName="Date_Of_Associating" />
                 <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
               </MappingFragment>
@@ -617,6 +668,26 @@
               <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Times">
+            <EntityTypeMapping TypeName="FinapModel.Times">
+              <MappingFragment StoreEntitySet="Times">
+                <ScalarProperty Name="SetROI" ColumnName="SetROI" />
+                <ScalarProperty Name="AllCreditors" ColumnName="AllCreditors" />
+                <ScalarProperty Name="AllDebtors" ColumnName="AllDebtors" />
+                <ScalarProperty Name="TimeForOneTransaction" ColumnName="TimeForOneTransaction" />
+                <ScalarProperty Name="CountOfTransactions" ColumnName="CountOfTransactions" />
+                <ScalarProperty Name="CountOfDebtors" ColumnName="CountOfDebtors" />
+                <ScalarProperty Name="CountOfCreditors" ColumnName="CountOfCreditors" />
+                <ScalarProperty Name="UpdateTransactionsTime" ColumnName="UpdateTransactionsTime" />
+                <ScalarProperty Name="UpdateCreditorsTime" ColumnName="UpdateCreditorsTime" />
+                <ScalarProperty Name="UpdateDebtorsTime" ColumnName="UpdateDebtorsTime" />
+                <ScalarProperty Name="AssociateTime" ColumnName="AssociateTime" />
+                <ScalarProperty Name="GetDebtorsTime" ColumnName="GetDebtorsTime" />
+                <ScalarProperty Name="GetCreditorsTime" ColumnName="GetCreditorsTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

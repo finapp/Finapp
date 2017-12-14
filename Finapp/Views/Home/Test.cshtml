@@ -1,20 +1,49 @@
-﻿@model Finapp.ViewModels.TestsViewModel
+﻿@model IEnumerable<Finapp.Models.Times>
 @{
     ViewBag.Title = "Test";
 }
+@{ int rowNo = 1;}
+<br /><br /><br />
 
-<br/><br/><br/>
-
-<table class="table table table-responsive table-striped">
+<table class="table table-responsive table-striped">
     <thead>
         <tr>
-            <th>TEST</th><th>Get Debtors</th><th>Get Creditors</th><th>Assotiations</th><th>UpdateDb</th>
+            <th>TEST</th>
+            <th>Get Creditors</th>
+            <th>Get Debtors</th>
+            <th>Set EROI</th>
+            <th>Assotiations</th>
+            <th>Update Creditors</th>
+            <th>Update Debtors</th>
+            <th>Update Transactions</th>
+            <th>One Transaction</th>
+            <th>Creditors</th>
+            <th>All</th>
+            <th>Debtors</th>
+            <th>All</th>
+            <th>Transactions</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td><td>@Model.GetDebtorsTime</td><td>@Model.GetCreditorsTime</td><td>@Model.GetAssociationsTime</td><td>@Model.GetDbUpdateTime</td>
-        </tr>
+            @foreach (var time in Model)
+            {
+                <tr>
+                    <td>@(rowNo++)</td>
+                    <td>@time.GetCreditorsTime</td>
+                    <td>@time.GetDebtorsTime</td>
+                    <td>@time.SetROI</td>
+                    <td>@time.AssociateTime</td>
+                    <td>@time.UpdateCreditorsTime</td>
+                    <td>@time.UpdateDebtorsTime</td>
+                    <td>@time.UpdateTransactionsTime</td>
+                    <td>@time.TimeForOneTransaction</td>
+                    <td>@time.CountOfCreditors</td>
+                    <td>@time.AllCreditors</td>
+                    <td>@time.CountOfDebtors</td>
+                    <td>@time.AllDebtors</td>
+                    <td>@time.CountOfTransactions</td>
+                </tr>
+            }
     </tbody>
 </table>
 

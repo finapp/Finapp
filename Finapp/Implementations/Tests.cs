@@ -28,10 +28,13 @@ namespace Finapp.Implementations
         private string getCreditorsTime;
         private string getROITime;
         private string getAssociationsTime;
-        private string getTransactionsTime;
-        private string getDbUpdateTime;
+        private string getTransactionTime;
+        private string getDbDebtorsTime;
+        private string getDbCreditorsTime;
+        private string getDbTransactionsTime;
 
-        public Tests(ICreditorService creditorService, IDebtorService debtorService, ITransactionOutService transactionOutService, IAssociateService associateService, ISummaryService summaryService, SummaryModel summary, FinapEntities1 context, ICreator creator)
+        public Tests(ICreditorService creditorService, IDebtorService debtorService, ITransactionOutService transactionOutService, 
+            IAssociateService associateService, ISummaryService summaryService, SummaryModel summary, FinapEntities1 context, ICreator creator)
         {
             _creditorService = creditorService;
             _debtorService = debtorService;
@@ -58,19 +61,13 @@ namespace Finapp.Implementations
             return null;
         }
 
-        public TestsViewModel TestFor1000()
+        public IEnumerable<Times> TestFor1000()
         {
             Associating();
 
 
-
-            return new TestsViewModel
-            {
-                GetDebtorsTime = getDebtorsTime,
-                GetCreditorsTime = getCreditorsTime,
-                GetAssociationsTime = getAssociationsTime,
-                GetDbUpdateTime = getDbUpdateTime
-            };
+            return _context.Times.ToList();
+           
         }
 
         public bool DoAssociation(Associate associate)
@@ -257,20 +254,49 @@ namespace Finapp.Implementations
             stopWatch.Start();
 
             _transactionOutService.AddTransactions(transactionsList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getDbTransactionsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
+
+            stopWatch.Reset();
+            stopWatch.Start();
             foreach (var debtor in debtors)
             {
                 _debtorService.ModifyDebtor(debtor);
             }
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            getDbDebtorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+            stopWatch.Reset();
+            stopWatch.Start();
             foreach (var cred in creditors)
             {
                 _creditorService.ModifyCreditor(cred);
             }
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
-            getDbUpdateTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
-           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10);
+            getDbCreditorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
+
+            _context.Times.Add(new Times
+            {
+                AssociateTime = getAssociationsTime,
+                CountOfCreditors = creditors.Count(),
+                CountOfDebtors = debtors.Count(),
+                CountOfTransactions = transactionsList.Count(),
+                GetCreditorsTime = getCreditorsTime,
+                GetDebtorsTime = getDebtorsTime,
+                TimeForOneTransaction = "1",
+                UpdateCreditorsTime = getDbCreditorsTime,
+                UpdateDebtorsTime = getDbDebtorsTime,
+                UpdateTransactionsTime = getDbTransactionsTime
+            });
+            _context.SaveChanges();
             return true;
 
         }
@@ -280,11 +306,6 @@ namespace Finapp.Implementations
             IEnumerable<Debtor> debtors = AddDebtorsToQueue();
             IEnumerable<Creditor> creditor = AddCreditorsToQueue(34);
 
-            if (debtors == null)
-                return false;
-
-            if (creditor.Count() == 0)
-                return false;
 
             var associate = new Associate
             {
@@ -318,6 +339,8 @@ namespace Finapp.Implementations
                 Turnover = _summary.Turnover
             };
             _summaryService.CreateSummary(summary);
+
+
 
             return true;
         }

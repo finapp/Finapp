@@ -15,5 +15,6 @@ namespace Finapp.ViewModels
         public double APR { get; set; }
         public double EAPR { get; set; }
         public int Trials { get; set; }
+        public int Money { get; set; }
     }
 }
