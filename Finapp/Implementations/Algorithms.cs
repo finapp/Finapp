@@ -1,4 +1,5 @@
-﻿using Finapp.Interfaces;
+﻿using AutoMapper;
+using Finapp.Interfaces;
 using Finapp.IServices;
 using Finapp.Models;
 using Finapp.Services;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Finapp.Implementations
@@ -19,7 +21,7 @@ namespace Finapp.Implementations
         private readonly IAssociateService _associateService;
         private readonly ISummaryService _summaryService;
         private SummaryModel _summary;
-        private readonly FinapEntities1 _context;
+        private FinapEntities1 _context;
 
         private Stopwatch stopWatch;
         private Stopwatch EROIstopWatch;
@@ -33,7 +35,7 @@ namespace Finapp.Implementations
         private string getDbCreditorsTime;
         private string getDbTransactionsTime;
 
-        public Algorithms(ICreditorService creditorService, IDebtorService debtorService, ITransactionOutService transactionOutService, 
+        public Algorithms(ICreditorService creditorService, IDebtorService debtorService, ITransactionOutService transactionOutService,
             IAssociateService associateService, ISummaryService summaryService, SummaryModel summary, FinapEntities1 context)
         {
             _creditorService = creditorService;
@@ -54,7 +56,7 @@ namespace Finapp.Implementations
             var dateDebtor = _debtorService.GetTheOldestQueueDate();
 
             stopWatch.Start();
-            IEnumerable<Creditor> creditors = _context.Creditor.Where(c=>c.Available==true).ToList();
+            IEnumerable<Creditor> creditors = _context.Creditor.Where(c => c.Available == true).ToList();
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             getDebtorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
@@ -63,7 +65,7 @@ namespace Finapp.Implementations
             stopWatch.Reset();
             stopWatch.Start();
 
-            IEnumerable<Debtor> debtors = _context.Debtor.Where(d=>d.Available==true).ToList();
+            IEnumerable<Debtor> debtors = _context.Debtor.Where(d => d.Available == true).ToList();
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             getCreditorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
@@ -75,23 +77,32 @@ namespace Finapp.Implementations
             stopWatch.Start();
 
             var transactionsList = new List<Transaction_Out>();
+            creditors = AddTrialsToCreditors(creditors);
+            //  creditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
+
+            // debtors = Mapper.Map<IEnumerable<Debtor>>(debtors);
 
             foreach (var debtor in debtors)
             {
-                EROIstopWatch.Start();
-                var creds = (from c in creditors
-                             where c.EROI < debtor.EAPR
-                             select c.EROI)
-                             .ToList();
 
-                var EROI = creds.Max();
-                EROIstopWatch.Stop();
+                debtor.Trials += 1;
+
+                EROIstopWatch.Start();
+                //   var creds = (from c in creditors
+                //                where c.EROI < debtor.EAPR && c.Available
+                //                select c.EROI)
+                //                .ToList();
+                ////   creditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
 
                 creditors = creditors.OrderBy(c => c.Queue_Date);
+                //  creditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
+                IEnumerable<Creditor> creds = creditors.Where(c => c.EROI < debtor.EAPR && c.Available).ToList();
+                var EROI = creds.Max(c => c.EROI);
+                EROIstopWatch.Stop();
 
-                foreach (var cred in creditors)
+                foreach (var cred in creds)
                 {
-                    if (cred.Finapp_Balance > debtor.Finapp_Debet && cred.EROI<debtor.EAPR && cred.Available && debtor.Available)
+                    if (cred.Finapp_Balance > debtor.Finapp_Debet && debtor.Available && cred.Available)
                     {
                         var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
                         var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
@@ -159,7 +170,7 @@ namespace Finapp.Implementations
 
                         break;
                     }
-                    else if (cred.EROI < debtor.EAPR && cred.Available && debtor.Available)
+                    else if (cred.EROI < debtor.EAPR && debtor.Available && cred.Available)
                     {
                         var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * cred.Finapp_Balance));
                         var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * cred.Finapp_Balance));
@@ -268,12 +279,10 @@ namespace Finapp.Implementations
 
             stopWatch.Reset();
             stopWatch.Start();
+            IEnumerable<Debtor> updateDebtors = Mapper.Map<IEnumerable<Debtor>>(debtors);
 
+            _debtorService.ModifyDebtors(updateDebtors);
 
-            foreach (var debtor in debtors)
-            {
-                _debtorService.ModifyDebtor(debtor);
-            }
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             getDbDebtorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
@@ -282,16 +291,16 @@ namespace Finapp.Implementations
             stopWatch.Reset();
             stopWatch.Start();
 
-            foreach (var cred in creditors)
-            {
-                _creditorService.ModifyCreditor(cred);
-            }
+            IEnumerable<Creditor> updateCreditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
+
+            _creditorService.ModifyCreditors(updateCreditors);
+
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             getDbCreditorsTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}",
            ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
-
+            _context = new FinapEntities1();
             _context.Times.Add(new Times
             {
                 AssociateTime = getAssociationsTime,
@@ -311,26 +320,24 @@ namespace Finapp.Implementations
             _context.SaveChanges();
 
             return true;
-
         }
-
 
         public bool Associating()
         {
             var associationsCounter = (from a in _context.Associate
-                                select a.Nr)
+                                       select a.Nr)
                                 .Count();
 
             var associate = new Associate
             {
                 Date_Of_Associating = DateTime.Now,
-                Nr = associationsCounter+1
+                Nr = associationsCounter + 1
             };
             _associateService.AddNewAssociate(associate);
 
             if (associate.Nr > 1)
             {
-                UpdateCreditors(associate.Nr??0);
+                UpdateCreditors(associate.Nr ?? 0);
                 UpdateDebtors(associate.Nr ?? 0);
             }
             IEnumerable<Debtor> debtors = AddDebtorsToQueue();
@@ -341,7 +348,7 @@ namespace Finapp.Implementations
 
             //if (creditor.Count() == 0)
             //    return false;
-        
+
 
 
             DoAssociation(associate);
@@ -350,9 +357,9 @@ namespace Finapp.Implementations
             var avgOfProfits = 0;
             var avgOfSavingsPercentage = 0;
             var avgOfProfitsPercentage = 0;
-            var days =0;
+            var days = 0;
 
-            if(debtors.Count()!=0 && creditor.Count() != 0 && _summary.CounterOdCreditors!=0)
+            if (debtors.Count() != 0 && creditor.Count() != 0 && _summary.CounterOdCreditors != 0)
             {
                 avgOfSavings = _summary.SavingsSum / debtors.Count();
                 avgOfProfits = _summary.ProfitsSum / creditor.Count();
@@ -388,149 +395,149 @@ namespace Finapp.Implementations
             return true;
         }
 
-        private bool CreateTransaction(Debtor debtor, IEnumerable<Creditor> creditors, Associate associate)
-        {
-            var EROI = creditors.Max(e => e.EROI);
+        //private bool CreateTransaction(Debtor debtor, IEnumerable<Creditor> creditors, Associate associate)
+        //{
+        //    var EROI = creditors.Max(e => e.EROI);
 
-            foreach (var creditor in creditors)
-            {
-                if (creditor.Finapp_Balance > debtor.Finapp_Debet)
-                {
-                    var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
-                    var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
-                    var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-                    var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.EROI / 100))));
-                    var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.ROI / 100))));
-                    var debtorSavings = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)(debtor.APR - debtor.EAPR) / 100))));
+        //    foreach (var creditor in creditors)
+        //    {
+        //        if (creditor.Finapp_Balance > debtor.Finapp_Debet)
+        //        {
+        //            var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
+        //            var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
+        //            var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+        //            var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.EROI / 100))));
+        //            var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.ROI / 100))));
+        //            var debtorSavings = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)(debtor.APR - debtor.EAPR) / 100))));
 
-                    var transactionOut = new Transaction_Out
-                    {
-                        Ammount = debtor.Finapp_Debet,
-                        Date_Of_Transaction = DateTime.Now,
-                        ROI = (float)EROI,
-                        Finapp_Debetor = 0,
-                        Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
-                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
-                        Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
-                        Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-                        Associate_Id = associate.Associate_Id,
-                        Creditor_Id = creditor.Creditor_Id,
-                        Debtor_Id = debtor.Debtor_Id,
-                        ActualCreditorBenefits = actualCreditorBenefits,
-                        CreditorBenefits = realCreditorBenefits,
-                        DebtorSavings = debtorSavings,
-                        AssociateDay = associate.Nr
-                    };
+        //            var transactionOut = new Transaction_Out
+        //            {
+        //                Ammount = debtor.Finapp_Debet,
+        //                Date_Of_Transaction = DateTime.Now,
+        //                ROI = (float)EROI,
+        //                Finapp_Debetor = 0,
+        //                Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
+        //                Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+        //                Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
+        //                Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
+        //                Associate_Id = associate.Associate_Id,
+        //                Creditor_Id = creditor.Creditor_Id,
+        //                Debtor_Id = debtor.Debtor_Id,
+        //                ActualCreditorBenefits = actualCreditorBenefits,
+        //                CreditorBenefits = realCreditorBenefits,
+        //                DebtorSavings = debtorSavings,
+        //                AssociateDay = associate.Nr
+        //            };
 
-                    _summary.ProfitsAveragePercentage += (int)EROI;
-                    _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
-                    _summary.CounterOdCreditors++;
-                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days*debtor.Finapp_Debet;
-                    _summary.Turnover += debtor.Finapp_Debet;
+        //            _summary.ProfitsAveragePercentage += (int)EROI;
+        //            _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
+        //            _summary.CounterOdCreditors++;
+        //            _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * debtor.Finapp_Debet;
+        //            _summary.Turnover += debtor.Finapp_Debet;
 
-                    var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+        //            var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
 
-                    if (creditor.LastAssociate < associate.Associate_Id)
-                    {
-                        creditor.AssociateCounter += 1;
-                        creditor.LastAssociate = associate.Associate_Id;
-                    }
+        //            if (creditor.LastAssociate < associate.Associate_Id)
+        //            {
+        //                creditor.AssociateCounter += 1;
+        //                creditor.LastAssociate = associate.Associate_Id;
+        //            }
 
-                    creditor.Queue_Date = date;
-                    _creditorService.ModifyCreditor(creditor);
+        //            creditor.Queue_Date = date;
+        //            _creditorService.ModifyCreditor(creditor);
 
-                    date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+        //            date = _debtorService.GetTheOldestQueueDate().AddDays(1);
 
-                    if (debtor.LastAssociate < associate.Associate_Id)
-                    {
-                        debtor.AssociateCounter += 1;
-                        debtor.LastAssociate = associate.Associate_Id;
-                    }
+        //            if (debtor.LastAssociate < associate.Associate_Id)
+        //            {
+        //                debtor.AssociateCounter += 1;
+        //                debtor.LastAssociate = associate.Associate_Id;
+        //            }
 
-                    debtor.Queue_Date = date;
-                    _debtorService.ModifyDebtor(debtor);
+        //            debtor.Queue_Date = date;
+        //           // _debtorService.ModifyDebtor(debtor);
 
-                    _transactionOutService.AddTransaction(transactionOut);
+        //            _transactionOutService.AddTransaction(transactionOut);
 
-                    creditor.Finapp_Balance -= debtor.Finapp_Debet;
-                    _creditorService.ModifyCreditor(creditor);
-                    debtor.Finapp_Debet = 0;
-                    debtor.Available = false;
-                    _debtorService.ModifyDebtor(debtor);
+        //            creditor.Finapp_Balance -= debtor.Finapp_Debet;
+        //            _creditorService.ModifyCreditor(creditor);
+        //            debtor.Finapp_Debet = 0;
+        //            debtor.Available = false;
+        //            _debtorService.ModifyDebtor(debtor);
 
-                    break;
-                }
-                else
-                {
-                    var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance));
-                    var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * creditor.Finapp_Balance));
-                    var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-                    var realCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.EROI / 100))));
-                    var actualCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.ROI / 100))));
-                    var debtorSavings = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)(debtor.APR - debtor.EAPR) / 100))));
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance));
+        //            var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * creditor.Finapp_Balance));
+        //            var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+        //            var realCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.EROI / 100))));
+        //            var actualCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.ROI / 100))));
+        //            var debtorSavings = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)(debtor.APR - debtor.EAPR) / 100))));
 
-                    var transactionOut = new Transaction_Out
-                    {
-                        Ammount = creditor.Finapp_Balance,
-                        Date_Of_Transaction = DateTime.Now,
-                        ROI = (float)EROI,
-                        Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
-                        Finapp_Creditor = 0,
-                        Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
-                        Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
-                        Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-                        Associate_Id = associate.Associate_Id,
-                        Creditor_Id = creditor.Creditor_Id,
-                        Debtor_Id = debtor.Debtor_Id,
-                        ActualCreditorBenefits = actualCreditorBenefits,
-                        CreditorBenefits = realCreditorBenefits,
-                        DebtorSavings = debtorSavings,
-                        AssociateDay = associate.Nr
-                    };
+        //            var transactionOut = new Transaction_Out
+        //            {
+        //                Ammount = creditor.Finapp_Balance,
+        //                Date_Of_Transaction = DateTime.Now,
+        //                ROI = (float)EROI,
+        //                Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
+        //                Finapp_Creditor = 0,
+        //                Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+        //                Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
+        //                Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
+        //                Associate_Id = associate.Associate_Id,
+        //                Creditor_Id = creditor.Creditor_Id,
+        //                Debtor_Id = debtor.Debtor_Id,
+        //                ActualCreditorBenefits = actualCreditorBenefits,
+        //                CreditorBenefits = realCreditorBenefits,
+        //                DebtorSavings = debtorSavings,
+        //                AssociateDay = associate.Nr
+        //            };
 
-                    _summary.ProfitsAveragePercentage += (int)EROI;
-                    _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
-                    _summary.CounterOdCreditors++;
-                    _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * creditor.Finapp_Balance;
-                    _summary.Turnover += creditor.Finapp_Balance;
+        //            _summary.ProfitsAveragePercentage += (int)EROI;
+        //            _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
+        //            _summary.CounterOdCreditors++;
+        //            _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * creditor.Finapp_Balance;
+        //            _summary.Turnover += creditor.Finapp_Balance;
 
-                    var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
+        //            var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
 
-                    if (creditor.LastAssociate < associate.Associate_Id)
-                    {
-                        creditor.AssociateCounter += 1;
-                        creditor.LastAssociate = associate.Associate_Id;
-                    }
+        //            if (creditor.LastAssociate < associate.Associate_Id)
+        //            {
+        //                creditor.AssociateCounter += 1;
+        //                creditor.LastAssociate = associate.Associate_Id;
+        //            }
 
-                    creditor.Queue_Date = date;
-                    _creditorService.ModifyCreditor(creditor);
+        //            creditor.Queue_Date = date;
+        //            _creditorService.ModifyCreditor(creditor);
 
-                    date = _debtorService.GetTheOldestQueueDate().AddDays(1);
+        //            date = _debtorService.GetTheOldestQueueDate().AddDays(1);
 
-                    if (debtor.LastAssociate < associate.Associate_Id)
-                    {
-                        debtor.AssociateCounter += 1;
-                        debtor.LastAssociate = associate.Associate_Id;
-                    }
+        //            if (debtor.LastAssociate < associate.Associate_Id)
+        //            {
+        //                debtor.AssociateCounter += 1;
+        //                debtor.LastAssociate = associate.Associate_Id;
+        //            }
 
-                    debtor.Queue_Date = date;
-                    _debtorService.ModifyDebtor(debtor);
+        //            debtor.Queue_Date = date;
+        //            _debtorService.ModifyDebtor(debtor);
 
-                    _transactionOutService.AddTransaction(transactionOut);
+        //            _transactionOutService.AddTransaction(transactionOut);
 
-                    debtor.Finapp_Debet -= creditor.Finapp_Balance;
-                    _debtorService.ModifyDebtor(debtor);
+        //            debtor.Finapp_Debet -= creditor.Finapp_Balance;
+        //            _debtorService.ModifyDebtor(debtor);
 
-                    creditor.Finapp_Balance = 0;
-                    creditor.Available = false;
-                    _creditorService.ModifyCreditor(creditor);
+        //            creditor.Finapp_Balance = 0;
+        //            creditor.Available = false;
+        //            _creditorService.ModifyCreditor(creditor);
 
-                    if (debtor.Finapp_Debet == 0)
-                        break;
-                }
-            }
-            return true;
-        }
+        //            if (debtor.Finapp_Debet == 0)
+        //                break;
+        //        }
+        //    }
+        //  return true;
+        //}
 
         private int CountAllSavings(Creditor creditor, int sum)
         {
@@ -562,13 +569,26 @@ namespace Finapp.Implementations
             return creditorsList;
         }
 
+        private IEnumerable<Creditor> AddTrialsToCreditors(IEnumerable<Creditor> creditors)
+        {
+            foreach (var creditor in creditors)
+            {
+                if (creditor.Available == true)
+                    creditor.Trials += 1;
+            }
+
+            return creditors;
+        }
+
         private void UpdateCreditors(int associateNr)
         {
             var creditors = _context.Creditor.ToList();
             var updateList = new List<Creditor>();
+            var canUpdate = false;
 
             foreach (var creditor in creditors)
             {
+                canUpdate = false;
                 var transactions = (from t in _context.Transaction_Out
                                     where t.Creditor_Id == creditor.Creditor_Id
                                     select new { t.CreditorBenefits, t.AssociateDay, t.Ammount, t.Day_Access_To_Funds })
@@ -576,14 +596,19 @@ namespace Finapp.Implementations
 
                 foreach (var transaction in transactions)
                 {
-                    if(transaction.Day_Access_To_Funds+transaction.AssociateDay == associateNr)
+                    if (transaction.Day_Access_To_Funds + transaction.AssociateDay == associateNr)
                     {
-                        creditor.Finapp_Balance += (transaction.CreditorBenefits + transaction.Ammount??0);
+                        creditor.Finapp_Balance += (transaction.CreditorBenefits + transaction.Ammount ?? 0);
                         creditor.Available = true;
-                        updateList.Add(creditor);
+                        canUpdate = true;
                     }
                 }
+                if (canUpdate)
+                    updateList.Add(creditor);
+
             }
+            updateList = Mapper.Map<List<Creditor>>(updateList);
+
             _creditorService.ModifyCreditors(updateList);
         }
 
@@ -591,9 +616,18 @@ namespace Finapp.Implementations
         {
             var debtors = _context.Debtor.ToList();
             var updateList = new List<Debtor>();
+            var toUpdate = false;
 
             foreach (var debtor in debtors)
             {
+                toUpdate = false;
+
+                if (debtor.Finapp_Debet == 0)
+                {
+                    debtor.HaveMoney++;
+                    toUpdate = true;
+                }
+
                 var transactions = (from t in _context.Transaction_Out
                                     where t.Debtor_Id == debtor.Debtor_Id
                                     select new { t.DebtorSavings, t.AssociateDay, t.Ammount, t.Day_Access_To_Funds })
@@ -603,12 +637,17 @@ namespace Finapp.Implementations
                 {
                     if (transaction.Day_Access_To_Funds + transaction.AssociateDay == associateNr)
                     {
-                        debtor.Finapp_Debet += ( transaction.Ammount - transaction.DebtorSavings ?? 0);
+                        debtor.Finapp_Debet += (transaction.Ammount - transaction.DebtorSavings ?? 0);
                         debtor.Available = true;
-                        updateList.Add(debtor);
+                        toUpdate = true;
                     }
                 }
+                if (toUpdate)
+                    updateList.Add(debtor);
+
             }
+            updateList = Mapper.Map<List<Debtor>>(updateList);
+
             _debtorService.ModifyDebtors(updateList);
         }
     }

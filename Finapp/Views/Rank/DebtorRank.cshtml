@@ -21,6 +21,8 @@
             <th>Trials</th>
             <th>Associations</th>
             <th>Savings</th>
+            <th>Days with app</th>
+            <th>Days with money</th>
         </tr>
         @foreach (var debtor in Model)
         {
@@ -44,7 +46,13 @@
                     @debtor.AssociateCounter
                 </td>
                 <td>
-                    @debtor.Money
+                    @debtor.Money PLN
+                </td>
+                <td>
+                    @debtor.Days
+                </td>
+                <td>
+                    @debtor.DaysWithMoney
                 </td>
             </tr>
         }

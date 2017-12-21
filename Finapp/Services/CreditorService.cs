@@ -1,4 +1,5 @@
-﻿using Finapp.IServices;
+﻿using AutoMapper;
+using Finapp.IServices;
 using Finapp.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace Finapp.Services
 {
     public class CreditorService : ICreditorService
     {
-        private readonly FinapEntities1 _context;
+        private Func<FinapEntities1> dbFactory;
+        private FinapEntities1 _context;
 
-        public CreditorService(FinapEntities1 context)
+        public CreditorService(Func<FinapEntities1> dbFactory, FinapEntities1 context)
         {
+            this.dbFactory = dbFactory;
             _context = context;
         }
 
@@ -61,6 +64,7 @@ namespace Finapp.Services
 
         public IEnumerable<Creditor> GetAvailableCreditors(float eapr)
         {
+            _context = new FinapEntities1();
             try
             {
                 var creditors = _context.Creditor
@@ -93,12 +97,32 @@ namespace Finapp.Services
 
         public bool ModifyCreditors(IEnumerable<Creditor> creditors)
         {
-
-            foreach (var item in creditors)
+            var dbContext = dbFactory.Invoke();
+            var counter = 1;
+            try
             {
-                _context.Entry(item).State = EntityState.Modified;
+                foreach (var item in creditors)
+                {
+                    counter++;
+                    dbContext.Entry(item).State = EntityState.Modified;
+                    // _context.Entry(item).State = EntityState.Modified;
+                    if (counter % 100 == 0)
+                    {
+                        dbContext.SaveChanges();
+                        dbContext.Dispose();
+                        dbContext = new FinapEntities1();
+                    }
+                }
+                dbContext.SaveChanges();
             }
-            _context.SaveChanges();
+            catch(Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                dbContext.Dispose();
+            }
 
             return true;
         }
@@ -134,14 +158,33 @@ namespace Finapp.Services
         }
         public bool AddNewCreditors(IEnumerable<Creditor> creditors)
         {
-
-            foreach (var item in creditors)
+            IEnumerable<Creditor> updateCreditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
+            int counter = 0;
+            try
             {
-                _context.Entry(item).State = EntityState.Added;
-            }
+                foreach (var item in updateCreditors)
+                {
+                    _context.Entry(item).State = EntityState.Added;
+                    counter++;
+                    if (counter % 100 == 0)
+                    {
+                        _context.SaveChanges();
+                        _context.Dispose();
+                        _context = new FinapEntities1();
+                    }
+                }
                 _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                _context.Dispose();
+            }
 
-                return true;
+            return true;
         }
 
         public bool AddAssociate(Associate associate, Creditor creditor)
@@ -161,11 +204,11 @@ namespace Finapp.Services
         public DateTime GetTheOldestQueueDate()
         {
             var dates = (from c in _context.Creditor
-                        select c.Queue_Date)
+                         select c.Queue_Date)
                         .ToList();
             var date = dates.Max();
 
-            return date??DateTime.Now;
+            return date ?? DateTime.Now;
         }
 
     }

@@ -1,0 +1,20 @@
+﻿@model Finapp.Models.Times
+
+
+
+<div>
+    @{
+        var myChart = new Chart(width: 800, height: 600)
+            .AddTitle("Times for " + ViewBag.Message)
+            .AddSeries(
+                name: "Employee",
+                xValue: new[] { "Get Debtors", "Get Investors", "Set EROI", "Assotiations", "Update Debtors", "Update Investors", "Create Transactions" },
+                yValues: new[] { Model.GetDebtorsTime, Model.GetCreditorsTime, Model.SetROI, Model.AssociateTime, Model.UpdateDebtorsTime, Model.UpdateCreditorsTime, Model.UpdateTransactionsTime })
+            .Write();
+    }
+
+
+
+
+
+</div>

@@ -11,7 +11,7 @@ namespace Finapp.Services
 {
     public class TransactionOutService : ITransactionOutService
     {
-        private readonly FinapEntities1 _context;
+        private FinapEntities1 _context;
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
 
@@ -39,11 +39,32 @@ namespace Finapp.Services
 
         public bool AddTransactions(IEnumerable<Transaction_Out> transactions)
         {
-            foreach (var item in transactions)
+            int counter = 1;
+
+            try
             {
-                _context.Entry(item).State = EntityState.Added;
+                foreach (var item in transactions)
+                {
+                    counter++;
+                    _context.Entry(item).State = EntityState.Added;
+
+                    if (counter % 100 == 0)
+                    {
+                        _context.SaveChanges();
+                        _context.Dispose();
+                        _context = new FinapEntities1();
+                    }
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                _context.Dispose();
+            }
 
             return true;
         }
@@ -87,7 +108,7 @@ namespace Finapp.Services
                             where c.Creditor_Id == transaction.Creditor_Id
                             select c.username)
                             .FirstOrDefault();
-                
+
             var realCreditorBenefits = ((int)((float)partOfYear * transaction.Creditor_Benefits_Per_Annum ?? 0));
 
             return new TransactionWithUserViewModel
@@ -116,14 +137,15 @@ namespace Finapp.Services
                 .ToList();
         }
 
-        public UserTransactionsViewModel GetUserTransactions(int amount, int associateNr, int profit, string username)
+        public UserTransactionsViewModel GetUserTransactions(int amount, int associateNr, int profit, string username, int transactions)
         {
             return new UserTransactionsViewModel
             {
                 Amount = amount,
                 AssociateNr = associateNr,
                 Username = username,
-                Profits = profit
+                Profits = profit,
+                Transactions = transactions
             };
         }
     }

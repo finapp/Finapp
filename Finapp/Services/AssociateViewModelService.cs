@@ -85,7 +85,7 @@ namespace Finapp.Services
                     
                 }
 
-                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username);
+                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username, listOfTransactions.Count);
 
                 if (oneAssociate.Amount > 0)
                     returnedList.Add(oneAssociate);
@@ -127,7 +127,7 @@ namespace Finapp.Services
                     profit += transaction.CreditorBenefits ?? 0;
                 }
 
-                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username);
+                oneAssociate = _transactionService.GetUserTransactions(amount, number, profit, username, listOfTransactions.Count);
                 returnedList.Add(oneAssociate);
 
                 number++;

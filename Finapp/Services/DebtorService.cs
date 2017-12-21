@@ -1,9 +1,11 @@
-﻿using Finapp.IServices;
+﻿using AutoMapper;
+using Finapp.IServices;
 using Finapp.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 
@@ -11,11 +13,13 @@ namespace Finapp.Services
 {
     public class DebtorService : IDebtorService
     {
-        private readonly FinapEntities1 _context;
+        private FinapEntities1 _context;
+        private Func<FinapEntities1> dbFactory;
 
-        public DebtorService(FinapEntities1 context)
+        public DebtorService(FinapEntities1 context, Func<FinapEntities1> dbFactory)
         {
             _context = context;
+            this.dbFactory = dbFactory;
         }
 
         public IEnumerable<Debtor> GetAllDebtors()
@@ -76,6 +80,7 @@ namespace Finapp.Services
 
         public IEnumerable<Debtor> GetAvailableDebtors()
         {
+            _context = new FinapEntities1();
             try
             {
                 var debtors = _context.Debtor
@@ -90,6 +95,8 @@ namespace Finapp.Services
                 throw e;
             }
         }
+
+
 
         public bool ModifyDebtor(Debtor debtor)
         {
@@ -107,13 +114,36 @@ namespace Finapp.Services
 
         public bool ModifyDebtors(IEnumerable<Debtor> debtors)
         {
-
-            foreach (var item in debtors)
+            var dbContext = dbFactory.Invoke();
+            var counter = 1;
+            try
             {
-                _context.Entry(item).State = EntityState.Modified;
+                foreach (var item in debtors)
+                {
+                    counter++;
+                    dbContext.Entry(item).State = EntityState.Modified;
+                    //_context.Entry(item).State = EntityState.Modified;
+                    //Debtor d2 = Mapper.Map(dbContext.Debtor.Where(s=>s.Debtor_Id == item.Debtor_Id).FirstOrDefault(), item);
+                    //Debtor d = Mapper.Map<Debtor>(item);
+                    //dbContext.Debtor.Attach(d2);
+                    //dbContext.Set<Debtor>().AddOrUpdate(item);
+                    if (counter % 100 == 0)
+                    {
+                        dbContext.SaveChanges();
+                        dbContext.Dispose();
+                        dbContext = new FinapEntities1();
+                    }
+                }
+                dbContext.SaveChanges();
             }
-            _context.SaveChanges();
-
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                dbContext.Dispose();
+            }
             return true;
         }
 
@@ -148,11 +178,33 @@ namespace Finapp.Services
 
         public bool AddNewDebtors(IEnumerable<Debtor> debtors)
         {
-            foreach (var item in debtors)
+            IEnumerable<Debtor> updateDebtors = Mapper.Map<IEnumerable<Debtor>>(debtors);
+
+            _context = new FinapEntities1();
+            int counter = 1;
+            try
             {
-                _context.Entry(item).State = EntityState.Added;
+                foreach (var item in updateDebtors)
+                {
+                    _context.Entry(item).State = EntityState.Added;
+                    counter++;
+                    if (counter % 100 == 0)
+                    {
+                        _context.SaveChanges();
+                        _context.Dispose();
+                        _context = new FinapEntities1();
+                    }
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                _context.Dispose();
+            }
 
             return true;
         }

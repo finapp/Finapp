@@ -10,7 +10,7 @@ namespace Finapp.Services
 {
     public class AssociateService : IAssociateService
     {
-        private readonly FinapEntities1 _context;
+        private FinapEntities1 _context;
         private readonly ICreditorService _creditorService;
         private readonly IDebtorService _debtorService;
 
@@ -23,6 +23,7 @@ namespace Finapp.Services
 
         public bool AddNewAssociate(Associate associate)
         {
+            _context = new FinapEntities1();
             try
             {
                 _context.Associate.Add(associate);
@@ -34,14 +35,14 @@ namespace Finapp.Services
                 foreach (var creditor in creditors)
                 {
                     creditor.Trials += 1;
-                    _creditorService.ModifyCreditor(creditor);
                 }
+                _creditorService.ModifyCreditors(creditors);
 
                 foreach (var debtor in debtors)
                 {
                     debtor.Trials += 1;
-                    _debtorService.ModifyDebtor(debtor);
                 }
+                _debtorService.ModifyDebtors(debtors);
 
                 return true;
             }

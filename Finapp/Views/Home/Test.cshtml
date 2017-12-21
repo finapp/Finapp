@@ -5,6 +5,10 @@
 @{ int rowNo = 1;}
 <br /><br /><br />
 
+<div class="text-center">
+@Html.ActionLink("Create chart", "Charts", "Home", new { area = "" }, new { @class = "btn btn-success" })
+</div>
+
 <table class="table table-responsive table-striped">
     <thead>
         <tr>
@@ -15,7 +19,7 @@
             <th>Assotiations</th>
             <th>Update Creditors</th>
             <th>Update Debtors</th>
-            <th>Update Transactions</th>
+            <th>Create Transactions</th>
             <th>One Transaction</th>
             <th>Creditors</th>
             <th>All</th>

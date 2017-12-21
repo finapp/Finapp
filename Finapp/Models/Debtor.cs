@@ -35,6 +35,7 @@ namespace Finapp.Models
         public Nullable<int> AssociateCounter { get; set; }
         public Nullable<int> LastAssociate { get; set; }
         public Nullable<int> Savings { get; set; }
+        public Nullable<int> HaveMoney { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Associate> Associate { get; set; }

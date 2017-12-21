@@ -64,10 +64,8 @@ namespace Finapp.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<FinapEntities1>().ToSelf().InRequestScope();
             kernel.Bind<IDebtorService>().To<DebtorService>().InRequestScope();
             kernel.Bind<ICreditorService>().To<CreditorService>().InRequestScope();
-            kernel.Bind<IAlgorithms>().To<Algorithms>().InRequestScope();
             kernel.Bind<ITransactionOutService>().To<TransactionOutService>().InRequestScope();
             kernel.Bind<IDebtorViewModelService>().To<DebtorViewModelService>().InRequestScope();
             kernel.Bind<ICreditorViewModelService>().To<CreditorViewModelService>().InRequestScope();
@@ -80,6 +78,14 @@ namespace Finapp.App_Start
             kernel.Bind<IRankViewModelService>().To<RankViewModelService>().InRequestScope();
             kernel.Bind<IDBSummaryViewModelService>().To<DBSummaryViewModelService>().InRequestScope();
             kernel.Bind<ITests>().To<Tests>().InRequestScope();
+
+            kernel.Bind<IAlgorithms>().To<Algorithms>().InRequestScope();
+            kernel.Bind<Func<IAlgorithms>>().ToConstant<Func<IAlgorithms>>(() => kernel.GetService(typeof(IAlgorithms)) as IAlgorithms);
+
+            kernel.Bind<FinapEntities1>().ToSelf().InRequestScope();
+            kernel.Bind<Func<FinapEntities1>>().ToConstant<Func<FinapEntities1>>(() => kernel.GetService(typeof(FinapEntities1)) as FinapEntities1);
+
+
         }
     }
 }

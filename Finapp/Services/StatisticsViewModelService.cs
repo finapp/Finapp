@@ -52,22 +52,27 @@ namespace Finapp.Services
             var days = 0;
             var turnover = 0;
 
-            int counter = summaries.Count();
+            int counter = 0;
 
             foreach (var summary in summaries)
             {
-                debetAverage += summary.Debet_Average??0;
-                balanceAverage += summary.Balance_Average??0;
-                savingsAverage += summary.Savings_Average??0;
-                profitsAverage += summary.Profits_Average??0;
-                savingsAveragePercentage += summary.Savings_Average_Percentage??0;
-                profitsAveragePercentage += summary.Profits_Average_Percentage??0;
-                profitsSum += summary.Profits_Sum??0;
-                savingsSum += summary.Savings_Sum??0;
-                balanceSum += summary.Balance_Sum??0;
-                debetSum += summary.Debet_Sum??0;
-                days += summary.Days??0;
-                turnover += summary.Turnover??0;
+                if (summary.Days > 0)
+                {
+                    counter++;
+                    debetAverage += summary.Debet_Average ?? 0;
+                    balanceAverage += summary.Balance_Average ?? 0;
+                    savingsAverage += summary.Savings_Average ?? 0;
+                    profitsAverage += summary.Profits_Average ?? 0;
+                    savingsAveragePercentage += summary.Savings_Average_Percentage ?? 0;
+                    profitsAveragePercentage += summary.Profits_Average_Percentage ?? 0;
+                    profitsSum += summary.Profits_Sum ?? 0;
+                    savingsSum += summary.Savings_Sum ?? 0;
+                    balanceSum += summary.Balance_Sum ?? 0;
+                    debetSum += summary.Debet_Sum ?? 0;
+                    days += summary.Days ?? 0;
+                    turnover += summary.Turnover ?? 0;
+                }
+
             }
 
             if (counter > 0)

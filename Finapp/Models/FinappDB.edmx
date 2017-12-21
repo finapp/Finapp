@@ -61,6 +61,7 @@
           <Property Name="LastAssociate" Type="int" />
           <Property Name="AllSavings" Type="int" />
           <Property Name="Savings" Type="int" />
+          <Property Name="HaveMoney" Type="int" />
         </EntityType>
         <EntityType Name="Debtor_Associate">
           <Key>
@@ -345,6 +346,7 @@
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />
           <Property Name="Savings" Type="Int32" />
+          <Property Name="HaveMoney" Type="Int32" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -571,6 +573,7 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="HaveMoney" ColumnName="HaveMoney" />
                 <ScalarProperty Name="Savings" ColumnName="Savings" />
                 <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
                 <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />

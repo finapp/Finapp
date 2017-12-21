@@ -11,5 +11,6 @@ namespace Finapp.ViewModels
         public int AssociateNr { get; set; }
         public int Profits { get; set; }
         public string Username { get; set; }
+        public int Transactions { get; set; }
     }
 }

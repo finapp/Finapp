@@ -26,9 +26,11 @@ namespace Finapp.Services
 
         public IEnumerable<RankViewModel> GetCreditorsRank()
         {
-            var creditors = _creditorService.GetAllCreditors();
+            var creditors = (from c in _context.Creditor
+                             select new { c.username, c.AssociateCounter, c.ROI, c.EROI, c.Trials, c.Profits })
+                             .ToList();
 
-            List<RankViewModel> listOfCreditors = new List<RankViewModel>();
+            List < RankViewModel > listOfCreditors = new List<RankViewModel>();
 
             foreach (var creditor in creditors)
             {
@@ -50,7 +52,13 @@ namespace Finapp.Services
 
         public IEnumerable<RankViewModel> GetDebtorsRank()
         {
-            var debtors = _debtorService.GetAllDebtors();
+            var debtors = (from d in _context.Debtor
+                           select new { d.username, d.AssociateCounter, d.APR, d.EAPR, d.Trials, d.Savings, d.HaveMoney })
+                           .ToList();
+
+            var days = (from a in _context.Associate
+                        select a.Nr)
+                        .ToList().Max();
 
             List<RankViewModel> listOfDebtors = new List<RankViewModel>();
 
@@ -63,7 +71,9 @@ namespace Finapp.Services
                     APR = debtor.APR??0,
                     EAPR = debtor.EAPR??0,
                     Trials = debtor.Trials??0,
-                    Money = debtor.Savings??0
+                    Money = debtor.Savings??0,
+                    Days = days??0,
+                    DaysWithMoney = debtor.HaveMoney??0
                 });
             }
 

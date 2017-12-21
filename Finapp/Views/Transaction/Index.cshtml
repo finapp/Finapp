@@ -6,6 +6,10 @@
 
 @{ int rowNo = 0;}
 
+<div class="text-center">
+@Html.ActionLink("Generate EXCELL", "Index", "Excell", new { area = "" }, new { @class = "btn btn-success" })
+</div>
+
 @foreach (var transactions in Model.ListOfTransactions)
 {
     <div class="text-center">

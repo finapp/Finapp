@@ -38,30 +38,14 @@ namespace Finapp.CreateDatabase
         {
             var creditors = _context.Creditor.ToList();
 
-            foreach (var creditor in creditors)
-            {
-                creditor.Available = true;
-                creditor.Finapp_Balance = creditor.Balance;
-
-                _context.Creditor.Attach(creditor);
-                _context.Entry(creditor).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
+            _creditorService.ModifyCreditors(creditors);
         }
 
         public void UpdateDebtors()
         {
             var debtors = _context.Debtor.ToList();
 
-            foreach (var debtor in debtors)
-            {
-                debtor.Available = true;
-                debtor.Finapp_Debet = debtor.Debet;
-
-                _context.Debtor.Attach(debtor);
-                _context.Entry(debtor).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
+            _debtorService.ModifyDebtors(debtors);
         }
 
 
@@ -146,6 +130,7 @@ namespace Finapp.CreateDatabase
                 };
 
                 creditorsToCreate.Add(c);
+
             }
 
             _creditorService.AddNewCreditors(creditorsToCreate);
@@ -183,7 +168,7 @@ namespace Finapp.CreateDatabase
 
                 var deb = new Debtor
                 {
-                    Debtor_Id = i+idDebtor,
+                    Debtor_Id = i + idDebtor,
                     username = "Ewa" + number,
                     APR = apr,
                     EAPR = eapr,
@@ -196,9 +181,12 @@ namespace Finapp.CreateDatabase
                     Trials = 0,
                     AssociateCounter = 0,
                     LastAssociate = 0,
-                    Savings = 0
+                    Savings = 0,
+                    HaveMoney = 0
                 };
                 debtorsToCreate.Add(deb);
+            
+                
             }
 
             _debtorService.AddNewDebtors(debtorsToCreate);

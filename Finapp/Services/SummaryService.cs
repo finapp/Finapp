@@ -9,7 +9,7 @@ namespace Finapp.Services
 {
     public class SummaryService : ISummaryService
     {
-        private readonly FinapEntities1 _context;
+        private FinapEntities1 _context;
 
         public SummaryService(FinapEntities1 context)
         {
@@ -18,6 +18,7 @@ namespace Finapp.Services
 
         public bool CreateSummary(Summary summary)
         {
+            _context = new FinapEntities1();
             try
             {
                 _context.Summary.Add(summary);
