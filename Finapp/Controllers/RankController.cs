@@ -18,6 +18,7 @@ namespace Finapp.Controllers
 
         public ActionResult CreditorRank()
         {
+            var a = _rankService.GetCreditorsRank();
             return View(_rankService.GetCreditorsRank());
         }
 

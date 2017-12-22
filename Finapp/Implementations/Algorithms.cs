@@ -627,7 +627,7 @@ namespace Finapp.Implementations
                     debtor.HaveMoney++;
                     toUpdate = true;
                 }
-
+                var accessDays = debtor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
                 var transactions = (from t in _context.Transaction_Out
                                     where t.Debtor_Id == debtor.Debtor_Id
                                     select new { t.DebtorSavings, t.AssociateDay, t.Ammount, t.Day_Access_To_Funds })
@@ -638,7 +638,10 @@ namespace Finapp.Implementations
                     if (transaction.Day_Access_To_Funds + transaction.AssociateDay == associateNr)
                     {
                         debtor.Finapp_Debet += (transaction.Ammount - transaction.DebtorSavings ?? 0);
-                        debtor.Available = true;
+                        if (accessDays > associateNr)
+                        {
+                            debtor.Available = true;
+                        }
                         toUpdate = true;
                     }
                 }

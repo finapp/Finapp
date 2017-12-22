@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finapp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,5 +19,8 @@ namespace Finapp.ViewModels
         public int Money { get; set; }
         public int Days { get; set; }
         public int DaysWithMoney { get; set; }
+        public int TransactionCounter { get; set; }
+
+        public List<AssociationToRankViewModel> Associations { get; set; }
     }
 }

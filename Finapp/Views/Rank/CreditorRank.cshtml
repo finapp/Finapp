@@ -21,6 +21,10 @@
             <th>Trials</th>
             <th>Associations</th>
             <th>Profits</th>
+            <th>Associate nr</th>
+            <th>Transactions</th>
+            <th>Balance</th>
+            <th>Transactions sum</th>
         </tr>
         @foreach (var creditor in Model)
         {
@@ -46,6 +50,21 @@
                 <td>
                     @creditor.Money PLN
                 </td>
+                @foreach (var item in creditor.Associations)
+                {
+                    <td>
+                        @item.AssociateNr
+                    </td>
+                    <td>
+                        @item.TransactionCounter
+                    </td>
+                    <td>
+                        @item.ActualDebet PLN
+                    </td>
+                    <td>
+                        @item.MoneyInTransactions PLN
+                    </td>
+                }
             </tr>
         }
     </thead>

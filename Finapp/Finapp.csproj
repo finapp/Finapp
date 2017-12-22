@@ -270,6 +270,7 @@
     <Compile Include="Services\SummaryViewModelService.cs" />
     <Compile Include="Services\TransactionOutService.cs" />
     <Compile Include="ViewModels\AssociateViewModel.cs" />
+    <Compile Include="ViewModels\AssociationToRankViewModel.cs" />
     <Compile Include="ViewModels\DBSummaryViewModel.cs" />
     <Compile Include="ViewModels\RankViewModel.cs" />
     <Compile Include="ViewModels\CreditorViewModel.cs" />
