@@ -395,150 +395,6 @@ namespace Finapp.Implementations
             return true;
         }
 
-        //private bool CreateTransaction(Debtor debtor, IEnumerable<Creditor> creditors, Associate associate)
-        //{
-        //    var EROI = creditors.Max(e => e.EROI);
-
-        //    foreach (var creditor in creditors)
-        //    {
-        //        if (creditor.Finapp_Balance > debtor.Finapp_Debet)
-        //        {
-        //            var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
-        //            var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
-        //            var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-        //            var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.EROI / 100))));
-        //            var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)creditor.ROI / 100))));
-        //            var debtorSavings = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)(debtor.APR - debtor.EAPR) / 100))));
-
-        //            var transactionOut = new Transaction_Out
-        //            {
-        //                Ammount = debtor.Finapp_Debet,
-        //                Date_Of_Transaction = DateTime.Now,
-        //                ROI = (float)EROI,
-        //                Finapp_Debetor = 0,
-        //                Finapp_Creditor = creditor.Finapp_Balance - debtor.Finapp_Debet,
-        //                Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
-        //                Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
-        //                Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-        //                Associate_Id = associate.Associate_Id,
-        //                Creditor_Id = creditor.Creditor_Id,
-        //                Debtor_Id = debtor.Debtor_Id,
-        //                ActualCreditorBenefits = actualCreditorBenefits,
-        //                CreditorBenefits = realCreditorBenefits,
-        //                DebtorSavings = debtorSavings,
-        //                AssociateDay = associate.Nr
-        //            };
-
-        //            _summary.ProfitsAveragePercentage += (int)EROI;
-        //            _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
-        //            _summary.CounterOdCreditors++;
-        //            _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * debtor.Finapp_Debet;
-        //            _summary.Turnover += debtor.Finapp_Debet;
-
-        //            var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
-
-        //            if (creditor.LastAssociate < associate.Associate_Id)
-        //            {
-        //                creditor.AssociateCounter += 1;
-        //                creditor.LastAssociate = associate.Associate_Id;
-        //            }
-
-        //            creditor.Queue_Date = date;
-        //            _creditorService.ModifyCreditor(creditor);
-
-        //            date = _debtorService.GetTheOldestQueueDate().AddDays(1);
-
-        //            if (debtor.LastAssociate < associate.Associate_Id)
-        //            {
-        //                debtor.AssociateCounter += 1;
-        //                debtor.LastAssociate = associate.Associate_Id;
-        //            }
-
-        //            debtor.Queue_Date = date;
-        //           // _debtorService.ModifyDebtor(debtor);
-
-        //            _transactionOutService.AddTransaction(transactionOut);
-
-        //            creditor.Finapp_Balance -= debtor.Finapp_Debet;
-        //            _creditorService.ModifyCreditor(creditor);
-        //            debtor.Finapp_Debet = 0;
-        //            debtor.Available = false;
-        //            _debtorService.ModifyDebtor(debtor);
-
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * creditor.Finapp_Balance));
-        //            var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * creditor.Finapp_Balance));
-        //            var days = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-        //            var realCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.EROI / 100))));
-        //            var actualCreditorBenefits = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)creditor.ROI / 100))));
-        //            var debtorSavings = ((int)((float)days / 365 * (creditor.Finapp_Balance * ((float)(debtor.APR - debtor.EAPR) / 100))));
-
-        //            var transactionOut = new Transaction_Out
-        //            {
-        //                Ammount = creditor.Finapp_Balance,
-        //                Date_Of_Transaction = DateTime.Now,
-        //                ROI = (float)EROI,
-        //                Finapp_Debetor = debtor.Finapp_Debet - creditor.Finapp_Balance,
-        //                Finapp_Creditor = 0,
-        //                Day_Access_To_Funds = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days,
-        //                Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
-        //                Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
-        //                Associate_Id = associate.Associate_Id,
-        //                Creditor_Id = creditor.Creditor_Id,
-        //                Debtor_Id = debtor.Debtor_Id,
-        //                ActualCreditorBenefits = actualCreditorBenefits,
-        //                CreditorBenefits = realCreditorBenefits,
-        //                DebtorSavings = debtorSavings,
-        //                AssociateDay = associate.Nr
-        //            };
-
-        //            _summary.ProfitsAveragePercentage += (int)EROI;
-        //            _summary.SavingsAveragePercentage += (int)(debtor.APR - debtor.EAPR);
-        //            _summary.CounterOdCreditors++;
-        //            _summary.Days += creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days * creditor.Finapp_Balance;
-        //            _summary.Turnover += creditor.Finapp_Balance;
-
-        //            var date = _creditorService.GetTheOldestQueueDate().AddDays(1);
-
-        //            if (creditor.LastAssociate < associate.Associate_Id)
-        //            {
-        //                creditor.AssociateCounter += 1;
-        //                creditor.LastAssociate = associate.Associate_Id;
-        //            }
-
-        //            creditor.Queue_Date = date;
-        //            _creditorService.ModifyCreditor(creditor);
-
-        //            date = _debtorService.GetTheOldestQueueDate().AddDays(1);
-
-        //            if (debtor.LastAssociate < associate.Associate_Id)
-        //            {
-        //                debtor.AssociateCounter += 1;
-        //                debtor.LastAssociate = associate.Associate_Id;
-        //            }
-
-        //            debtor.Queue_Date = date;
-        //            _debtorService.ModifyDebtor(debtor);
-
-        //            _transactionOutService.AddTransaction(transactionOut);
-
-        //            debtor.Finapp_Debet -= creditor.Finapp_Balance;
-        //            _debtorService.ModifyDebtor(debtor);
-
-        //            creditor.Finapp_Balance = 0;
-        //            creditor.Available = false;
-        //            _creditorService.ModifyCreditor(creditor);
-
-        //            if (debtor.Finapp_Debet == 0)
-        //                break;
-        //        }
-        //    }
-        //  return true;
-        //}
-
         private int CountAllSavings(Creditor creditor, int sum)
         {
             return (int)(sum * ((float)creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days / 365));
@@ -599,6 +455,7 @@ namespace Finapp.Implementations
                     if (transaction.Day_Access_To_Funds + transaction.AssociateDay == associateNr)
                     {
                         creditor.Finapp_Balance += (transaction.CreditorBenefits + transaction.Ammount ?? 0);
+                        creditor.ActualMoney += (transaction.CreditorBenefits + transaction.Ammount ?? 0);
                         creditor.Available = true;
                         canUpdate = true;
                     }
@@ -638,6 +495,7 @@ namespace Finapp.Implementations
                     if (transaction.Day_Access_To_Funds + transaction.AssociateDay == associateNr)
                     {
                         debtor.Finapp_Debet += (transaction.Ammount - transaction.DebtorSavings ?? 0);
+                        debtor.ActualMoney -= transaction.DebtorSavings ?? 0;
                         if (accessDays > associateNr)
                         {
                             debtor.Available = true;

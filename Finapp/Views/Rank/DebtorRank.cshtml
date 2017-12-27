@@ -9,7 +9,18 @@
     <h2>Debtors Rank</h2>
 </div>
 
-@{ int rowNo = 0; }
+@{ int rowNo = 0;
+    int counter = 0;
+    foreach (var item in Model)
+    {
+        var associations = item.AssociateCounter;
+
+        if (counter < associations)
+        {
+            counter = associations;
+        }
+    }
+}
 
 <table class="table table-responsive table-striped">
     <thead>
@@ -24,60 +35,64 @@
             <th>Savings</th>
             <th>Days with app</th>
             <th>Days with money</th>
-            <th>Associate nr</th>
-            <th>Transactions</th>
-            <th>Debet</th>
-            <th>Transactions sum</th>
+            @for (int i = 0; i < counter; i++)
+            {
+                <th>Associate nr</th>
+                <th>Transactions</th>
+                <th>Debit</th>
+                <th>Transactions sum</th>
+            }
+
         </tr>
         @foreach (var debtor in Model)
         {
-        <tr>
-            <td>
-                @(rowNo += 1)
-            </td>
-            <td>
-                @debtor.Username
-            </td>
-            <td>
-                @debtor.APR
-            </td>
-            <td>
-                @debtor.EAPR
-            </td>
-            <td>
-                @debtor.Trials
-            </td>
-            <td>
-                @debtor.AssociateCounter
-            </td>
-            <td>
-                @debtor.TransactionCounter
-            </td>
-            <td>
-                @debtor.Money PLN
-            </td>
-            <td>
-                @debtor.Days
-            </td>
-            <td>
-                @debtor.DaysWithMoney
-            </td>
-            @foreach (var item in debtor.Associations)
-            {
-            <td>
-                @item.AssociateNr
-            </td>
-            <td>
-                @item.TransactionCounter
-            </td>
-            <td>
-                @item.ActualDebet PLN
-            </td>
-            <td>
-                @item.MoneyInTransactions PLN
-            </td>
-            }
-        </tr>
+            <tr>
+                <td>
+                    @(rowNo += 1)
+                </td>
+                <td>
+                    @debtor.Username
+                </td>
+                <td>
+                    @debtor.APR
+                </td>
+                <td>
+                    @debtor.EAPR
+                </td>
+                <td>
+                    @debtor.Trials
+                </td>
+                <td>
+                    @debtor.AssociateCounter
+                </td>
+                <td>
+                    @debtor.TransactionCounter
+                </td>
+                <td>
+                    @debtor.Money PLN
+                </td>
+                <td>
+                    @debtor.Days
+                </td>
+                <td>
+                    @debtor.DaysWithMoney
+                </td>
+                @foreach (var item in debtor.Associations)
+                {
+                    <td>
+                        @item.AssociateNr
+                    </td>
+                    <td>
+                        @item.TransactionCounter
+                    </td>
+                    <td>
+                        @item.ActualDebet PLN
+                    </td>
+                    <td>
+                        @item.MoneyInTransactions PLN
+                    </td>
+                }
+            </tr>
         }
     </thead>
 </table> 

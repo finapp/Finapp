@@ -33,6 +33,7 @@
           <Property Name="ActualCreditorBenefits" Type="int" />
           <Property Name="AllProfits" Type="int" />
           <Property Name="Profits" Type="int" />
+          <Property Name="ActualMoney" Type="int" />
         </EntityType>
         <EntityType Name="Creditor_Associate">
           <Key>
@@ -62,6 +63,7 @@
           <Property Name="AllSavings" Type="int" />
           <Property Name="Savings" Type="int" />
           <Property Name="HaveMoney" Type="int" />
+          <Property Name="ActualMoney" Type="int" />
         </EntityType>
         <EntityType Name="Debtor_Associate">
           <Key>
@@ -325,6 +327,7 @@
           <Property Name="LastAssociate" Type="Int32" />
           <Property Name="ActualCreditorBenefits" Type="Int32" />
           <Property Name="Profits" Type="Int32" />
+          <Property Name="ActualMoney" Type="Int32" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -347,6 +350,7 @@
           <Property Name="LastAssociate" Type="Int32" />
           <Property Name="Savings" Type="Int32" />
           <Property Name="HaveMoney" Type="Int32" />
+          <Property Name="ActualMoney" Type="Int32" />
         </EntityType>
         <EntityType Name="Transaction_Out">
           <Key>
@@ -552,6 +556,7 @@
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
+                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
                 <ScalarProperty Name="Profits" ColumnName="Profits" />
                 <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
                 <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
@@ -573,6 +578,7 @@
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
                 <ScalarProperty Name="HaveMoney" ColumnName="HaveMoney" />
                 <ScalarProperty Name="Savings" ColumnName="Savings" />
                 <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />

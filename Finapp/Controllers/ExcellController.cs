@@ -1,4 +1,5 @@
 ﻿using Finapp.IServices;
+using Ionic.Zip;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,7 @@ namespace Finapp.Controllers
         public ActionResult Index()
         {
             MemoryStream file = new MemoryStream();
-           
-            //var file = new FileInfo(@"C:\Users\Dev1\Desktop\Transactions.xlsx");
+
             var info = _summaryService.GetAllInformations();
             var credRank = _rankService.GetCreditorsRank();
             var debRank = _rankService.GetDebtorsRank();
@@ -96,7 +96,7 @@ namespace Finapp.Controllers
                 worksheetCred.Cells[3, 9].Value = "Balance";
                 worksheetCred.Cells[3, 10].Value = "Transactions sum";
 
-
+                var counterForAssociations = 0;
                 rowNumber = 4;
                 var count = 7;
                 foreach (var cred in credRank)
@@ -108,8 +108,11 @@ namespace Finapp.Controllers
                     worksheetCred.Cells[rowNumber, 5].Value = cred.AssociateCounter;
                     worksheetCred.Cells[rowNumber, 6].Value = cred.Money;
                     count = 7;
+                    var userAssociationsCounter = 0;
+
                     foreach (var item in cred.Associations)
                     {
+                        userAssociationsCounter++;
                         worksheetCred.Cells[rowNumber, count].Value = item.AssociateNr;
                         count++;
                         worksheetCred.Cells[rowNumber, count].Value = item.TransactionCounter;
@@ -118,16 +121,28 @@ namespace Finapp.Controllers
                         count++;
                         worksheetCred.Cells[rowNumber, count].Value = item.MoneyInTransactions;
                         count++;
+
+                        if (userAssociationsCounter > counterForAssociations)
+                            counterForAssociations = userAssociationsCounter;
                     }
 
                     rowNumber++;
                 }
-                for (int i = 1; i < count*10; i++)
+
+                for (int i = 11; i < 11+counterForAssociations*4-4; i+=4)
+                {
+                    worksheetCred.Cells[3, i].Value = "Associate nr";
+                    worksheetCred.Cells[3, i+1].Value = "Transactions";
+                    worksheetCred.Cells[3, i+2].Value = "Balance";
+                    worksheetCred.Cells[3, i+3].Value = "Transaction sum";
+                }
+
+                for (int i = 1; i < count * 10; i++)
                 {
                     worksheetCred.Column(i).AutoFit();
                 }
 
-         
+
                 ExcelWorksheet worksheetDebt = package.Workbook.Worksheets.Add("Debtor Rank");
                 worksheetDebt.TabColor = Color.Blue;
                 worksheetDebt.DefaultRowHeight = 12;
@@ -146,7 +161,7 @@ namespace Finapp.Controllers
                 worksheetDebt.Cells[3, 11].Value = "Debit";
                 worksheetDebt.Cells[3, 12].Value = "Transactions sum";
 
-
+                counterForAssociations = 0;
                 rowNumber = 4;
                 count = 8;
                 foreach (var cred in debRank)
@@ -159,10 +174,11 @@ namespace Finapp.Controllers
                     worksheetDebt.Cells[rowNumber, 6].Value = cred.Money;
                     worksheetDebt.Cells[rowNumber, 7].Value = cred.Days;
                     worksheetDebt.Cells[rowNumber, 8].Value = cred.DaysWithMoney;
-
+                    var userAssociationsCounter = 0;
                     count = 9;
                     foreach (var item in cred.Associations)
                     {
+                        userAssociationsCounter++;
                         worksheetDebt.Cells[rowNumber, count].Value = item.AssociateNr;
                         count++;
                         worksheetDebt.Cells[rowNumber, count].Value = item.TransactionCounter;
@@ -171,40 +187,38 @@ namespace Finapp.Controllers
                         count++;
                         worksheetDebt.Cells[rowNumber, count].Value = item.MoneyInTransactions;
                         count++;
+
+                        if (userAssociationsCounter > counterForAssociations)
+                            counterForAssociations = userAssociationsCounter;
                     }
 
                     rowNumber++;
+                }
+
+                for (int i = 14; i < 14 + counterForAssociations * 4 - 4; i += 4)
+                {
+                    worksheetCred.Cells[3, i].Value = "Associate nr";
+                    worksheetCred.Cells[3, i + 1].Value = "Transactions";
+                    worksheetCred.Cells[3, i + 2].Value = "Debit";
+                    worksheetCred.Cells[3, i + 3].Value = "Transaction sum";
                 }
                 for (int i = 1; i < count * 10; i++)
                 {
                     worksheetDebt.Column(i).AutoFit();
                 }
 
-                package.Save();
-                
-
-                using (MailMessage mm = new MailMessage("ks.bizparkoferty@gmail.com", "swislocki.kacper@gmail.com"))
+                using (var memoryStream = new MemoryStream())
                 {
-                    mm.Subject = "Statistics";
-                    mm.Attachments.Add(new Attachment(file, "Excel.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.AddHeader("content-disposition", "attachment; filename=Arkusz.xlsx");
+                    package.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
 
-                    mm.IsBodyHtml = true;
-
-                    SmtpClient smtp = new SmtpClient();
-                    NetworkCredential NetworkCred = new NetworkCredential("ks.bizparkoferty@gmail.com", System.Configuration.ConfigurationManager.AppSettings["emailPassword"]);
-
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
-                    smtp.Send(mm);
                 }
 
             }
-
-
 
             return RedirectToAction("Index", "Transaction");
         }

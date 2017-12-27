@@ -9,7 +9,19 @@
     <h2>Investors Rank</h2>
 </div>
 
-@{ int rowNo = 0; }
+@{ int rowNo = 0;
+    int counter = 0;
+    foreach (var item in Model)
+    {
+        var associations = item.AssociateCounter;
+
+        if (counter < associations)
+        {
+            counter = associations;
+        }
+    }
+}
+
 
 <table class="table table-responsive table-striped">
     <thead>
@@ -21,10 +33,13 @@
             <th>Trials</th>
             <th>Associations</th>
             <th>Profits</th>
-            <th>Associate nr</th>
-            <th>Transactions</th>
-            <th>Balance</th>
-            <th>Transactions sum</th>
+            @for (int i = 0; i < counter; i++)
+            {
+                <th>Associate nr</th>
+                <th>Transactions</th>
+                <th>Balance</th>
+                <th>Transactions sum</th>
+            }
         </tr>
         @foreach (var creditor in Model)
         {

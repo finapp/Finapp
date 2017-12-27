@@ -27,7 +27,7 @@ namespace Finapp.Services
         public IEnumerable<RankViewModel> GetCreditorsRank()
         {
             var creditors = (from c in _context.Creditor
-                             select new { c.username, c.AssociateCounter, c.ROI, c.EROI, c.Trials, c.Profits, c.Creditor_Id, c.Balance })
+                             select new { c.username, c.AssociateCounter, c.ROI, c.EROI, c.Trials, c.Profits, c.Creditor_Id, c.Balance, c.ActualMoney })
                              .ToList();
 
             List<RankViewModel> listOfCreditors = new List<RankViewModel>();
@@ -52,7 +52,7 @@ namespace Finapp.Services
                     if (sum > 0)
                         listOfAssociation.Add(new AssociationToRankViewModel
                         {
-                            ActualDebet = creditor.Balance,
+                            ActualDebet = creditor.ActualMoney??0,
                             AssociateNr = associate.Nr ?? 0,
                             MoneyInTransactions = sum,
                             TransactionCounter = transactions.Count,
@@ -82,7 +82,7 @@ namespace Finapp.Services
         public IEnumerable<RankViewModel> GetDebtorsRank()
         {
             var debtors = (from d in _context.Debtor
-                           select new { d.Debtor_Id, d.username, d.AssociateCounter, d.APR, d.EAPR, d.Trials, d.Savings, d.HaveMoney, d.Debet })
+                           select new { d.Debtor_Id, d.username, d.AssociateCounter, d.APR, d.EAPR, d.Trials, d.Savings, d.HaveMoney, d.Debet, d.ActualMoney })
                            .ToList();
 
             var days = (from a in _context.Associate
@@ -112,7 +112,7 @@ namespace Finapp.Services
                     if (sum > 0)
                         listOfAssociation.Add(new AssociationToRankViewModel
                         {
-                            ActualDebet = debtor.Debet,
+                            ActualDebet = debtor.ActualMoney??0,
                             AssociateNr = associate.Nr ?? 0,
                             MoneyInTransactions = sum,
                             TransactionCounter = transactions.Count
