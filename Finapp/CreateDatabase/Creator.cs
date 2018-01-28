@@ -105,7 +105,8 @@ namespace Finapp.CreateDatabase
                 var roi = rand.Next(0, 3);
                 var eroi = rand.Next(4, 8);
                 var droi = eroi - roi;
-                DateTime d = DateTime.Now.AddDays(rand.Next(1, 12) * 7);
+                var accessDays = rand.Next(1, 12) * 7;
+                DateTime d = DateTime.Now.AddDays(accessDays);
                 var days = d.Subtract(DateTime.Now).Days; 
                 var actualBenefits = (int)(balance * ((float)roi / 100)*(float)days/365);
                 var number = i+idCreditor;
@@ -127,7 +128,8 @@ namespace Finapp.CreateDatabase
                     AssociateCounter = 0,
                     LastAssociate = 0,
                     ActualCreditorBenefits = actualBenefits,
-                    Profits = 0
+                    Profits = 0,
+                    AccessDays = accessDays
                 };
 
                 creditorsToCreate.Add(c);
@@ -163,10 +165,12 @@ namespace Finapp.CreateDatabase
                 }
 
                 var dapr = apr - eapr;
-                DateTime d = DateTime.Now.AddDays(rand.Next(15, 50) * 7);
+
+                var accessDays = rand.Next(15, 50) * 7;
+                DateTime d = DateTime.Now.AddDays(accessDays);
 
                 var number = i + idDebtor;
-
+                var days = rand.Next(1, 30);
                 var deb = new Debtor
                 {
                     Debtor_Id = i + idDebtor,
@@ -178,13 +182,14 @@ namespace Finapp.CreateDatabase
                     ActualMoney = debet,
                     Available = true,
                     Finapp_Debet = debet,
-                    Queue_Date = debtorQueueDate.AddDays(rand.Next(1, 30)),
+                    Queue_Date = debtorQueueDate.AddDays(days),
                     Expiration_Date = d,
                     Trials = 0,
                     AssociateCounter = 0,
                     LastAssociate = 0,
                     Savings = 0,
-                    HaveMoney = 0
+                    HaveMoney = 0,
+                    AccessDays = accessDays
                 };
                 debtorsToCreate.Add(deb);
             
