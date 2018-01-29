@@ -88,14 +88,8 @@ namespace Finapp.Implementations
                 debtor.Trials += 1;
 
                 EROIstopWatch.Start();
-                //   var creds = (from c in creditors
-                //                where c.EROI < debtor.EAPR && c.Available
-                //                select c.EROI)
-                //                .ToList();
-                ////   creditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
 
                 creditors = creditors.OrderBy(c => c.Queue_Date);
-                //  creditors = Mapper.Map<IEnumerable<Creditor>>(creditors);
                 IEnumerable<Creditor> creds = creditors.Where(c => c.EROI < debtor.EAPR && c.Available).ToList();
                 var EROI = creds.Max(c => c.EROI);
                 EROIstopWatch.Stop();
@@ -106,7 +100,7 @@ namespace Finapp.Implementations
                     {
                         var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * debtor.Finapp_Debet));
                         var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * debtor.Finapp_Debet));
-                        var days = cred.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                        var days = cred.AccessDays;
                         var realCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)cred.EROI / 100))));
                         var actualCreditorBenefits = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)cred.ROI / 100))));
                         var debtorSavings = ((int)((float)days / 365 * (debtor.Finapp_Debet * ((float)(debtor.APR - debtor.EAPR) / 100))));
@@ -118,7 +112,7 @@ namespace Finapp.Implementations
                             ROI = (float)EROI,
                             Finapp_Debetor = 0,
                             Finapp_Creditor = cred.Finapp_Balance - debtor.Finapp_Debet,
-                            Day_Access_To_Funds = cred.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+                            Day_Access_To_Funds = cred.AccessDays??0,
                             Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
                             Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                             Associate_Id = associate.Associate_Id,
@@ -174,7 +168,7 @@ namespace Finapp.Implementations
                     {
                         var debtorBenefitsPerAnnum = (int)((float)(((debtor.APR - debtor.EAPR) / 100) * cred.Finapp_Balance));
                         var creditorBenefitsPerAnnum = (int)((float)((EROI / 100) * cred.Finapp_Balance));
-                        var days = cred.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                        var days = cred.AccessDays;
                         var realCreditorBenefits = ((int)((float)days / 365 * (cred.Finapp_Balance * ((float)cred.EROI / 100))));
                         var actualCreditorBenefits = ((int)((float)days / 365 * (cred.Finapp_Balance * ((float)cred.ROI / 100))));
                         var debtorSavings = ((int)((float)days / 365 * (cred.Finapp_Balance * ((float)(debtor.APR - debtor.EAPR) / 100))));
@@ -186,7 +180,7 @@ namespace Finapp.Implementations
                             ROI = (float)EROI,
                             Finapp_Debetor = debtor.Finapp_Debet - cred.Finapp_Balance,
                             Finapp_Creditor = 0,
-                            Day_Access_To_Funds = cred.Expiration_Date.Value.Subtract(DateTime.Now).Days,
+                            Day_Access_To_Funds = cred.AccessDays??0,
                             Creditor_Benefits_Per_Annum = creditorBenefitsPerAnnum,
                             Debtor_Benefits_Per_Annum = debtorBenefitsPerAnnum,
                             Associate_Id = associate.Associate_Id,
@@ -397,12 +391,12 @@ namespace Finapp.Implementations
 
         private int CountAllSavings(Creditor creditor, int sum)
         {
-            return (int)(sum * ((float)creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days / 365));
+            return (int)(sum * ((float)creditor.AccessDays / 365));
         }
 
         private int CountAllBalance(Creditor creditor, int sum)
         {
-            return (int)(sum * ((float)creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days) / 365);
+            return (int)(sum * ((float)creditor.AccessDays) / 365);
         }
 
         private IEnumerable<Debtor> AddDebtorsToQueue()
@@ -484,7 +478,7 @@ namespace Finapp.Implementations
                     debtor.HaveMoney++;
                     toUpdate = true;
                 }
-                var accessDays = debtor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                var accessDays = debtor.AccessDays;
                 var transactions = (from t in _context.Transaction_Out
                                     where t.Debtor_Id == debtor.Debtor_Id
                                     select new { t.DebtorSavings, t.AssociateDay, t.Ammount, t.Day_Access_To_Funds })

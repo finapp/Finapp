@@ -41,8 +41,8 @@ namespace Finapp.Services
 
             foreach (var creditor in creditors)
             {
-                var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-                var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)accessDays / 365);
+               // var accessDays = creditor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                var expectedProfits = (int)((float)creditor.Delta_ROI / 100 * creditor.Balance * (float)creditor.AccessDays / 365);
                 string haveTransactions;
 
                 if (creditor.AssociateCounter > 0)
@@ -63,7 +63,7 @@ namespace Finapp.Services
                     FinappBalance = creditor.Finapp_Balance,
                     Expiration_Date = creditor.Expiration_Date ?? DateTime.Now,
                     Queue_Date = creditor.Queue_Date ?? DateTime.Now,
-                    AccessDays = accessDays,
+                    AccessDays = creditor.AccessDays??0,
                     ExpectedProfits = expectedProfits,
                     HaveTransactions = haveTransactions,
                     ActualProfits = creditor.ActualCreditorBenefits??0

@@ -116,6 +116,7 @@ namespace Finapp.Services
         {
             var dbContext = dbFactory.Invoke();
             var counter = 1;
+            _context.Dispose();
             try
             {
                 foreach (var item in debtors)
@@ -135,6 +136,7 @@ namespace Finapp.Services
                     }
                 }
                 dbContext.SaveChanges();
+                _context = new FinapEntities1();
             }
             catch (Exception e)
             {

@@ -37,8 +37,8 @@ namespace Finapp.Services
 
             foreach (var debtor in debtors)
             {
-                var accessDays = debtor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
-                var expectedSavings = (int)(((float)debtor.Delta_APR / 100) * debtor.Debet * (float)accessDays/365);
+                //var accessDays = debtor.Expiration_Date.Value.Subtract(DateTime.Now).Days;
+                var expectedSavings = (int)(((float)debtor.Delta_APR / 100) * debtor.Debet * (float)debtor.AccessDays/365);
                 string haveTransactions;
 
                 if (debtor.AssociateCounter > 0)
@@ -59,7 +59,7 @@ namespace Finapp.Services
                     FinappDebet = debtor.Finapp_Debet,
                     Expiration_Date = debtor.Expiration_Date ?? DateTime.Now,
                     Queue_Date = debtor.Queue_Date ?? DateTime.Now,
-                    AccessDays = accessDays,
+                    AccessDays = debtor.AccessDays??0,
                     ExpectedSavings = expectedSavings,
                     HaveTransactions = haveTransactions
                 });
