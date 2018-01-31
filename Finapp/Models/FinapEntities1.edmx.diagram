@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1723372281a44b8490c040b14c2a237e" Name="Diagram1">
+        <EntityTypeShape EntityType="FinapModel.Associate" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinapModel.Creditor" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinapModel.Debtor" Width="1.5" PointX="3.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinapModel.Summary" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinapModel.Times" Width="1.5" PointX="8.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinapModel.Transaction_Out" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <AssociationConnector ManuallyRouted="false" Association="FinapModel.fkAssociate" />
+        <AssociationConnector Association="FinapModel.fkAssociateTr" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.2812475" PointY="10.67462244550387" />
+          <ConnectorPoint PointX="1.2812475" PointY="12.355481880108515" />
+          <ConnectorPoint PointX="1.7135429166666667" PointY="12.355481880108515" />
+          <ConnectorPoint PointX="1.8802095833333332" PointY="12.355481880108515" />
+          <ConnectorPoint PointX="4.442811675" PointY="12.355481880108515" />
+          <ConnectorPoint PointX="4.442811675" PointY="11.797669380108514" />
+          <ConnectorPoint PointX="6" PointY="11.797669380108514" />
+        </AssociationConnector>
+        <AssociationConnector Association="FinapModel.fkCreditor" ManuallyRouted="false" />
+        <AssociationConnector Association="FinapModel.fkDebtor" ManuallyRouted="false" />
+        <AssociationConnector Association="FinapModel.DebtorAssociate" />
+        <AssociationConnector Association="FinapModel.CreditorAssociate" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

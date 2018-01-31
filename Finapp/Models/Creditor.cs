@@ -17,8 +17,8 @@ namespace Finapp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Creditor()
         {
+            this.Transaction_Out = new HashSet<Transaction_Out>();
             this.Associate = new HashSet<Associate>();
-            this.Transaction_Out1 = new HashSet<Transaction_Out>();
         }
     
         public int Creditor_Id { get; set; }
@@ -29,19 +29,20 @@ namespace Finapp.Models
         public bool Available { get; set; }
         public int Finapp_Balance { get; set; }
         public Nullable<System.DateTime> Queue_Date { get; set; }
-        public Nullable<System.DateTime> Expiration_Date { get; set; }
-        public Nullable<float> Delta_ROI { get; set; }
+        public Nullable<double> Delta_ROI { get; set; }
         public Nullable<int> Trials { get; set; }
         public Nullable<int> AssociateCounter { get; set; }
         public Nullable<int> LastAssociate { get; set; }
         public Nullable<int> ActualCreditorBenefits { get; set; }
+        public Nullable<int> AllProfits { get; set; }
         public Nullable<int> Profits { get; set; }
         public Nullable<int> ActualMoney { get; set; }
         public Nullable<int> AccessDays { get; set; }
+        public Nullable<System.DateTime> Expiration_Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Associate> Associate { get; set; }
+        public virtual ICollection<Transaction_Out> Transaction_Out { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction_Out> Transaction_Out1 { get; set; }
+        public virtual ICollection<Associate> Associate { get; set; }
     }
 }

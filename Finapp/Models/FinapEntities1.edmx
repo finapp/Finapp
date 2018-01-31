@@ -25,7 +25,6 @@
           <Property Name="Available" Type="bit" Nullable="false" />
           <Property Name="Finapp_Balance" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="datetime" />
-          <Property Name="Expiration_Date" Type="date" />
           <Property Name="Delta_ROI" Type="float" />
           <Property Name="Trials" Type="int" />
           <Property Name="AssociateCounter" Type="int" />
@@ -35,8 +34,9 @@
           <Property Name="Profits" Type="int" />
           <Property Name="ActualMoney" Type="int" />
           <Property Name="AccessDays" Type="int" />
+          <Property Name="Expiration_Date" Type="datetime" />
         </EntityType>
-        <EntityType Name="Creditor_Associate">
+        <EntityType Name="CreditorAssociate">
           <Key>
             <PropertyRef Name="Associate_Id" />
             <PropertyRef Name="Creditor_Id" />
@@ -57,7 +57,7 @@
           <Property Name="Finapp_Debet" Type="int" Nullable="false" />
           <Property Name="Queue_Date" Type="date" />
           <Property Name="Expiration_Date" Type="date" />
-          <Property Name="Delta_APR" Type="real" Nullable="false" />
+          <Property Name="Delta_APR" Type="real" />
           <Property Name="Trials" Type="int" />
           <Property Name="AssociateCounter" Type="int" />
           <Property Name="LastAssociate" Type="int" />
@@ -67,7 +67,7 @@
           <Property Name="ActualMoney" Type="int" />
           <Property Name="AccessDays" Type="int" />
         </EntityType>
-        <EntityType Name="Debtor_Associate">
+        <EntityType Name="DebtorAssociate">
           <Key>
             <PropertyRef Name="Associate_Id" />
             <PropertyRef Name="Debtor_Id" />
@@ -84,7 +84,6 @@
           <Property Name="Debet_Average" Type="int" />
           <Property Name="Balance_Average" Type="int" />
           <Property Name="Savings_Average" Type="int" />
-          <Property Name="Profits_Average" Type="int" />
           <Property Name="Savings_Average_Percentage" Type="int" />
           <Property Name="Profits_Average_Percentage" Type="int" />
           <Property Name="Profits_Sum" Type="int" />
@@ -96,16 +95,7 @@
           <Property Name="Days" Type="int" />
           <Property Name="DateOfSummary" Type="date" />
           <Property Name="Turnover" Type="int" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="Profits_Average" Type="int" />
         </EntityType>
         <EntityType Name="Times">
           <Key>
@@ -149,43 +139,55 @@
           <Property Name="DebtorSavings" Type="int" />
           <Property Name="AssociateDay" Type="int" />
         </EntityType>
-        <Association Name="aaa">
+        <Association Name="fK_Person22">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
-          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <End Role="DebtorAssociate" Type="Self.DebtorAssociate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Associate">
               <PropertyRef Name="Associate_Id" />
             </Principal>
-            <Dependent Role="Transaction_Out">
+            <Dependent Role="DebtorAssociate">
               <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="cc">
+        <Association Name="fK_Person322">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="DebtorAssociate" Type="Self.DebtorAssociate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="DebtorAssociate">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fK_Person3222">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
-          <End Role="Creditor_Associate" Type="Self.Creditor_Associate" Multiplicity="*" />
+          <End Role="CreditorAssociate" Type="Self.CreditorAssociate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Associate">
               <PropertyRef Name="Associate_Id" />
             </Principal>
-            <Dependent Role="Creditor_Associate">
+            <Dependent Role="CreditorAssociate">
               <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ccs">
+        <Association Name="fK_Person3232">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
-          <End Role="Creditor_Associate" Type="Self.Creditor_Associate" Multiplicity="*" />
+          <End Role="CreditorAssociate" Type="Self.CreditorAssociate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Creditor">
               <PropertyRef Name="Creditor_Id" />
             </Principal>
-            <Dependent Role="Creditor_Associate">
+            <Dependent Role="CreditorAssociate">
               <PropertyRef Name="Creditor_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk01">
+        <Association Name="fkAssociate">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
           <End Role="Summary" Type="Self.Summary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,43 +199,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkqqq">
-          <End Role="Creditor" Type="Self.Creditor" Multiplicity="1" />
-          <End Role="Creditor1" Type="Self.Creditor" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Creditor">
-              <PropertyRef Name="Creditor_Id" />
-            </Principal>
-            <Dependent Role="Creditor1">
-              <PropertyRef Name="Creditor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ggg">
+        <Association Name="fkAssociateTr">
           <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
-          <End Role="Debtor_Associate" Type="Self.Debtor_Associate" Multiplicity="*" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Associate">
               <PropertyRef Name="Associate_Id" />
             </Principal>
-            <Dependent Role="Debtor_Associate">
+            <Dependent Role="Transaction_Out">
               <PropertyRef Name="Associate_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="lkldk">
-          <End Role="Debtor" Type="Self.Debtor" Multiplicity="0..1" />
-          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Debtor">
-              <PropertyRef Name="Debtor_Id" />
-            </Principal>
-            <Dependent Role="Transaction_Out">
-              <PropertyRef Name="Debtor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lklk">
+        <Association Name="fkCreditor">
           <End Role="Creditor" Type="Self.Creditor" Multiplicity="0..1" />
           <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,14 +223,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="sddsd">
-          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
-          <End Role="Debtor_Associate" Type="Self.Debtor_Associate" Multiplicity="*" />
+        <Association Name="fkDebtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="0..1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Debtor">
               <PropertyRef Name="Debtor_Id" />
             </Principal>
-            <Dependent Role="Debtor_Associate">
+            <Dependent Role="Transaction_Out">
               <PropertyRef Name="Debtor_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -260,54 +238,61 @@
         <EntityContainer Name="FinapModelStoreContainer">
           <EntitySet Name="Associate" EntityType="Self.Associate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Creditor" EntityType="Self.Creditor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Creditor_Associate" EntityType="Self.Creditor_Associate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditorAssociate" EntityType="Self.CreditorAssociate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Debtor_Associate" EntityType="Self.Debtor_Associate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtorAssociate" EntityType="Self.DebtorAssociate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Summary" EntityType="Self.Summary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Times" EntityType="Self.Times" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="aaa" Association="Self.aaa">
+          <AssociationSet Name="fK_Person22" Association="Self.fK_Person22">
             <End Role="Associate" EntitySet="Associate" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+            <End Role="DebtorAssociate" EntitySet="DebtorAssociate" />
           </AssociationSet>
-          <AssociationSet Name="cc" Association="Self.cc">
+          <AssociationSet Name="fK_Person322" Association="Self.fK_Person322">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="DebtorAssociate" EntitySet="DebtorAssociate" />
+          </AssociationSet>
+          <AssociationSet Name="fK_Person3222" Association="Self.fK_Person3222">
             <End Role="Associate" EntitySet="Associate" />
-            <End Role="Creditor_Associate" EntitySet="Creditor_Associate" />
+            <End Role="CreditorAssociate" EntitySet="CreditorAssociate" />
           </AssociationSet>
-          <AssociationSet Name="ccs" Association="Self.ccs">
+          <AssociationSet Name="fK_Person3232" Association="Self.fK_Person3232">
             <End Role="Creditor" EntitySet="Creditor" />
-            <End Role="Creditor_Associate" EntitySet="Creditor_Associate" />
+            <End Role="CreditorAssociate" EntitySet="CreditorAssociate" />
           </AssociationSet>
-          <AssociationSet Name="fk01" Association="Self.fk01">
+          <AssociationSet Name="fkAssociate" Association="Self.fkAssociate">
             <End Role="Associate" EntitySet="Associate" />
             <End Role="Summary" EntitySet="Summary" />
           </AssociationSet>
-          <AssociationSet Name="fkqqq" Association="Self.fkqqq">
-            <End Role="Creditor" EntitySet="Creditor" />
-            <End Role="Creditor1" EntitySet="Creditor" />
-          </AssociationSet>
-          <AssociationSet Name="ggg" Association="Self.ggg">
+          <AssociationSet Name="fkAssociateTr" Association="Self.fkAssociateTr">
             <End Role="Associate" EntitySet="Associate" />
-            <End Role="Debtor_Associate" EntitySet="Debtor_Associate" />
-          </AssociationSet>
-          <AssociationSet Name="lkldk" Association="Self.lkldk">
-            <End Role="Debtor" EntitySet="Debtor" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
-          <AssociationSet Name="lklk" Association="Self.lklk">
+          <AssociationSet Name="fkCreditor" Association="Self.fkCreditor">
             <End Role="Creditor" EntitySet="Creditor" />
             <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
-          <AssociationSet Name="sddsd" Association="Self.sddsd">
+          <AssociationSet Name="fkDebtor" Association="Self.fkDebtor">
             <End Role="Debtor" EntitySet="Debtor" />
-            <End Role="Debtor_Associate" EntitySet="Debtor_Associate" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FinapModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Associate">
+          <Key>
+            <PropertyRef Name="Associate_Id" />
+          </Key>
+          <Property Name="Associate_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_Of_Associating" Type="DateTime" Precision="0" />
+          <Property Name="Nr" Type="Int32" />
+          <NavigationProperty Name="Summary" Relationship="Self.fkAssociate" FromRole="Associate" ToRole="Summary" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.fkAssociateTr" FromRole="Associate" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Debtor" Relationship="FinapModel.DebtorAssociate" FromRole="Associate" ToRole="Debtor" />
+          <NavigationProperty Name="Creditor" Relationship="FinapModel.CreditorAssociate" FromRole="Associate" ToRole="Creditor" />
+        </EntityType>
         <EntityType Name="Creditor">
           <Key>
             <PropertyRef Name="Creditor_Id" />
@@ -320,17 +305,18 @@
           <Property Name="Available" Type="Boolean" Nullable="false" />
           <Property Name="Finapp_Balance" Type="Int32" Nullable="false" />
           <Property Name="Queue_Date" Type="DateTime" Precision="3" />
-          <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
-          <Property Name="Delta_ROI" Type="Single" />
-          <NavigationProperty Name="Associate" Relationship="FinapModel.Creditor_Associate" FromRole="Creditor" ToRole="Associate" />
-          <NavigationProperty Name="Transaction_Out1" Relationship="FinapModel.lklk" FromRole="Creditor" ToRole="Transaction_Out" />
+          <Property Name="Delta_ROI" Type="Double" />
           <Property Name="Trials" Type="Int32" />
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />
           <Property Name="ActualCreditorBenefits" Type="Int32" />
+          <Property Name="AllProfits" Type="Int32" />
           <Property Name="Profits" Type="Int32" />
           <Property Name="ActualMoney" Type="Int32" />
           <Property Name="AccessDays" Type="Int32" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.fkCreditor" FromRole="Creditor" ToRole="Transaction_Out" />
+          <Property Name="Expiration_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Associate" Relationship="FinapModel.CreditorAssociate" FromRole="Creditor" ToRole="Associate" />
         </EntityType>
         <EntityType Name="Debtor">
           <Key>
@@ -345,104 +331,18 @@
           <Property Name="Finapp_Debet" Type="Int32" Nullable="false" />
           <Property Name="Queue_Date" Type="DateTime" Precision="0" />
           <Property Name="Expiration_Date" Type="DateTime" Precision="0" />
-          <Property Name="Delta_APR" Type="Single" Nullable="false" />
-          <NavigationProperty Name="Associate" Relationship="FinapModel.Debtor_Associate" FromRole="Debtor" ToRole="Associate" />
-          <NavigationProperty Name="Transaction_Out1" Relationship="FinapModel.lkldk" FromRole="Debtor" ToRole="Transaction_Out" />
+          <Property Name="Delta_APR" Type="Single" />
           <Property Name="Trials" Type="Int32" />
           <Property Name="AssociateCounter" Type="Int32" />
           <Property Name="LastAssociate" Type="Int32" />
+          <Property Name="AllSavings" Type="Int32" />
           <Property Name="Savings" Type="Int32" />
           <Property Name="HaveMoney" Type="Int32" />
           <Property Name="ActualMoney" Type="Int32" />
           <Property Name="AccessDays" Type="Int32" />
+          <NavigationProperty Name="Transaction_Out" Relationship="Self.fkDebtor" FromRole="Debtor" ToRole="Transaction_Out" />
+          <NavigationProperty Name="Associate" Relationship="FinapModel.DebtorAssociate" FromRole="Debtor" ToRole="Associate" />
         </EntityType>
-        <EntityType Name="Transaction_Out">
-          <Key>
-            <PropertyRef Name="Transaction_Out_Id" />
-          </Key>
-          <Property Name="Transaction_Out_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ammount" Type="Int32" Nullable="false" />
-          <Property Name="Date_Of_Transaction" Type="DateTime" Precision="0" />
-          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
-          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
-          <Property Name="ROI" Type="Single" />
-          <Property Name="Finapp_Debetor" Type="Int32" />
-          <Property Name="Finapp_Creditor" Type="Int32" />
-          <Property Name="Day_Access_To_Funds" Type="Int32" Nullable="false" />
-          <Property Name="Creditor_Benefits_Per_Annum" Type="Int32" />
-          <Property Name="Debtor_Benefits_Per_Annum" Type="Int32" />
-          <Property Name="Associate_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Associate" Relationship="FinapModel.aaa" FromRole="Transaction_Out" ToRole="Associate" />
-          <Property Name="Creditor_Id" Type="Int32" />
-          <Property Name="Debtor_Id" Type="Int32" />
-          <NavigationProperty Name="Creditor1" Relationship="FinapModel.lklk" FromRole="Transaction_Out" ToRole="Creditor" />
-          <NavigationProperty Name="Debtor1" Relationship="FinapModel.lkldk" FromRole="Transaction_Out" ToRole="Debtor" />
-          <Property Name="ActualCreditorBenefits" Type="Int32" />
-          <Property Name="CreditorBenefits" Type="Int32" />
-          <Property Name="DebtorSavings" Type="Int32" />
-          <Property Name="AssociateDay" Type="Int32" />
-        </EntityType>
-        <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Creditor" EntityType="Self.Creditor" />
-          <EntitySet Name="Debtor" EntityType="Self.Debtor" />
-          <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" />
-          <EntitySet Name="Associate" EntityType="FinapModel.Associate" />
-          <AssociationSet Name="aaa" Association="FinapModel.aaa">
-            <End Role="Associate" EntitySet="Associate" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
-          </AssociationSet>
-          <EntitySet Name="Summary" EntityType="FinapModel.Summary" />
-          <AssociationSet Name="fk01" Association="FinapModel.fk01">
-            <End Role="Associate" EntitySet="Associate" />
-            <End Role="Summary" EntitySet="Summary" />
-          </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="FinapModel.sysdiagrams" />
-          <AssociationSet Name="Creditor_Associate" Association="FinapModel.Creditor_Associate">
-            <End Role="Associate" EntitySet="Associate" />
-            <End Role="Creditor" EntitySet="Creditor" />
-          </AssociationSet>
-          <AssociationSet Name="Debtor_Associate" Association="FinapModel.Debtor_Associate">
-            <End Role="Associate" EntitySet="Associate" />
-            <End Role="Debtor" EntitySet="Debtor" />
-          </AssociationSet>
-          <AssociationSet Name="lklk" Association="FinapModel.lklk">
-            <End Role="Creditor" EntitySet="Creditor" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
-          </AssociationSet>
-          <AssociationSet Name="lkldk" Association="FinapModel.lkldk">
-            <End Role="Debtor" EntitySet="Debtor" />
-            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
-          </AssociationSet>
-          <AssociationSet Name="fkqqq" Association="FinapModel.fkqqq">
-            <End Role="Creditor" EntitySet="Creditor" />
-            <End Role="Creditor1" EntitySet="Creditor" />
-          </AssociationSet>
-          <EntitySet Name="Times" EntityType="FinapModel.Times" />
-        </EntityContainer>
-        <EntityType Name="Associate">
-          <Key>
-            <PropertyRef Name="Associate_Id" />
-          </Key>
-          <Property Name="Associate_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Transaction_Out" Relationship="FinapModel.aaa" FromRole="Associate" ToRole="Transaction_Out" />
-          <Property Name="Date_Of_Associating" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Summary" Relationship="FinapModel.fk01" FromRole="Associate" ToRole="Summary" />
-          <NavigationProperty Name="Creditor" Relationship="FinapModel.Creditor_Associate" FromRole="Associate" ToRole="Creditor" />
-          <NavigationProperty Name="Debtor" Relationship="FinapModel.Debtor_Associate" FromRole="Associate" ToRole="Debtor" />
-          <Property Name="Nr" Type="Int32" />
-        </EntityType>
-        <Association Name="aaa">
-          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
-          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Associate">
-              <PropertyRef Name="Associate_Id" />
-            </Principal>
-            <Dependent Role="Transaction_Out">
-              <PropertyRef Name="Associate_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Summary">
           <Key>
             <PropertyRef Name="Summary_Id" />
@@ -452,86 +352,20 @@
           <Property Name="Debet_Average" Type="Int32" />
           <Property Name="Balance_Average" Type="Int32" />
           <Property Name="Savings_Average" Type="Int32" />
-          <Property Name="Profits_Average" Type="Int32" />
           <Property Name="Savings_Average_Percentage" Type="Int32" />
           <Property Name="Profits_Average_Percentage" Type="Int32" />
           <Property Name="Profits_Sum" Type="Int32" />
           <Property Name="Savings_Sum" Type="Int32" />
           <Property Name="Balance_Sum" Type="Int32" />
           <Property Name="Debet_Sum" Type="Int32" />
-          <NavigationProperty Name="Associate" Relationship="FinapModel.fk01" FromRole="Summary" ToRole="Associate" />
           <Property Name="Debtors" Type="Int32" />
           <Property Name="Creditors" Type="Int32" />
           <Property Name="Days" Type="Int32" />
           <Property Name="DateOfSummary" Type="DateTime" Precision="0" />
           <Property Name="Turnover" Type="Int32" />
+          <NavigationProperty Name="Associate" Relationship="Self.fkAssociate" FromRole="Summary" ToRole="Associate" />
+          <Property Name="Profits_Average" Type="Int32" />
         </EntityType>
-        <Association Name="fk01">
-          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="1" />
-          <End Type="FinapModel.Summary" Role="Summary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Associate">
-              <PropertyRef Name="Associate_Id" />
-            </Principal>
-            <Dependent Role="Summary">
-              <PropertyRef Name="Associate_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="Creditor_Associate">
-          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
-          <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="*" />
-        </Association>
-        <Association Name="Debtor_Associate">
-          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
-          <End Type="FinapModel.Debtor" Role="Debtor" Multiplicity="*" />
-        </Association>
-        <Association Name="lklk">
-          <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="0..1" />
-          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Creditor">
-              <PropertyRef Name="Creditor_Id" />
-            </Principal>
-            <Dependent Role="Transaction_Out">
-              <PropertyRef Name="Creditor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="lkldk">
-          <End Type="FinapModel.Debtor" Role="Debtor" Multiplicity="0..1" />
-          <End Type="FinapModel.Transaction_Out" Role="Transaction_Out" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Debtor">
-              <PropertyRef Name="Debtor_Id" />
-            </Principal>
-            <Dependent Role="Transaction_Out">
-              <PropertyRef Name="Debtor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkqqq">
-          <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="1" />
-          <End Type="FinapModel.Creditor" Role="Creditor1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Creditor">
-              <PropertyRef Name="Creditor_Id" />
-            </Principal>
-            <Dependent Role="Creditor1">
-              <PropertyRef Name="Creditor_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Times">
           <Key>
             <PropertyRef Name="Id" />
@@ -551,23 +385,138 @@
           <Property Name="AllCreditors" Type="Int32" />
           <Property Name="SetROI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Transaction_Out">
+          <Key>
+            <PropertyRef Name="Transaction_Out_Id" />
+          </Key>
+          <Property Name="Transaction_Out_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ammount" Type="Int32" Nullable="false" />
+          <Property Name="Date_Of_Transaction" Type="DateTime" Precision="0" />
+          <Property Name="Creditor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="Debtor_Account_Id" Type="Int32" Nullable="false" />
+          <Property Name="ROI" Type="Single" />
+          <Property Name="Finapp_Debetor" Type="Int32" />
+          <Property Name="Finapp_Creditor" Type="Int32" />
+          <Property Name="Day_Access_To_Funds" Type="Int32" Nullable="false" />
+          <Property Name="Creditor_Benefits_Per_Annum" Type="Int32" />
+          <Property Name="Debtor_Benefits_Per_Annum" Type="Int32" />
+          <Property Name="Associate_Id" Type="Int32" Nullable="false" />
+          <Property Name="Creditor_Id" Type="Int32" />
+          <Property Name="Debtor_Id" Type="Int32" />
+          <Property Name="ActualCreditorBenefits" Type="Int32" />
+          <Property Name="CreditorBenefits" Type="Int32" />
+          <Property Name="DebtorSavings" Type="Int32" />
+          <Property Name="AssociateDay" Type="Int32" />
+          <NavigationProperty Name="Associate" Relationship="Self.fkAssociateTr" FromRole="Transaction_Out" ToRole="Associate" />
+          <NavigationProperty Name="Creditor" Relationship="Self.fkCreditor" FromRole="Transaction_Out" ToRole="Creditor" />
+          <NavigationProperty Name="Debtor" Relationship="Self.fkDebtor" FromRole="Transaction_Out" ToRole="Debtor" />
+        </EntityType>
+        <Association Name="fkAssociate">
+          <End Type="Self.Associate" Multiplicity="1" Role="Associate" />
+          <End Type="Self.Summary" Multiplicity="*" Role="Summary" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Summary">
+              <PropertyRef Name="Associate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkAssociateTr">
+          <End Role="Associate" Type="Self.Associate" Multiplicity="1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Associate">
+              <PropertyRef Name="Associate_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Associate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkCreditor">
+          <End Role="Creditor" Type="Self.Creditor" Multiplicity="0..1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Creditor">
+              <PropertyRef Name="Creditor_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Creditor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkDebtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="0..1" />
+          <End Role="Transaction_Out" Type="Self.Transaction_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="Debtor_Id" />
+            </Principal>
+            <Dependent Role="Transaction_Out">
+              <PropertyRef Name="Debtor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinapEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Associate" EntityType="Self.Associate" />
+          <EntitySet Name="Creditor" EntityType="Self.Creditor" />
+          <EntitySet Name="Debtor" EntityType="Self.Debtor" />
+          <EntitySet Name="Summary" EntityType="Self.Summary" />
+          <EntitySet Name="Times" EntityType="Self.Times" />
+          <EntitySet Name="Transaction_Out" EntityType="Self.Transaction_Out" />
+          <AssociationSet Name="fkAssociate" Association="Self.fkAssociate">
+            <End EntitySet="Associate" Role="Associate" />
+            <End EntitySet="Summary" Role="Summary" />
+          </AssociationSet>
+          <AssociationSet Name="fkAssociateTr" Association="Self.fkAssociateTr">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="fkCreditor" Association="Self.fkCreditor">
+            <End Role="Creditor" EntitySet="Creditor" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="fkDebtor" Association="Self.fkDebtor">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="Transaction_Out" EntitySet="Transaction_Out" />
+          </AssociationSet>
+          <AssociationSet Name="DebtorAssociate" Association="FinapModel.DebtorAssociate">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Debtor" EntitySet="Debtor" />
+          </AssociationSet>
+          <AssociationSet Name="CreditorAssociate" Association="FinapModel.CreditorAssociate">
+            <End Role="Associate" EntitySet="Associate" />
+            <End Role="Creditor" EntitySet="Creditor" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="DebtorAssociate">
+          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
+          <End Type="FinapModel.Debtor" Role="Debtor" Multiplicity="*" />
+        </Association>
+        <Association Name="CreditorAssociate">
+          <End Type="FinapModel.Associate" Role="Associate" Multiplicity="*" />
+          <End Type="FinapModel.Creditor" Role="Creditor" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FinapModelStoreContainer" CdmEntityContainer="FinapEntities1">
+          <EntitySetMapping Name="Associate">
+            <EntityTypeMapping TypeName="FinapModel.Associate">
+              <MappingFragment StoreEntitySet="Associate">
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+                <ScalarProperty Name="Date_Of_Associating" ColumnName="Date_Of_Associating" />
+                <ScalarProperty Name="Nr" ColumnName="Nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Creditor">
             <EntityTypeMapping TypeName="FinapModel.Creditor">
               <MappingFragment StoreEntitySet="Creditor">
-                <ScalarProperty Name="AccessDays" ColumnName="AccessDays" />
-                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
-                <ScalarProperty Name="Profits" ColumnName="Profits" />
-                <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
-                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
-                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
-                <ScalarProperty Name="Trials" ColumnName="Trials" />
-                <ScalarProperty Name="Delta_ROI" ColumnName="Delta_ROI" />
                 <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -577,21 +526,21 @@
                 <ScalarProperty Name="Available" ColumnName="Available" />
                 <ScalarProperty Name="Finapp_Balance" ColumnName="Finapp_Balance" />
                 <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
+                <ScalarProperty Name="Delta_ROI" ColumnName="Delta_ROI" />
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
+                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
+                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
+                <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
+                <ScalarProperty Name="AllProfits" ColumnName="AllProfits" />
+                <ScalarProperty Name="Profits" ColumnName="Profits" />
+                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
+                <ScalarProperty Name="AccessDays" ColumnName="AccessDays" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Debtor">
             <EntityTypeMapping TypeName="FinapModel.Debtor">
               <MappingFragment StoreEntitySet="Debtor">
-                <ScalarProperty Name="AccessDays" ColumnName="AccessDays" />
-                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
-                <ScalarProperty Name="HaveMoney" ColumnName="HaveMoney" />
-                <ScalarProperty Name="Savings" ColumnName="Savings" />
-                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
-                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
-                <ScalarProperty Name="Trials" ColumnName="Trials" />
-                <ScalarProperty Name="Delta_APR" ColumnName="Delta_APR" />
-                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
                 <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="APR" ColumnName="APR" />
@@ -600,85 +549,87 @@
                 <ScalarProperty Name="Debet" ColumnName="Debet" />
                 <ScalarProperty Name="Finapp_Debet" ColumnName="Finapp_Debet" />
                 <ScalarProperty Name="Queue_Date" ColumnName="Queue_Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Transaction_Out">
-            <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
-              <MappingFragment StoreEntitySet="Transaction_Out">
-                <ScalarProperty Name="AssociateDay" ColumnName="AssociateDay" />
-                <ScalarProperty Name="DebtorSavings" ColumnName="DebtorSavings" />
-                <ScalarProperty Name="CreditorBenefits" ColumnName="CreditorBenefits" />
-                <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
-                <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
-                <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
-                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
-                <ScalarProperty Name="Debtor_Benefits_Per_Annum" ColumnName="Debtor_Benefits_Per_Annum" />
-                <ScalarProperty Name="Creditor_Benefits_Per_Annum" ColumnName="Creditor_Benefits_Per_Annum" />
-                <ScalarProperty Name="Day_Access_To_Funds" ColumnName="Day_Access_To_Funds" />
-                <ScalarProperty Name="Finapp_Creditor" ColumnName="Finapp_Creditor" />
-                <ScalarProperty Name="Finapp_Debetor" ColumnName="Finapp_Debetor" />
-                <ScalarProperty Name="ROI" ColumnName="ROI" />
-                <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
-                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
-                <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />
-                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
-                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Associate">
-            <EntityTypeMapping TypeName="FinapModel.Associate">
-              <MappingFragment StoreEntitySet="Associate">
-                <ScalarProperty Name="Nr" ColumnName="Nr" />
-                <ScalarProperty Name="Date_Of_Associating" ColumnName="Date_Of_Associating" />
-                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+                <ScalarProperty Name="Delta_APR" ColumnName="Delta_APR" />
+                <ScalarProperty Name="Trials" ColumnName="Trials" />
+                <ScalarProperty Name="AssociateCounter" ColumnName="AssociateCounter" />
+                <ScalarProperty Name="LastAssociate" ColumnName="LastAssociate" />
+                <ScalarProperty Name="AllSavings" ColumnName="AllSavings" />
+                <ScalarProperty Name="Savings" ColumnName="Savings" />
+                <ScalarProperty Name="HaveMoney" ColumnName="HaveMoney" />
+                <ScalarProperty Name="ActualMoney" ColumnName="ActualMoney" />
+                <ScalarProperty Name="AccessDays" ColumnName="AccessDays" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Summary">
             <EntityTypeMapping TypeName="FinapModel.Summary">
               <MappingFragment StoreEntitySet="Summary">
-                <ScalarProperty Name="Turnover" ColumnName="Turnover" />
-                <ScalarProperty Name="DateOfSummary" ColumnName="DateOfSummary" />
-                <ScalarProperty Name="Days" ColumnName="Days" />
-                <ScalarProperty Name="Creditors" ColumnName="Creditors" />
-                <ScalarProperty Name="Debtors" ColumnName="Debtors" />
-                <ScalarProperty Name="Debet_Sum" ColumnName="Debet_Sum" />
-                <ScalarProperty Name="Balance_Sum" ColumnName="Balance_Sum" />
-                <ScalarProperty Name="Savings_Sum" ColumnName="Savings_Sum" />
-                <ScalarProperty Name="Profits_Sum" ColumnName="Profits_Sum" />
-                <ScalarProperty Name="Profits_Average_Percentage" ColumnName="Profits_Average_Percentage" />
-                <ScalarProperty Name="Savings_Average_Percentage" ColumnName="Savings_Average_Percentage" />
                 <ScalarProperty Name="Profits_Average" ColumnName="Profits_Average" />
-                <ScalarProperty Name="Savings_Average" ColumnName="Savings_Average" />
-                <ScalarProperty Name="Balance_Average" ColumnName="Balance_Average" />
-                <ScalarProperty Name="Debet_Average" ColumnName="Debet_Average" />
-                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
                 <ScalarProperty Name="Summary_Id" ColumnName="Summary_Id" />
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+                <ScalarProperty Name="Debet_Average" ColumnName="Debet_Average" />
+                <ScalarProperty Name="Balance_Average" ColumnName="Balance_Average" />
+                <ScalarProperty Name="Savings_Average" ColumnName="Savings_Average" />
+                <ScalarProperty Name="Savings_Average_Percentage" ColumnName="Savings_Average_Percentage" />
+                <ScalarProperty Name="Profits_Average_Percentage" ColumnName="Profits_Average_Percentage" />
+                <ScalarProperty Name="Profits_Sum" ColumnName="Profits_Sum" />
+                <ScalarProperty Name="Savings_Sum" ColumnName="Savings_Sum" />
+                <ScalarProperty Name="Balance_Sum" ColumnName="Balance_Sum" />
+                <ScalarProperty Name="Debet_Sum" ColumnName="Debet_Sum" />
+                <ScalarProperty Name="Debtors" ColumnName="Debtors" />
+                <ScalarProperty Name="Creditors" ColumnName="Creditors" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="DateOfSummary" ColumnName="DateOfSummary" />
+                <ScalarProperty Name="Turnover" ColumnName="Turnover" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="FinapModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="Times">
+            <EntityTypeMapping TypeName="FinapModel.Times">
+              <MappingFragment StoreEntitySet="Times">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GetCreditorsTime" ColumnName="GetCreditorsTime" />
+                <ScalarProperty Name="GetDebtorsTime" ColumnName="GetDebtorsTime" />
+                <ScalarProperty Name="AssociateTime" ColumnName="AssociateTime" />
+                <ScalarProperty Name="UpdateDebtorsTime" ColumnName="UpdateDebtorsTime" />
+                <ScalarProperty Name="UpdateCreditorsTime" ColumnName="UpdateCreditorsTime" />
+                <ScalarProperty Name="UpdateTransactionsTime" ColumnName="UpdateTransactionsTime" />
+                <ScalarProperty Name="CountOfCreditors" ColumnName="CountOfCreditors" />
+                <ScalarProperty Name="CountOfDebtors" ColumnName="CountOfDebtors" />
+                <ScalarProperty Name="CountOfTransactions" ColumnName="CountOfTransactions" />
+                <ScalarProperty Name="TimeForOneTransaction" ColumnName="TimeForOneTransaction" />
+                <ScalarProperty Name="AllDebtors" ColumnName="AllDebtors" />
+                <ScalarProperty Name="AllCreditors" ColumnName="AllCreditors" />
+                <ScalarProperty Name="SetROI" ColumnName="SetROI" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Creditor_Associate" TypeName="FinapModel.Creditor_Associate" StoreEntitySet="Creditor_Associate">
-            <EndProperty Name="Creditor">
-              <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
-            </EndProperty>
-            <EndProperty Name="Associate">
-              <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Debtor_Associate" TypeName="FinapModel.Debtor_Associate" StoreEntitySet="Debtor_Associate">
+          <EntitySetMapping Name="Transaction_Out">
+            <EntityTypeMapping TypeName="FinapModel.Transaction_Out">
+              <MappingFragment StoreEntitySet="Transaction_Out">
+                <ScalarProperty Name="Transaction_Out_Id" ColumnName="Transaction_Out_Id" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="Date_Of_Transaction" ColumnName="Date_Of_Transaction" />
+                <ScalarProperty Name="Creditor_Account_Id" ColumnName="Creditor_Account_Id" />
+                <ScalarProperty Name="Debtor_Account_Id" ColumnName="Debtor_Account_Id" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Finapp_Debetor" ColumnName="Finapp_Debetor" />
+                <ScalarProperty Name="Finapp_Creditor" ColumnName="Finapp_Creditor" />
+                <ScalarProperty Name="Day_Access_To_Funds" ColumnName="Day_Access_To_Funds" />
+                <ScalarProperty Name="Creditor_Benefits_Per_Annum" ColumnName="Creditor_Benefits_Per_Annum" />
+                <ScalarProperty Name="Debtor_Benefits_Per_Annum" ColumnName="Debtor_Benefits_Per_Annum" />
+                <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+                <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
+                <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
+                <ScalarProperty Name="ActualCreditorBenefits" ColumnName="ActualCreditorBenefits" />
+                <ScalarProperty Name="CreditorBenefits" ColumnName="CreditorBenefits" />
+                <ScalarProperty Name="DebtorSavings" ColumnName="DebtorSavings" />
+                <ScalarProperty Name="AssociateDay" ColumnName="AssociateDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DebtorAssociate" TypeName="FinapModel.DebtorAssociate" StoreEntitySet="DebtorAssociate">
             <EndProperty Name="Debtor">
               <ScalarProperty Name="Debtor_Id" ColumnName="Debtor_Id" />
             </EndProperty>
@@ -686,27 +637,15 @@
               <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Times">
-            <EntityTypeMapping TypeName="FinapModel.Times">
-              <MappingFragment StoreEntitySet="Times">
-                <ScalarProperty Name="SetROI" ColumnName="SetROI" />
-                <ScalarProperty Name="AllCreditors" ColumnName="AllCreditors" />
-                <ScalarProperty Name="AllDebtors" ColumnName="AllDebtors" />
-                <ScalarProperty Name="TimeForOneTransaction" ColumnName="TimeForOneTransaction" />
-                <ScalarProperty Name="CountOfTransactions" ColumnName="CountOfTransactions" />
-                <ScalarProperty Name="CountOfDebtors" ColumnName="CountOfDebtors" />
-                <ScalarProperty Name="CountOfCreditors" ColumnName="CountOfCreditors" />
-                <ScalarProperty Name="UpdateTransactionsTime" ColumnName="UpdateTransactionsTime" />
-                <ScalarProperty Name="UpdateCreditorsTime" ColumnName="UpdateCreditorsTime" />
-                <ScalarProperty Name="UpdateDebtorsTime" ColumnName="UpdateDebtorsTime" />
-                <ScalarProperty Name="AssociateTime" ColumnName="AssociateTime" />
-                <ScalarProperty Name="GetDebtorsTime" ColumnName="GetDebtorsTime" />
-                <ScalarProperty Name="GetCreditorsTime" ColumnName="GetCreditorsTime" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+          <AssociationSetMapping Name="CreditorAssociate" TypeName="FinapModel.CreditorAssociate" StoreEntitySet="CreditorAssociate">
+            <EndProperty Name="Creditor">
+              <ScalarProperty Name="Creditor_Id" ColumnName="Creditor_Id" />
+            </EndProperty>
+            <EndProperty Name="Associate">
+              <ScalarProperty Name="Associate_Id" ColumnName="Associate_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -118,7 +118,7 @@ namespace Finapp.Services
                 DebtorUsername = debtor.username,
                 Date = transaction.Date_Of_Transaction ?? DateTime.Now,
                 ROI = (float)transaction.ROI,
-                APR = debtor.Delta_APR,
+                APR = debtor.Delta_APR??0,
                 CreditorUsername = creditor,
                 CreditorAccountFinappAmount = transaction.Finapp_Creditor ?? 100,
                 CreditorBenefits = transaction.CreditorBenefits ?? 0,

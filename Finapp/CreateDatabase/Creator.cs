@@ -25,8 +25,8 @@ namespace Finapp.CreateDatabase
         public void ClearDB()
         {
             _context.Database.ExecuteSqlCommand("Delete from [Summary]");
-            _context.Database.ExecuteSqlCommand("Delete from [Creditor_Associate]");
-            _context.Database.ExecuteSqlCommand("Delete from [Debtor_Associate]");
+            _context.Database.ExecuteSqlCommand("Delete from [CreditorAssociate]");
+            _context.Database.ExecuteSqlCommand("Delete from [DebtorAssociate]");
             _context.Database.ExecuteSqlCommand("Delete from [Transaction_Out]");
             _context.Database.ExecuteSqlCommand("Delete from [Associate]");
             _context.Database.ExecuteSqlCommand("Delete from [Creditor]");

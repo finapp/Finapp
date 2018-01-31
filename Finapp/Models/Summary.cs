@@ -19,7 +19,6 @@ namespace Finapp.Models
         public Nullable<int> Debet_Average { get; set; }
         public Nullable<int> Balance_Average { get; set; }
         public Nullable<int> Savings_Average { get; set; }
-        public Nullable<int> Profits_Average { get; set; }
         public Nullable<int> Savings_Average_Percentage { get; set; }
         public Nullable<int> Profits_Average_Percentage { get; set; }
         public Nullable<int> Profits_Sum { get; set; }
@@ -31,6 +30,7 @@ namespace Finapp.Models
         public Nullable<int> Days { get; set; }
         public Nullable<System.DateTime> DateOfSummary { get; set; }
         public Nullable<int> Turnover { get; set; }
+        public Nullable<int> Profits_Average { get; set; }
     
         public virtual Associate Associate { get; set; }
     }

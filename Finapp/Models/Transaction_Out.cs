@@ -34,7 +34,7 @@ namespace Finapp.Models
         public Nullable<int> AssociateDay { get; set; }
     
         public virtual Associate Associate { get; set; }
-        public virtual Creditor Creditor1 { get; set; }
-        public virtual Debtor Debtor1 { get; set; }
+        public virtual Creditor Creditor { get; set; }
+        public virtual Debtor Debtor { get; set; }
     }
 }

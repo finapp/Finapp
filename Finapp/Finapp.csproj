@@ -218,41 +218,42 @@
     <Compile Include="IServices\ISummaryViewModelService.cs" />
     <Compile Include="IServices\ITransactionOutService.cs" />
     <Compile Include="Models\Associate.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Creditor.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Debtor.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FinappDB.Context.cs">
-      <DependentUpon>FinappDB.Context.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\FinapEntities1.Context.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinapEntities1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinapEntities1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinapEntities1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinapEntities1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\FinappDb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>FinappDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FinappDb.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FinappDb.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Models\FinappDB1.cs" />
     <Compile Include="Models\Summary.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Times.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction_Out.cs">
-      <DependentUpon>FinappDb.tt</DependentUpon>
+      <DependentUpon>FinapEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -292,14 +293,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\FinappDB.Context.tt">
+    <Content Include="Models\FinapEntities1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FinappDB.Context.cs</LastGenOutput>
-      <DependentUpon>FinappDb.edmx</DependentUpon>
+      <DependentUpon>FinapEntities1.edmx</DependentUpon>
+      <LastGenOutput>FinapEntities1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\FinapEntities1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FinapEntities1.edmx</DependentUpon>
+      <LastGenOutput>FinapEntities1.cs</LastGenOutput>
     </Content>
     <Content Include="Models\FinappDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FinappDb.edmx</DependentUpon>
       <LastGenOutput>FinappDb.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-mocks.js" />
@@ -311,14 +316,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
-    <EntityDeploy Include="Models\FinappDb.edmx">
+    <EntityDeploy Include="Models\FinapEntities1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FinappDb.Designer.cs</LastGenOutput>
+      <LastGenOutput>FinapEntities1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\FinappDb.edmx.diagram">
-      <DependentUpon>FinappDb.edmx</DependentUpon>
+    <Content Include="Models\FinapEntities1.edmx.diagram">
+      <DependentUpon>FinapEntities1.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FinappAlgorithm - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\finappalgorithms - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
